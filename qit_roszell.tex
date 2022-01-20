@@ -403,7 +403,7 @@
 \begin{document}
 \maketitle
 \begin{abstract}
-Put an abstract for your document here.
+No idea what is happening in this class lol do this later
 \end{abstract}
 
 \tableofcontents
@@ -411,14 +411,37 @@ Put an abstract for your document here.
 \section{Intro to Linear Algebra}
 
 Let's jump right in. This section is an abbreviation of the introduction to linear algebra session.
-\begin{definition}
+
+A vector space is a group of objects (vectors) which may be added together and multiplied by compatible scalars from $\R$ or $\C$. In this class, we primarily care about vector spaces $\C^n$ from $\C$ and $\R^n$ from $\R$. Recall that $\C$ is the scalar field of complex numbers $a+bi$, where multiplication is defined by the rule $i^2=-1$, and is equipped with:
+\begin{enumerate}[label=(\alph*)]
+    \item a complex conjugation operation -- $\ol{a+bi}=(a+bi)^*=a-bi$ and
+    \item a size function called the \textbf{modulus} -- $\abs{a+bi}=\sqrt{a^2+b^2}.$
+\end{enumerate}
+Note that the modulus is similar to magnitude. \\
+To work with complex numbers, it's useful to have an understanding of the basic operations.
+\begin{enumerate}[label=(\alph*)]
+	\item To add/subtract complex numbers, add/subtract the corresponding real/imaginary parts. For 		example -- $(a+bi)+(c+di)=(a+c)+(b+d)i$
+	\item To multiply/divide complex numbers, multiply both parts of the complex number by the real 		number. For example -- $(a+bi)*(c+di)=ac+adi+bcj-bd=(ac-bd)+(ad+bc)i$. This form will be useful 		for the duration of the class.
+\end{enumerate}
+
+\subsection{Representing Vectors in Complex Spaces}
+As mentioned, this class primarily works in complex number spaces. For this reason, having useful tools for representing vectors in these abstract spaces is useful. Vectors are represented in \textbf{bra-ket} notation, where \textit{bra} represents a \textit{row} vector, and \textit{ket} represents a \textit{column} vector.
+\begin{definition}\label{def:ket}
 If $\ket{v}\in\C^n$ is a \textit{ket} vector which consists of $n$ complex numbers,
 \begin{equation}
-\ket{v}=\bmat{v_1 \\ v_2 \\ ... \\ v_n} v_1, v_2, ..., v_n \in \C
+\ket{v}=\bmat{v_1 \\ v_2 \\ ... \\ v_n} \textrm{for } v_1, v_2, ..., v_n \in \C
 \end{equation}
 \end{definition}
 
-\begin{definition}
+\begin{definition}\label{def:bra}
+If $\bra{v}\in\C^n$ is a \textit{bra} vector which consists of $n$ complex numbers,
+\begin{equation}
+\bra{v}=\bmat{v_1 & v_2 & ... & v_n} \textrm{for } v_1, v_2, ..., v_n \in \C
+\end{equation}
+\end{definition}
+Note that the the integer $n$ in definitions \ref{def:ket} and \ref{def:bra} is called the \textbf{dimension} of the vector space $\C^n$.
+
+\begin{definition}\label{def:li}
 A linear combination of $\lbrace\ket{v_1}, ..., \ket{v_n}\rbrace\subset\C^n$ is a single vector in the form $\lambda_1\ket{v_1} + \lambda_2\ket{v_2} + ... + \lambda_n\ket{v_n}$ for some $\lambda_1, \lambda_2, ... , lambda_k\in\C^n$.
 \end{definition}
 
