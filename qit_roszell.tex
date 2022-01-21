@@ -408,6 +408,10 @@ No idea what is happening in this class lol do this later
 
 \tableofcontents
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Intro to Linear Algebra %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \section{Intro to Linear Algebra}
 
 Let's jump right in. This section is an abbreviation of the introduction to linear algebra session.
@@ -424,8 +428,13 @@ To work with complex numbers, it's useful to have an understanding of the basic 
 	\item To multiply/divide complex numbers, multiply both parts of the complex number by the real 		number. For example -- $(a+bi)*(c+di)=ac+adi+bcj-bd=(ac-bd)+(ad+bc)i$. This form will be useful 		for the duration of the class.
 \end{enumerate}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Representing Vectors in Complex Spaces %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \subsection{Representing Vectors in Complex Spaces}
 As mentioned, this class primarily works in complex number spaces. For this reason, having useful tools for representing vectors in these abstract spaces is useful. Vectors are represented in \textbf{bra-ket} notation, where \textit{bra} represents a \textit{row} vector, and \textit{ket} represents a \textit{column} vector.
+
 \begin{definition}\label{def:ket}
 If $\ket{v}\in\C^n$ is a \textit{ket} vector which consists of $n$ complex numbers,
 \begin{equation}
@@ -441,9 +450,146 @@ If $\bra{v}\in\C^n$ is a \textit{bra} vector which consists of $n$ complex numbe
 \end{definition}
 Note that the the integer $n$ in definitions \ref{def:ket} and \ref{def:bra} is called the \textbf{dimension} of the vector space $\C^n$.
 
+\begin{example}
+$\C^2$ is a 2-dimensional vector space over $\C$.
+\begin{center}
+$\alpha\bmat{1 \\ 0} + \beta\bmat{0 \\ 1}$ \\
+$\bmat{\alpha \\ 0}+\bmat{0 \\ \beta}=\bmat{\alpha \\ \beta}$
+Note: $\bmat{\alpha \\ \beta}$ 'fills up' $\C^2$; IE it represents all values contained within $\C^2$
+\end{center}
+\end{example}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Linear Combinations %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Linear Combinations}
+A linear combination is a useful tool for this class which is the 'combination' or multiplication of each term in a set by constants, and then adding the result. The interesting property of linear combinations is that the result is still contained within the initial set.
+
 \begin{definition}\label{def:li}
-A linear combination of $\lbrace\ket{v_1}, ..., \ket{v_n}\rbrace\subset\C^n$ is a single vector in the form $\lambda_1\ket{v_1} + \lambda_2\ket{v_2} + ... + \lambda_n\ket{v_n}$ for some $\lambda_1, \lambda_2, ... , lambda_k\in\C^n$.
+A linear combination of $\lbrace\ket{v_1}, ..., \ket{v_n}\rbrace\subset\C^n$ is a single vector in the form $\lambda_1\ket{v_1} + \lambda_2\ket{v_2} + ... + \lambda_n\ket{v_n}$ for some $\lambda_1, \lambda_2, ... , \lambda_k\in\C^n$.
 \end{definition}
+
+\begin{remark}
+If $\ket{w}$ is a linear combination of $\lbrace\ket{v_1}, ..., \ket{v_n}\rbrace\subset\C^n$, we can say that it belongs to the \textbf{span} of the set of $\lbrace\ket{v_1}, ..., \ket{v_n}\rbrace\subset\C^n$.
+\end{remark}
+
+\begin{example}
+Create a linear combination of $\ket{v_1}=\bmat{i \\ 2}, \ket{v_2}=\bmat{-1 \\ i+1}$
+\begin{center}
+(\textit{foil}) \\
+$(3+2i)\bmat{i \\ 2} + (2+i)\bmat{-1 \\ i+1}$ \\
+(\textit{add}) \\
+$=\bmat{3i-2 \\ 6+4i} + \bmat{-2-i \\ 3i+1}$ \\
+$=\bmat{2i-4 \\ 7i+7}=\ket{w}$ \textit{spans} $\lbrace\ket{v_1}, \ket{v_2}\rbrace$
+\end{center}
+\end{example}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Linearly Independent %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Linearly Independent}
+Another important concept is that of a set being \textit{linearly independent}. Being linearly independent essentially means that every piece of 'information' given by a set of vectors adds some sort of new information/perspective on the problem.
+
+\begin{remark}
+Two vectors are \textbf{linearly independent} as long as they are not \textit{parallel}.
+\end{remark}
+
+A good way of looking at this is that a system that is not linearly independent has more than one element that is some offset of the same constant. These elements are not giving new perspective, because they give the same information.
+
+\begin{definition}\label{•}
+A set of vectors $\setovecs{v}$ is linearly independent if no vector is a linear combination of any other vectors. Algebraically, $[if \lambda_1\ket{v_1} + \lambda_2\ket{v_2} + ... + \lambda_n\ket{v_k}=\ket{0}, then \lambda_1=\lambda_2=\lambda_k=0]$
+\end{definition}
+
+The only way that the zero vector ($\ket{0}$) can be possible is if the complex constants ($\lambda$) are all the same, \textit{and} zero.
+
+\begin{theorem}
+If a set of $k$ vectors in $\C^n$ is linearly independent, then $k \leq n$. Equivalently, if you have a set of $k$ vectors in $\C^n$ such that $k>n$, then the set is linearly independent.
+\end{theorem}
+
+This theorem is important because it establishes the notion that a set can't contain more vectors than the space allows for. Said differently, the dimension of $M$ is the number of vectors contained within that are linearly independent.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Basis %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Basis}
+\begin{theorem}
+A \textbf{basis} of a subspace $M\subseteq\C^n$ is a set of vectors such that
+\begin{enumerate}
+	\item $S$ is linearly independent
+	\item Span($S$) $=M$ $\Longrightarrow$ "S Spans M"
+\end{enumerate}
+\end{theorem}
+It follows that the standard basis of $\C^N$ is $\bmat{1 \\ 0 \\ 0 \\ ... \\ 0},\bmat{0 \\ 1 \\ 0 \\ ... \\ 0},\bmat{0 \\ 0 \\ 1 \\ ... \\ 0},\bmat{0 \\ 0 \\ 0 \\ ... \\ 1}$
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Exercise 1 %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Exercise 1}
+Consider $S={\ket{v_1}, \ket{v_2}, \ket{v_3}}$ where $\ket{v_1}=\bmat{1 \\ -1}, \ket{v_2}=\bmat{i \\ 1}, \ket{v_3}=\bmat{0 \\ i}$
+\begin{enumerate}[label=(\alph*)]
+	\item Give a linear combination of the vectors in $S$. \\
+	\begin{center}
+	$\alpha\bmat{1 \\ -1} + \beta\bmat{i \\ 1} + \gamma\bmat{0 \\ i}=\ket{w}$ \\
+	\end{center}
+	Note that the next problem asks to determine if a vector is in span($S$). To 'kill two birds with 		one stone', try to find a linear combination that satisfies the question. To do this, assign 			values for $\alpha$, $\beta$, and $\gamma$. Note that $1+i=i+i$ (the top row), and $-1+1=0$. This
+	allows us to set $\alpha$ and $\beta$ to $1$ and operate on $\gamma$.
+	\begin{center}
+	$i(x+yi)=200-i$ \\
+	$xi-y$ $\Longrightarrow$ $x=-1$ $\Longrightarrow$ $\gamma=-1i-200$
+	\end{center}
+	Now plug in values.
+	$1*\bmat{1 \\ -1} + 1*\bmat{i \\ 1} + (-200-1i)*\bmat{0 \\ i}=\ket{w}$
+	\item Determine if $\bmat{1+i \\ 200-i}$ in Span($S$) \\
+	Start with where we left off in the last part.
+	\begin{center}
+	$1*\bmat{1 \\ -1} + 1*\bmat{i \\ 1} + (-200-1i)*\bmat{0 \\ i}=\bmat{1+i \\ 200-i}$
+	\end{center}
+	$\bmat{1+i \\ 200-i}$ \textit{is} in Span($S$) because there existed values $\alpha$, $\beta$, and 	$\gamma$ such that $\ket{w}$ of $S$ is a possible outcome of $S$.
+	\item Describe Span($S$) "geometrically" \\
+	Span($S$) can be thought of as every possible vector $(\alpha\bmat{1 \\ -1} + \beta\bmat{i \\ 1} + 	\gamma\bmat{0 \\ i})$ contained within $\C^2$
+	
+\end{enumerate}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Exercise 2 %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Exercise 2}
+Find the condition under which the following two vectors are linearly independent:
+\begin{center}
+$\ket{v_1}=\bmat{x \\ y \\ 3},\ket{v_2}=\bmat{2 \\ x-y \\ 1}\in\R^3$
+\end{center}
+Multiply $\ket{v_2}$ by a scalar that makes $\ket{v_1}$ and $\ket{v_2}$ \textit{not} linearly independent. This way, we can build a contradiction.
+\begin{center}
+$\ket{v_1}=\bmat{x \\ y \\ 3} = 3*\ket{v_2}=\bmat{2 \\ x-y \\ 1}$ \\
+$\bmat{x \\ y \\ 3}=\bmat{6 \\ 3*(x-y) \\ 3}$
+\end{center}
+It can be seen that in this case, $\Longrightarrow x=6$ and $y=4.5$. \\
+Therefore, as long as $x\neq6$ and $y\neq4.5$, $\ket{v_1}$ and $\ket{v_2}$ are linearly independent.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Exercise 3 %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Exercise 3}
+Show that the set formed by the following vectors is a basis for $\C^3$
+\begin{center}
+$\ket{v_1}=\bmat{1 \\ 1 \\ 1}, \ket{v_2}=\bmat{1 \\ 0 \\ 1}, \ket{v_3}=\bmat{1 \\ -1 \\ -1}$
+\end{center}
+Recall that for the vectors to be a basis for $\C^3$, they must be linearly independent, and
+Span($\ket{v_1},\ket{v_2},\ket{v_3}$)$=\C^3$ (every vector must give additional information, IE no redundancy). To prove linear independence, we need to find where the constants ($\lambda$) are zero, by \ref{def:li}. \\
+\begin{center}
+\textit{Goal is to find Eigen values }
+$\bmat{1 & 1 & 1 & 0 \\ 1 & 0 & -1 & 0 \\ 1 & 1 & -1 & 0}\longrightarrow (R_2-R_3)\longrightarrow\bmat{1 & 1 & 1 & 0 \\ 0 & -1 & 0 & 0 \\ 1 & 1 & -1 & 0}\longrightarrow (R_3-R_1)\longrightarrow\bmat{1 & 1 & 1 & 0 \\ 0 & -1 & 0 & 0 \\ 0 & 0 & -2 & 0}$ \\
+Note that with linear algebra experience, this stage is enough to prove that we have linear independence. At the time of writing, I haven't taken this class so I'm going to continue. \\
+(\textit{multiply by constant})
+$\longrightarrow (-1R_2-\frac{1}{2}R_3)\longrightarrow\bmat{1 & 1 & 1 & 0 \\ 0 & 1 & 0 & 0 \\ 0 & 0 & 1 & 0}=\bmat{1 & 0 & 0 & 0 \\ 0 & 1 & 0 & 0 \\ 0 & 0 & 1 & 0}$
+\end{center}
+To prove that the vectors provided are a basis for $\C^3$, we determined that the vectors are linearly independent such that $\alpha$, $\beta$, and $\gamma$ are zero. Then, noting that we're operating in $\C^3$, the vectors must be a basis. \textit{This is a bad way of explaining this, go to office hours}
 
 %%!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 %%!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
