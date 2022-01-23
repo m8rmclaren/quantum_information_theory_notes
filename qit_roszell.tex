@@ -377,7 +377,8 @@
 \newcommand{\re}[1]{\text{Re}(#1)}  % real part
 \newcommand{\im}[1]{\text{Im}(#1)} % complex part
 
-
+%% QIT
+\newcommand{\setofkets}[1]{\lb \ket{#1_1}, \ket{#1_2}, \ldots, \ket{#1_n}\rb} % Set of ket vectors
 
 
 %%!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -408,9 +409,7 @@ No idea what is happening in this class lol do this later
 
 \tableofcontents
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% Intro to Linear Algebra %%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 
 \section{Intro to Linear Algebra}
 
@@ -535,7 +534,7 @@ Consider $S={\ket{v_1}, \ket{v_2}, \ket{v_3}}$ where $\ket{v_1}=\bmat{1 \\ -1}, 
 	\begin{center}
 	$\alpha\bmat{1 \\ -1} + \beta\bmat{i \\ 1} + \gamma\bmat{0 \\ i}=\ket{w}$ \\
 	\end{center}
-	Note that the next problem asks to determine if a vector is in span($S$). To 'kill two birds with 		one stone', try to find a linear combination that satisfies the question. To do this, assign 			values for $\alpha$, $\beta$, and $\gamma$. Note that $1+i=i+i$ (the top row), and $-1+1=0$. This
+	Note that the next problem asks to determine if a vector is in span($S$). To 'kill two birds with 		one stone', try to find a linear combination that 			satisfies the question. To do this, assign 			values for $\alpha$, $\beta$, and $\gamma$. Note that $1+i=i+i$ (the top row), and $-1+1=0$. This
 	allows us to set $\alpha$ and $\beta$ to $1$ and operate on $\gamma$.
 	\begin{center}
 	$i(x+yi)=200-i$ \\
@@ -590,6 +589,220 @@ Note that with linear algebra experience, this stage is enough to prove that we 
 $\longrightarrow (-1R_2-\frac{1}{2}R_3)\longrightarrow\bmat{1 & 1 & 1 & 0 \\ 0 & 1 & 0 & 0 \\ 0 & 0 & 1 & 0}=\bmat{1 & 0 & 0 & 0 \\ 0 & 1 & 0 & 0 \\ 0 & 0 & 1 & 0}$
 \end{center}
 To prove that the vectors provided are a basis for $\C^3$, we determined that the vectors are linearly independent such that $\alpha$, $\beta$, and $\gamma$ are zero. Then, noting that we're operating in $\C^3$, the vectors must be a basis. \textit{This is a bad way of explaining this, go to office hours}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+% Inner Products
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Inner Products}
+
+Recall that $\ket{v}$ is a column vector and $\bra{v}$ is a row vector. Before talking about inner products, we must define operations that help the inner product process.
+\begin{remark}
+$(\C^n)^*$ is the "dual space of $\C^n$.
+\end{remark}
+The dual space is the space of all row vectors. This is useful for the next definition, which is critical in completing inner products.
+\begin{definition}
+We equip $\C^n$ with an "involution" (\textit{conjugate transpose}) operation:
+\begin{center}
+$\dagger:\C^n\longrightarrow(\C^n)^*$ given by $\bmat{x_1 \\ ... \\ x_n}=\bmat{x_1^* & ... & x_n^*}$ given a $\ket{v}\in\C^n$, $\bra{v}=\ket{v}^\dagger$
+\end{center}
+\end{definition}
+A quick example of this operation is helpful to explain the significance of these definitions.
+\begin{example}
+Given $\ket{v}=\bmat{7 \\ 8i \\ \pi + 3i \\ 0}\in\C^4$, find $\ket{v}^\dagger$\\
+Take the complex conjugate of each entry \\
+$\bra{v}=\bmat{7 & -8i & \pi-3i & 0}$
+\end{example}
+Now, we can talk about inner products. Of primary importance for this section, the inner product can determine if two vectors are orthogonal, and operates the same as a dot product on $\R^n$.
+\begin{definition}
+Given $\ket{v}, \ket{w}\in\C^n$, the \textbf{inner product} of $\ket{v}$ and $\ket{w}$ is $\langle w|v \rangle=\bra{w}^\dagger\cdot\ket{v}$
+\end{definition}
+\begin{remark}
+The inner product on $\R^n$ is the usual dot product.
+\end{remark}
+The following is a simple example showing the inner product on simple vectors in $\R^3$.
+\begin{example}
+Given $\ket{v}=\bmat{1 \\ 1\\ 3}, \ket{w}=\bmat{5 \\ -2 \\ 1}\in\R^3$, find $\langle w|v \rangle$ \\
+\indent Perform a complex conjugate on $\ket{w}$ (In $\R^3$, this is the same as flipping $nx1$ to $1xn$) \\
+\indent $\langle w|v \rangle=\bmat{5 & -2 & 1}\cdot\bmat{1 \\ 1 \\ 3}=(5*1)+(-2*1)+(1*3)=6$
+\end{example}
+Now, the following example shows the inner product on two simple vectors in $\C^2$.
+\begin{example}\label{ex:cpcmp}
+Given $\ket{v}=\bmat{i \\ 1}, \ket{w}=\bmat{i \\ -1}\in\C^2$, find $\inp{w}{v}$
+\begin{center}
+$\inp{w}{v}=\bmat{-i & -1}\cdot\bmat{i \\ 1}=1+(-1*1)=0$
+\end{center}
+\end{example}
+Recall from calculus III that the dot product of two vectors can give us insight on orthogonality. In the case of example \ref{ex:cpcmp}, the inner product of $\langle w|v \rangle$ was zero. This tells us that the two vectors are orthogonal.
+\begin{definition}
+The \textbf{norm} (similar to magnitude) of $\ket{v}\in\C^n$ is $\norm{\ket{v}}:=\sqrt{\inp{w}{v}}$ 
+\end{definition}
+\begin{example}
+$\ket{v}=\bmat{1 \\ 1}\in\R^2\longrightarrow||\ket{v}||=\sqrt{1^2+1^2}=\sqrt{2}$
+\end{example}
+\begin{remark}
+\begin{itemize}
+	\item $\ket{v}\in\C^n$ with $||\ket{v}||=1$ is called a unit vector
+	\item Unit vectors in $\C^n$ represent a \textit{quantum state}
+	\item An important property of a norm is the \textit{triangle inequality} $\longrightarrow\norm{\ket{v}+\ket{w}}\leq\norm{\ket{v}}+\norm{\ket{w}}$
+\end{itemize}
+\end{remark}
+\begin{definition}
+A set of non-zero vectors $S=\setofkets{v}\leq\C^n$ is called an orthogonal set if $\inp{v}{w}=0$ if $i\neq j$
+\end{definition}
+\begin{theorem}
+If $S=\setofkets{v}$ is an orthogonal set of non-zero vectors in $\C^n$, then $S$ is linearly independent.
+\end{theorem}
+\begin{proof}
+Let $c_1, ..., c_k\in\C$ such that $c_1\ket{v_1}+...+c_k\ket{v_k}$. \\
+\textit{Goal: show that $c_1=c_2=c_k=0\longrightarrow$ linearly independent using $S$ is orthogonal} \\
+Additionally, let \\ 
+\indent $j\in{1,...,k}$.\\
+Then, \\ 
+\indent $\bra{v_j}(c_1\ket{v_1}+...+c_k)=\inp{v_j}{0}$ \\
+\indent $\longrightarrow c_1\inp{v_j}{v_1}+...+c_k\inp{v_j}{v_k}$ \\
+\indent $c_j\inp{v_j}{v_j}=$ (\textit{$v_j$ is the only component 'allowed' to have magnitude}) \\
+Thus, $c_j=0$ since $\ket{v_j}\neq\ket{0}$ \\
+Note: Since $j$ was arbitrary, $c_1 = c_2 = ... = c_k = 0$. Hence, $S$ is linearly independent.
+\end{proof}
+
+\begin{remark}
+$S$ is an orthonormal basis if:
+\begin{itemize}
+	\item $S$ is an orthonormal set if $n$ unit vectors
+	\item $\spn{S}=\C^n$
+\end{itemize}
+\end{remark}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Projections %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Projections}
+
+\begin{definition}
+Define $\ket{f_i}\bra{f_i}$ to be the \textbf{projection} operator onto $\spn{\ket{f_i}}$
+\end{definition}
+
+\begin{theorem}
+Let $\beta=\setofkets{f}$ be an orthonormal basis for $\C^n$. Then, any $\ket{x}=c_1\ket{f_1}+...+c_n\ket{f_n}=\inp{f_1}{x}\ket{f_1}+...+\inp{f_n}{x}\ket{f_n}$.
+\end{theorem}
+It follows that $\sum_{j=1}^{n} \ket{f_j}\bra{f_j}=\bmat{1 &  &  \\  & ... &  \\  &  &  1}$
+
+\begin{example}
+Let $\ket{f_1}=\frac{-2}{\sqrt{2}}\bmat{1 \\ 1},\ket{x}=\bmat{-2 \\ 1}$. \\
+$\ket{x_|}=\inp{f_1}{x}\ket{f_1}=P_1(\ket{x}$ \\
+$P_1(\ket{x})=\ket{f_1}\inp{f_1}{x}$
+\end{example}
+In the above example, $\ket{x_|}$ is the projection of $x$ onto $f_1$ in the direction of $f_1$.
+Note that the projection operation is similar to \textit{comp} from calculus III. Now, let's look at some properties of the projection operator.
+\begin{proposition}
+Let $\beta=\setofkets{f}$ be an orthonormal basis for $\C^n$. Then, $\lbrace P_1, P_2, P_n\rbrace$ is a set of $n\times n$ matrices such that
+\begin{enumerate}
+\item $P_i(\ket{v})\in\spn(\ket{f_i}$
+\item $\ket{v}-P_i(\ket{v})$ is orthogonal to $\ket{f_i}$
+\item $P_i^2=P_i*P_i=P_i$
+\item $P_iP_j=0$ when $i\neq\j$, and $P_i^\dagger=P_i$
+\item $\sum_{i=1}^{n} P_i=I_n$ IE the sum of $P$'s gives us the identity matrix.
+\end{enumerate}
+\end{proposition}
+
+Projection operators make it easy for us to find $c_1, c_2, c_n$ for $\ket{x}=c_1\ket{f_1}+...+c_k\ket{f_k}$ when $\setofkets{f}$ is an orthonormal set. Side note, in quantum land, $P_i$'s are how we measure the probability that $\ket{x}$ is actually in $\ket{f_i}$.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Gram-Schmidt %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Gram-Schmidt}
+
+Let $\beta=\setofkets{b}$ be a basis for $\C^n$
+\begin{itemize}
+\item Linearly independent
+\item $\spn{\beta}=\C^n$ (IE no redundancy)
+\end{itemize}
+Goal: Turn $\beta$ into an orthonormal basis, $\setofkets{f}$
+\begin{enumerate}
+\item First, make an orthogonal basis. \\
+$\ket{f_{i+1}}:=\ket{b_{i+1}}-(\sum_{j=1}{i} \frac{\inp{f_j}{b_{i+1}}}{\inp{f_j}{f_j}}\ket{f_j})$
+\item Then, make an orthonormal basis by normalizing the resultant ($\ket{f}$) vectors. \\
+For each $\ket{f}$, $\ket{f}=\frac{1}{\norm{\ket{f}}}\ket{f}$
+\end{enumerate}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Exercise 7 %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Exercise 7}
+Let $\beta=\lbrace\ket{b_1},\ket{b_2}\rbrace$, where $\ket{b_1}=\frac{1}{\sqrt{2}}\bmat{1 \\ 1}, \ket{b_2}=\frac{1}{\sqrt{2}}\bmat{1 \\ -1}$
+\begin{enumerate}[label=(\alph*)]
+	\item Show that $\beta$ is an orthonormal basis for $\C^2$ \\
+	\begin{enumerate}[label=(\roman*)]
+		\item Show that they're orthogonal
+		\begin{center}
+		$\inp{w}{v}=\bra{w}^\dagger\cdot\ket{v}$ \\
+		$\frac{1}{\sqrt{2}}(\bmat{1 & 1}\bmat{1 \\ -1}$ \\
+		$=\frac{1}{\sqrt{2}}((1*1)+(1*-1))=0\longleftarrow$ Recall that if the inner product is zero, the 					vectors are orthogonal
+		\end{center}
+		\item Determine if $\ket{b_1}$ and $\ket{b_2}$ are unit vectors
+		\begin{center}
+		\indent $\frac{1}{\sqrt{2}}\sqrt{1^2+1^2}=\frac{\sqrt{2}}{\sqrt{2}}=1\longleftarrow$ Unit vector
+		\end{center}
+		Therefore, $\beta$ is an orthonormal basis.
+	\end{enumerate}
+	\item Find the coordinates (or components) of $\ket{x}=\bmat{-2 \\ 1}$ relative to $\beta$. IE find the 			scalars $c_1, c_2 \in \C$ such that $c_1\ket{b_1}+c_2\ket{b_2}=\ket{x}$.
+	\begin{enumerate}[label=(\roman*)]
+		\item Multiply both sides by $\bra{b_1}$
+		\begin{center}
+		$\bra{b_1}(c_1\ket{b_1}+c_2\ket{b_2})=\inp{b_1}{x}$ \\
+		$c_1\inp{b_1}{b_1}+c_2\inp{b_1}{b_2} = c_1*1+c_2*0=c_1$ \\ 
+		Note that inner product of itself is parallel, and since $\beta$ is an orthonormal basis, $\inp{b_1}{b_2}			=1$ (IE they're orthogonal). \\
+		$c_1=\inp{b_1}{x}$ \\
+		$c_1=\frac{1}{\sqrt{2}}\bmat{1 & 1}\bmat{-2 \\ 1}\longrightarrow =\bmat{\frac{1}{\sqrt{2}} & \frac{1}				{\sqrt{2}}}\bmat{-2 \\ 1}$ \\
+		$\frac{-2}{\sqrt{2}}+\frac{1}{\sqrt{2}}=\frac{-1}{\sqrt{2}}$ \\
+		\end{center}
+		\item Multiply both sides by $\bra{b_2}$
+		\begin{center}
+		$\bra{b_2}(c_1\ket{b_1}+c_2\ket{b_2})=\inp{b_2}{x}$ \\
+		$c_1\inp{b_2}{b_1}+c_2\inp{b_2}{b_2} = c_1*0+c_2*1=c_2$ \\
+		$c_2=\inp{b_2}{x}$ \\
+		
+		$c_2=\frac{1}{\sqrt{2}}\bmat{1 & -1}\bmat{-2 \\ 1}\longrightarrow =\bmat{\frac{1}{\sqrt{2}} & \frac{-1}				{\sqrt{2}}}\bmat{-2 \\ 1}$ \\
+		$\frac{-2}{\sqrt{2}}+\frac{-1}{\sqrt{2}}=\frac{-3}{\sqrt{2}}$ \\
+		\end{center}
+	\end{enumerate}
+	Therefore, $c_1=\frac{-1}{\sqrt{2}}$ and $c_2=\frac{-3}{\sqrt{2}}$ when $\ket{x}=\bmat{-2 \\ 1}$.
+\end{enumerate}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Exercise (Gram-Schmidt) %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Exercise (Gram-Schmidt)}
+Given $S=\rbrace\ket{v_1}=\bmat{-1 \\ 2 \\ 2}, \ket{v_2}=\bmat{2 \\ -1 \\ 2}, \ket{v_3}=\bmat{3 \\ 0 \\ 3}\lbrace$, turn $S$ into an orthonormal basis for $\spn{S}=\R^3$.
+\begin{enumerate}
+\item Find $\ket{f_1}$
+\begin{center}
+$\norm{\ket{v_1}}=3$ \\
+$\longrightarrow\ket{f_1}=\frac{1}{3}\bmat{-1 \\ 2 \\ 2}$ \\
+\end{center}
+\item Find $\ket{f_2}$
+\begin{center}
+$\ket{f_2}=\ket{v_2}-\left(\frac{\inp{v_1}{v_2}}{\inp{v_1}{v_1}}\ket{v_1}\right)$ \\
+$\bmat{2 \\ -1 \\ 2}-\left[ \bmat{-1 & 2 & 2} \bmat{2 \\ -1 \\ 2} \right] =\bmat{2 \\ -1 \\ 2}-\ket{0}$ \\
+$\ket{f_2}=\frac{1}{3}\bmat{2 \\ -1 \\ 2}$
+\end{center}
+\item Find $\ket{f_3}$
+\begin{center}
+$\ket{f_3}=\ket{v_3}-\left[ \left( \frac{\inp{v_1}{v_3}}{\inp{v_1}{v_1}}\ket{v_1} \right) + \left( \frac{\inp{v_2}{v_3}}{\inp{v_2}{v_2}}\ket{v_2} \right)  \right]$ \\
+$=\bmat{3 \\ 0 \\ 3}-\left[ \left( \frac{\bmat{-1 & 2 & 2}\bmat{3 \\ 0 \\ 3}}{\bmat{-1 & 2 & 2}\bmat{-1 \\ 2 \\ 2}} \right) + \left( \frac{\bmat{2 & -1 & 2}\bmat{3 \\ 0 \\ 3}}{\bmat{2 & -1 & 2}\bmat{2 \\ -1 \\ 2}} \right) \right]$ \\
+$=\bmat{3 \\ 0 \\ 3}-\left( \bmat{\frac{-1}{3} \\ \frac{2}{3} \\ \frac{2}{3}} + \bmat{\frac{8}{3} \\ \frac{-4}{3} \\ \frac{8}{3}} \right) =\bmat{\frac{2}{3} \\ \frac{2}{3} \\ \frac{-1}{3}}$ \\
+$\norm{f_3}=1$ \textit{already normalized}
+\end{center}
+\end{enumerate}
+Therefore, $\ket{f_{final}}=\frac{1}{3}\bmat{-1 \\ 2 \\ 2}, \frac{1}{3}\bmat{2 \\ -1 \\ 2}, \bmat{\frac{2}{3} \\ \frac{2}{3} \\ \frac{-1}{3}}$
+
 
 %%!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 %%!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
