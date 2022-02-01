@@ -360,7 +360,7 @@
 
 %% Linear Algebra
 \newcommand{\norm}[1]{\left\lVert#1\right\rVert} % norm
-\newcommand{\inp}[2]{\left\langle#1, #2\right\rangle} % inner product
+\newcommand{\inp}[2]{\left\langle#1\mid #2\right\rangle} % inner product
 \newcommand{\spn}[1]{\text{Span}\lp #1\rp} % span
 \newcommand{\cspn}[1]{\overline{\text{Span}}\lp #1\rp} % closed span
 
@@ -803,6 +803,117 @@ $\norm{f_3}=1$ \textit{already normalized}
 \end{enumerate}
 Therefore, $\ket{f_{final}}=\frac{1}{3}\bmat{-1 \\ 2 \\ 2}, \frac{1}{3}\bmat{2 \\ -1 \\ 2}, \bmat{\frac{2}{3} \\ \frac{2}{3} \\ \frac{-1}{3}}$
 
+\section{Matrices and Linear Transformations}
+Lets goooo
+\begin{definition}
+A map $T: \C^n\longrightarrow\C^m$ is a linear transformation if:
+\begin{enumerate}
+	\item $T(\ket{v}+\ket{u}=T(\ket{v}|\ket{u})$
+	\item $T(C\mid V)=CT(\ket{v}) \forall \ket{u},\ket{v}\in\C^n$
+\end{enumerate}
+\end{definition}
+Note that every linear transformation arises from a matrix.
+\begin{definition}
+$M_{mn}(\C)$ is a set of all $m\times n$ matrices with complex entries $M_N(\C):=M_{nm}(\C)$
+\end{definition}
+This is traditionally written as $M_n$ or $M_{mn}$. $M_{mn}$ is a vector space with usual scalar multiplication and matrix addition.
+
+\begin{example}
+Given $\sigma_x=\bmat{0 & 1 \\ 1 & 0}$, $\sigma_y=\bmat{0 & -i \\ i & 0}\in M_2$, $\sigma_z=\bmat{1 & 0 \\ 0 & -1}$, find $2\omega_x-i\omega_y$
+\begin{center}
+$=\bmat{0 & 1 \\ 1 & 0}-i\bmat{0 & -i \\ i & 0}$ \\
+$=\bmat{0 & 2 \\ 2 & 0}-\bmat{0 & 1 \\ -1 & 0}$ \\
+$=\bmat{0 & 1 \\ 3 & 0}$
+\end{center}
+\end{example}
+Note that $\sigma_x,\sigma_y,\sigma_z$ are called Pauli or 'spin' matrices. \\
+$I_n$ is called the identity matrix whose $0$'s are the standard basis for $\setofkets{e}\in\C^n$. IE: $I_N=\bmat{1 & 0 & 0 & ... & 0 \\ 0 & 1 & 0 & ... & 0 \\ 0 & 0 & 1 & ... & 0 \\ ... & ... & ... & ... & ... \\ 0 & 0 & 0 & ... & 1}$ $M_N$ has well-defined multiplication of matrices. \\ In general, if $A\in M_{mn}$, $B=m_{nk}$, $A=(a_{ij})^{mn}_{j=1 j=1}$, $B=(b_{rs})_{r=1, 2=1}$. Additionally, the matrix $AB=\bmat{A\ket{b_1} & ... & B\ket{b_k}}=(C_{pq})$ where $C_{pq}$ is the dot product of the $p$th row of $A$ against the $q$th column of $B$. \\
+Here are some nice facts that will help us in further examples:
+\begin{enumerate}
+\item $AB=\bmat{\bra{a_1}B \\ ... \\ \bra{a_m}B}$ where $\setofkets{a}$ are the rows of $A$.
+\item $AB=\sum^n_{i=1}\ket{a_j}\bra{b_j}$ (IE "the columns of $A$ against the rows of $B$")
+\end{enumerate}
+It's useful to know some matrix operations to proceed. In general, $\bmat{\ket{a_1} & ... & \ket{a_n}}\bmat{d_1 & & 0 \\ & ... & \\ 0 & & d_n}=\bmat{d_1\ket{a_1} & ... & d_n\ket{a_n}}$ Here's an example:
+\begin{example}
+\begin{center}
+$\bmat{0 & -i \\ i & 0}\bmat{1 & 0 \\ 0 & 3}=\bmat{0 & -3i \\ i & 0}$
+\end{center}
+\end{example}
+\begin{definition}
+An \textbf{eigenvalue} for $A\in M_n$ is a complex number $\lambda\in\C^n$ such that there is a non zero vector $\ket{x}\in\C^n$ satisfying $A\ket{x}=\lambda\ket{x}$.
+\end{definition}
+Said differently, the eigenvalue for A is somehow correlated to $\lambda$.
+\begin{definition}
+A matrix $A\in M_n$ is diagonalizable if:
+\begin{enumerate}
+\item There is a diagonal matrix $D$ and an invertable  matrix $P$ such that $A=PDP^-1$.
+\item There exists a basis for $\C^n$ consisting of eigenvectors for A
+\end{enumerate}
+\end{definition}
+
+\begin{example}
+Consider $A\bmat{I_2 & 0 \\ 0 & \sigma_y}$ \\ First, let's get the eigenvalues and normalized vectors. Note that eigenvalues are the \textit{roots} of the characteristic equation $det(A-\lambda I)=0$
+\begin{center}
+$\bmat{1 & 0 & 0 & 0 \\ 0 & 1 & 0 & 0 \\ 0 & 0 & 0 &-i \\ 0 & 0 & i & 0}-\bmat{\lambda & & & 0 \\ & \lambda & & & \\ & & \lambda & & \\ 0 & & & \lambda &}$ \\
+$A-\lambda I=\bmat{1 - \lambda & 0 & 0 & 0 \\ 0 & 1-\lambda & 0 & 0 \\ 0 & 0 & -\lambda & -i \\ 0 & 0 & i & \lambda}\longrightarrow det(A-\lambda I)=$
+$\begin{vmatrix}
+1 - \lambda & 0 & 0 & 0 \\ 
+0 & 1-\lambda & 0 & 0 \\ 
+0 & 0 & -\lambda & -i \\ 
+0 & 0 & i & \lambda \notag
+\end{vmatrix}$ \\
+$=(1-\lambda)\begin{vmatrix}
+1-\lambda & 0 & 0 \\ 
+0 & -\lambda & -i \\ 
+0 & i & \lambda \notag
+\end{vmatrix}=(1-\lambda)\bmat{1-\lambda & \bmat{-\lambda & -i \\ i & \lambda} & -0 & 0}$ \\
+$=(1-\lambda)(1-\lambda)\bmat{\lambda^2 & -1}=0$ \\
+$\lambda=1,1,1,-1$ \\
+These are our eigenvalues. Now, we need to find our eigenvectors\\
+Note: $A\ket{e_1}=\ket{e_1}$ and $B\ket{e_2}=\ket{e_2}$. \\
+$A-(1)I=\bmat{0 & 0 & 0 & 0 \\ 0 & 0 & 0 & 0 \\ 0 & 0 & -1 & -i \\ 0 & 0 & i & 1}\xrightarrow{R_4+iR_3}\bmat{0 & 0 & 0 & 0 \\ 0 & 0 & 0 & 0 \\ 0 & 0 & -1 & i \\ 0 & 0 & 0 & 0}\xrightarrow[-1*R_1]{R_1\leftrightarrow R_3}=\bmat{0 & 0 & 1 & -i \\ 0 & 0 & 0 & 0 \\ 0 & 0 & 0 & 0 \\ 0 & 0 & 0 & 0}$ \\
+Therefore, our eigen vector is $\ket{x}=\bmat{0 \\ 0 \\ i \\ 1}$. \\Our normalized eigen vectors are $\left\lbrace\bmat{1 \\ 0 \\ 0 \\ 0},\bmat{0 \\ 1 \\ 0 \\ 0},\frac{1}{\sqrt{2}}\bmat{0 \\ 0 \\ i \\ 1},\frac{1}{\sqrt{2}}\bmat{0 \\ 0 \\ 1 \\ i}\right\rbrace $
+\end{center}
+\end{example}
+
+\subsection{Subsection of something}
+Some, but not all matrices are diagonalizable; this property is highly desirable. Matrices are diagonalizable if and only if the eigenvalues form a basis. \\ \textit{put some shit here} \\
+\begin{enumerate}
+\item Vectors must be self-adjoint (\textit{hermition}) IE $A\in M_n$ is \textbf{hermition} if $A^\dagger=A$, $sigma+\dagger_x=\sigma_x$, $\sigma+\dagger_y=sigma_y$, $\sigma+\dagger_z=\sigma_z$
+\item As it turns out, \textit{all} hermition matricies are diagonalizable $\longleftrightarrow$ the eigenvectors for a basis (IE linearly independent and Span). Said differently, hermition matrices are only hermition matrices if their eigenvectors form an orthonormal basis (IE unit vector, norm, and Span). It's worth noting that the eigenvalues must be real for this to be the case.
+\item A matrix in $M_n$ is positive-semidefinite if for all $\ket{x}\in\C^n$, we have $\bra{x}A\ket{x}\geq0$
+\item The following are equivalent:
+\begin{enumerate}
+\item $u\in M_n$ is unitary
+\item $u^\dagger=u-1$ (IE left \textit{and} right inverse) $\longrightarrow u^{-1}u=uu^{-1}$
+\item $uu^\dagger=I_n$ and $u^\dagger u=I_n$ (unitaries are normal, but not necessarily hermition)
+\item The columns of $u$ form an orthonormal basis for $\C^n$
+\item $\forall\ket{x},\ket{y}\in\C^n$, $\inp{u_x}{u_y}=\inp{x}{y}$. Think of this as a rotation of the entire matrix, such that the angle between the vectors are preserved. Related to calculus III, this operation gives us the angle.
+\end{enumerate}
+\end{enumerate}
+Now, let's go over some examples of these properties in action.
+\begin{example}
+Example of a matrix that is \textit{not} Hermition:
+\begin{center}
+$N=\bmat{2 & -i \\ -i & 2}\longrightarrow N^\dagger=\bmat{2 & i \\ i & 2}$
+\end{center} Note: the columns of $N$ are not orthogonal, so $N$ is not unitary.
+\end{example}
+\begin{example}
+Example of a unitary matrix that's not Hermition: 
+\begin{center}
+$\bmat{\frac{1}{\sqrt{2}} & -\frac{1}{\sqrt{2}} \\ \frac{1}{\sqrt{2}} & \frac{1}{\sqrt{2}}}\longrightarrow u^{-1}=u^\dagger=\bmat{\frac{1}{\sqrt{2}} & -\frac{1}{\sqrt{2}} \\ \frac{1}{\sqrt{2}} & \frac{1}{\sqrt{2}}}$
+\end{center}
+\end{example}
+\begin{example}
+$\forall\ket{x}\in{C^n}$, $\bra{x}A\ket{x}\geq 0$: $A=\ket{e_2}\bra{e_2}$ where $e_2=\bmat{0 \\ 1}=\bmat{0 & 0 \\ 0 & 1}$ This is positive semidefinite if: \\
+\textit{proof} Let $\ket{x}=\bmat{a \\ b}\in\C^2$. \\
+$\bra{x}A\ket{x}=\bmat{a^* & b^*}\bmat{0 & 0 \\ 0 & 1}\bmat{a \\ b}$ \\
+$\bmat{a^* & b^*}\bmat{0 \\ b}=0+b^*b=\mid b\mid^2\geq0$
+\end{example}
+\begin{theorem}
+A matrix $N\in M_n$ is normal $\longleftrightarrow$ there is a unitary matrix $u=\bmat{\ket{u_1} & ... & \ket{u_n}}$ and a diagonalizable matrix $D=\bmat{\lambda & 0 \\ 0 & \lambda_n}$ such that $N=uDu^\dagger$
+\end{theorem}
+To perform decomposition of matrices, we can use the \textit{spectral theorem for normal matrices}, and the fact that in general, $A\in M_n$ has a singular value decomposition. Note that both of these use eigenvectors of the given matrix.
 
 %%!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 %%!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
