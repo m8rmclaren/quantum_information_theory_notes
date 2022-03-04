@@ -377,6 +377,9 @@
 \newcommand{\re}[1]{\text{Re}(#1)}  % real part
 \newcommand{\im}[1]{\text{Im}(#1)} % complex part
 
+\newcommand{\sinx}[1]{\sin\left(#1\right)}
+\newcommand{\cosx}[1]{\cos\left(#1\right)}
+
 %% QIT
 \newcommand{\setofkets}[1]{\lb \ket{#1_1}, \ket{#1_2}, \ldots, \ket{#1_n}\rb} % Set of ket vectors
 
@@ -409,9 +412,7 @@ No idea what is happening in this class lol do this later
 
 \tableofcontents
 
-
-
-\section{Intro to Linear Algebra}
+\section{Intro to Vector Spaces}
 
 Let's jump right in. This section is an abbreviation of the introduction to linear algebra session.
 
@@ -485,10 +486,10 @@ $=\bmat{2i-4 \\ 7i+7}=\ket{w}$ \textit{spans} $\lbrace\ket{v_1}, \ket{v_2}\rbrac
 \end{example}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% Linearly Independent %%%
+%%% Linear Independence %%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\subsection{Linearly Independent}
+\subsection{Linear Independence}
 Another important concept is that of a set being \textit{linearly independent}. Being linearly independent essentially means that every piece of 'information' given by a set of vectors adds some sort of new information/perspective on the problem.
 
 \begin{remark}
@@ -497,7 +498,7 @@ Two vectors are \textbf{linearly independent} as long as they are not \textit{pa
 
 A good way of looking at this is that a system that is not linearly independent has more than one element that is some offset of the same constant. These elements are not giving new perspective, because they give the same information.
 
-\begin{definition}\label{•}
+\begin{definition}
 A set of vectors $\setovecs{v}$ is linearly independent if no vector is a linear combination of any other vectors. Algebraically, $[if \lambda_1\ket{v_1} + \lambda_2\ket{v_2} + ... + \lambda_n\ket{v_k}=\ket{0}, then \lambda_1=\lambda_2=\lambda_k=0]$
 \end{definition}
 
@@ -524,79 +525,10 @@ A \textbf{basis} of a subspace $M\subseteq\C^n$ is a set of vectors such that
 It follows that the standard basis of $\C^N$ is $\bmat{1 \\ 0 \\ 0 \\ ... \\ 0},\bmat{0 \\ 1 \\ 0 \\ ... \\ 0},\bmat{0 \\ 0 \\ 1 \\ ... \\ 0},\bmat{0 \\ 0 \\ 0 \\ ... \\ 1}$
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% Exercise 1 %%%
+%%% Inner Products %%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\subsection{Exercise 1}
-Consider $S={\ket{v_1}, \ket{v_2}, \ket{v_3}}$ where $\ket{v_1}=\bmat{1 \\ -1}, \ket{v_2}=\bmat{i \\ 1}, \ket{v_3}=\bmat{0 \\ i}$
-\begin{enumerate}[label=(\alph*)]
-	\item Give a linear combination of the vectors in $S$. \\
-	\begin{center}
-	$\alpha\bmat{1 \\ -1} + \beta\bmat{i \\ 1} + \gamma\bmat{0 \\ i}=\ket{w}$ \\
-	\end{center}
-	Note that the next problem asks to determine if a vector is in span($S$). To 'kill two birds with 		one stone', try to find a linear combination that 			satisfies the question. To do this, assign 			values for $\alpha$, $\beta$, and $\gamma$. Note that $1+i=i+i$ (the top row), and $-1+1=0$. This
-	allows us to set $\alpha$ and $\beta$ to $1$ and operate on $\gamma$.
-	\begin{center}
-	$i(x+yi)=200-i$ \\
-	$xi-y$ $\Longrightarrow$ $x=-1$ $\Longrightarrow$ $\gamma=-1i-200$
-	\end{center}
-	Now plug in values.
-	$1*\bmat{1 \\ -1} + 1*\bmat{i \\ 1} + (-200-1i)*\bmat{0 \\ i}=\ket{w}$
-	\item Determine if $\bmat{1+i \\ 200-i}$ in Span($S$) \\
-	Start with where we left off in the last part.
-	\begin{center}
-	$1*\bmat{1 \\ -1} + 1*\bmat{i \\ 1} + (-200-1i)*\bmat{0 \\ i}=\bmat{1+i \\ 200-i}$
-	\end{center}
-	$\bmat{1+i \\ 200-i}$ \textit{is} in Span($S$) because there existed values $\alpha$, $\beta$, and 	$\gamma$ such that $\ket{w}$ of $S$ is a possible outcome of $S$.
-	\item Describe Span($S$) "geometrically" \\
-	Span($S$) can be thought of as every possible vector $(\alpha\bmat{1 \\ -1} + \beta\bmat{i \\ 1} + 	\gamma\bmat{0 \\ i})$ contained within $\C^2$
-	
-\end{enumerate}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% Exercise 2 %%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\subsection{Exercise 2}
-Find the condition under which the following two vectors are linearly independent:
-\begin{center}
-$\ket{v_1}=\bmat{x \\ y \\ 3},\ket{v_2}=\bmat{2 \\ x-y \\ 1}\in\R^3$
-\end{center}
-Multiply $\ket{v_2}$ by a scalar that makes $\ket{v_1}$ and $\ket{v_2}$ \textit{not} linearly independent. This way, we can build a contradiction.
-\begin{center}
-$\ket{v_1}=\bmat{x \\ y \\ 3} = 3*\ket{v_2}=\bmat{2 \\ x-y \\ 1}$ \\
-$\bmat{x \\ y \\ 3}=\bmat{6 \\ 3*(x-y) \\ 3}$
-\end{center}
-It can be seen that in this case, $\Longrightarrow x=6$ and $y=4.5$. \\
-Therefore, as long as $x\neq6$ and $y\neq4.5$, $\ket{v_1}$ and $\ket{v_2}$ are linearly independent.
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% Exercise 3 %%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\subsection{Exercise 3}
-Show that the set formed by the following vectors is a basis for $\C^3$
-\begin{center}
-$\ket{v_1}=\bmat{1 \\ 1 \\ 1}, \ket{v_2}=\bmat{1 \\ 0 \\ 1}, \ket{v_3}=\bmat{1 \\ -1 \\ -1}$
-\end{center}
-Recall that for the vectors to be a basis for $\C^3$, they must be linearly independent, and
-Span($\ket{v_1},\ket{v_2},\ket{v_3}$)$=\C^3$ (every vector must give additional information, IE no redundancy). To prove linear independence, we need to find where the constants ($\lambda$) are zero, by \ref{def:li}. \\
-\begin{center}
-\textit{Goal is to find Eigen values }
-$\bmat{1 & 1 & 1 & 0 \\ 1 & 0 & -1 & 0 \\ 1 & 1 & -1 & 0}\longrightarrow (R_2-R_3)\longrightarrow\bmat{1 & 1 & 1 & 0 \\ 0 & -1 & 0 & 0 \\ 1 & 1 & -1 & 0}\longrightarrow (R_3-R_1)\longrightarrow\bmat{1 & 1 & 1 & 0 \\ 0 & -1 & 0 & 0 \\ 0 & 0 & -2 & 0}$ \\
-Note that with linear algebra experience, this stage is enough to prove that we have linear independence. At the time of writing, I haven't taken this class so I'm going to continue. \\
-(\textit{multiply by constant})
-$\longrightarrow (-1R_2-\frac{1}{2}R_3)\longrightarrow\bmat{1 & 1 & 1 & 0 \\ 0 & 1 & 0 & 0 \\ 0 & 0 & 1 & 0}=\bmat{1 & 0 & 0 & 0 \\ 0 & 1 & 0 & 0 \\ 0 & 0 & 1 & 0}$
-\end{center}
-To prove that the vectors provided are a basis for $\C^3$, we determined that the vectors are linearly independent such that $\alpha$, $\beta$, and $\gamma$ are zero. Then, noting that we're operating in $\C^3$, the vectors must be a basis. \textit{This is a bad way of explaining this, go to office hours}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%
-% Inner Products
-%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\section{Inner Products}
+\subsection{Inner Products}
 
 Recall that $\ket{v}$ is a column vector and $\bra{v}$ is a row vector. Before talking about inner products, we must define operations that help the inner product process.
 \begin{remark}
@@ -731,6 +663,104 @@ For each $\ket{f}$, $\ket{f}=\frac{1}{\norm{\ket{f}}}\ket{f}$
 \end{enumerate}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Exercise 1 %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Exercise 1}
+Consider $S={\ket{v_1}, \ket{v_2}, \ket{v_3}}$ where $\ket{v_1}=\bmat{1 \\ -1}, \ket{v_2}=\bmat{i \\ 1}, \ket{v_3}=\bmat{0 \\ i}$
+\begin{enumerate}[label=(\alph*)]
+	\item Give a linear combination of the vectors in $S$. \\
+	\begin{center}
+	$\alpha\bmat{1 \\ -1} + \beta\bmat{i \\ 1} + \gamma\bmat{0 \\ i}=\ket{w}$ \\
+	\end{center}
+	Note that the next problem asks to determine if a vector is in span($S$). To 'kill two birds with 		one stone', try to find a linear combination that 			satisfies the question. To do this, assign 			values for $\alpha$, $\beta$, and $\gamma$. Note that $1+i=i+i$ (the top row), and $-1+1=0$. This
+	allows us to set $\alpha$ and $\beta$ to $1$ and operate on $\gamma$.
+	\begin{center}
+	$i(x+yi)=200-i$ \\
+	$xi-y$ $\Longrightarrow$ $x=-1$ $\Longrightarrow$ $\gamma=-1i-200$
+	\end{center}
+	Now plug in values.
+	$1*\bmat{1 \\ -1} + 1*\bmat{i \\ 1} + (-200-1i)*\bmat{0 \\ i}=\ket{w}$
+	\item Determine if $\bmat{1+i \\ 200-i}$ in Span($S$) \\
+	Start with where we left off in the last part.
+	\begin{center}
+	$1*\bmat{1 \\ -1} + 1*\bmat{i \\ 1} + (-200-1i)*\bmat{0 \\ i}=\bmat{1+i \\ 200-i}$
+	\end{center}
+	$\bmat{1+i \\ 200-i}$ \textit{is} in Span($S$) because there existed values $\alpha$, $\beta$, and 	$\gamma$ such that $\ket{w}$ of $S$ is a possible outcome of $S$.
+	\item Describe Span($S$) "geometrically" \\
+	Span($S$) can be thought of as every possible vector $(\alpha\bmat{1 \\ -1} + \beta\bmat{i \\ 1} + 	\gamma\bmat{0 \\ i})$ contained within $\C^2$
+	
+\end{enumerate}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Exercise 2 %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Exercise 2}
+Find the condition under which the following two vectors are linearly independent:
+\begin{center}
+$\ket{v_1}=\bmat{x \\ y \\ 3},\ket{v_2}=\bmat{2 \\ x-y \\ 1}\in\R^3$
+\end{center}
+Multiply $\ket{v_2}$ by a scalar that makes $\ket{v_1}$ and $\ket{v_2}$ \textit{not} linearly independent. This way, we can build a contradiction.
+\begin{center}
+$\ket{v_1}=\bmat{x \\ y \\ 3} = 3*\ket{v_2}=\bmat{2 \\ x-y \\ 1}$ \\
+$\bmat{x \\ y \\ 3}=\bmat{6 \\ 3*(x-y) \\ 3}$
+\end{center}
+It can be seen that in this case, $\Longrightarrow x=6$ and $y=4.5$. \\
+Therefore, as long as $x\neq6$ and $y\neq4.5$, $\ket{v_1}$ and $\ket{v_2}$ are linearly independent.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Exercise 3 %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Exercise 3}
+Show that the set formed by the following vectors is a basis for $\C^3$
+\begin{center}
+$\ket{v_1}=\bmat{1 \\ 1 \\ 1}, \ket{v_2}=\bmat{1 \\ 0 \\ 1}, \ket{v_3}=\bmat{1 \\ -1 \\ -1}$
+\end{center}
+Recall that for the vectors to be a basis for $\C^3$, they must be linearly independent, and
+Span($\ket{v_1},\ket{v_2},\ket{v_3}$)$=\C^3$ (every vector must give additional information, IE no redundancy). To prove linear independence, we need to find where the constants ($\lambda$) are zero, by \ref{def:li}. \\
+\begin{center}
+\textit{Goal is to find Eigen values }
+$\bmat{1 & 1 & 1 & 0 \\ 1 & 0 & -1 & 0 \\ 1 & 1 & -1 & 0}\longrightarrow (R_2-R_3)\longrightarrow\bmat{1 & 1 & 1 & 0 \\ 0 & -1 & 0 & 0 \\ 1 & 1 & -1 & 0}\longrightarrow (R_3-R_1)\longrightarrow\bmat{1 & 1 & 1 & 0 \\ 0 & -1 & 0 & 0 \\ 0 & 0 & -2 & 0}$ \\
+Note that with linear algebra experience, this stage is enough to prove that we have linear independence. At the time of writing, I haven't taken this class so I'm going to continue. \\
+(\textit{multiply by constant})
+$\longrightarrow (-1R_2-\frac{1}{2}R_3)\longrightarrow\bmat{1 & 1 & 1 & 0 \\ 0 & 1 & 0 & 0 \\ 0 & 0 & 1 & 0}=\bmat{1 & 0 & 0 & 0 \\ 0 & 1 & 0 & 0 \\ 0 & 0 & 1 & 0}$
+\end{center}
+To prove that the vectors provided are a basis for $\C^3$, we determined that the vectors are linearly independent such that $\alpha$, $\beta$, and $\gamma$ are zero. Then, noting that we're operating in $\C^3$, the vectors must be a basis. \textit{This is a bad way of explaining this, go to office hours}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Exercise 4 %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Exercise 4}
+Let $\ket{x}=\bmat{1 \\ i \\ 2+i}$, $\ket{y}=\bmat{2-i \\ 1 \\ 2+i}$, $\ket{z}=\frac{\sqrt{2+\sqrt{5}}}{2+\sqrt{5}}\ket{x}$.
+\begin{enumerate}
+	\item Find $\Vert\ket{x}\Vert$. \\
+	$\Vert\ket{x}\Vert=\sqrt{1^2+i^2+(2+i)^2}=\sqrt{1-1+(2+i)^2}=2+i$
+	\item Find $\inp{x}{y}$ \\
+	$\inp{x}{y}=\bra{x}^\dagger\cdot\ket{y}=\bmat{1 & -i & 2-i}\bmat{2-i \\ 1 \\ 2+i}=2-i-				i+5=7-2i$
+	\item find $\Vert\ket{z}\Vert$ \\ $\Vert\ket{z}\Vert=\frac{\sqrt{2+\sqrt{5}}}{2+\sqrt{5}}			\bmat{1 \\ i \\ 2+i}=(2+i)\cdot\frac{\sqrt{2+\sqrt{5}}}{2+\sqrt{5}}$
+\end{enumerate}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Exercise 5 %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Exercise 5}
+
+Prove that for all $\ket{u},\ket{v}\in\C^n$, $\inp{u}{v}=\inp{v}{u}^*$ \\
+\textit{Proof}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Exercise 6 %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Exercise 6}
+Prove that the inner product on $\C^n$ is a sesquilinear form. That is, show that the inner product is linear in the "ket" component and conjugate linear in the "bra" component. \\
+\textit{Proof} Let $\ket{a},ket{b}\in\C^n$. By definition of inner product, $\inp{a}{b}=\ket{a}^\dagger\cdot\ket{b}$
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Exercise 7 %%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -743,7 +773,7 @@ Let $\beta=\lbrace\ket{b_1},\ket{b_2}\rbrace$, where $\ket{b_1}=\frac{1}{\sqrt{2
 		\begin{center}
 		$\inp{w}{v}=\bra{w}^\dagger\cdot\ket{v}$ \\
 		$\frac{1}{\sqrt{2}}(\bmat{1 & 1}\bmat{1 \\ -1}$ \\
-		$=\frac{1}{\sqrt{2}}((1*1)+(1*-1))=0\longleftarrow$ Recall that if the inner product is zero, the 					vectors are orthogonal
+		$=\frac{1}{\sqrt{2}}((1*1)+(1*-1))=0\longleftarrow$ Recall that if the inner product is zero, the vectors are orthogonal
 		\end{center}
 		\item Determine if $\ket{b_1}$ and $\ket{b_2}$ are unit vectors
 		\begin{center}
@@ -751,15 +781,15 @@ Let $\beta=\lbrace\ket{b_1},\ket{b_2}\rbrace$, where $\ket{b_1}=\frac{1}{\sqrt{2
 		\end{center}
 		Therefore, $\beta$ is an orthonormal basis.
 	\end{enumerate}
-	\item Find the coordinates (or components) of $\ket{x}=\bmat{-2 \\ 1}$ relative to $\beta$. IE find the 			scalars $c_1, c_2 \in \C$ such that $c_1\ket{b_1}+c_2\ket{b_2}=\ket{x}$.
+	\item Find the coordinates (or components) of $\ket{x}=\bmat{-2 \\ 1}$ relative to $\beta$. IE find the scalars $c_1, c_2 \in \C$ such that $c_1\ket{b_1}+c_2\ket{b_2}=\ket{x}$.
 	\begin{enumerate}[label=(\roman*)]
 		\item Multiply both sides by $\bra{b_1}$
 		\begin{center}
 		$\bra{b_1}(c_1\ket{b_1}+c_2\ket{b_2})=\inp{b_1}{x}$ \\
 		$c_1\inp{b_1}{b_1}+c_2\inp{b_1}{b_2} = c_1*1+c_2*0=c_1$ \\ 
-		Note that inner product of itself is parallel, and since $\beta$ is an orthonormal basis, $\inp{b_1}{b_2}			=1$ (IE they're orthogonal). \\
+		Note that inner product of itself is parallel, and since $\beta$ is an orthonormal basis, $\inp{b_1}{b_2}=1$ (IE they're orthogonal). \\
 		$c_1=\inp{b_1}{x}$ \\
-		$c_1=\frac{1}{\sqrt{2}}\bmat{1 & 1}\bmat{-2 \\ 1}\longrightarrow =\bmat{\frac{1}{\sqrt{2}} & \frac{1}				{\sqrt{2}}}\bmat{-2 \\ 1}$ \\
+		$c_1=\frac{1}{\sqrt{2}}\bmat{1 & 1}\bmat{-2 \\ 1}\longrightarrow =\bmat{\frac{1}{\sqrt{2}} & \frac{1}{\sqrt{2}}}\bmat{-2 \\ 1}$ \\
 		$\frac{-2}{\sqrt{2}}+\frac{1}{\sqrt{2}}=\frac{-1}{\sqrt{2}}$ \\
 		\end{center}
 		\item Multiply both sides by $\bra{b_2}$
@@ -767,8 +797,7 @@ Let $\beta=\lbrace\ket{b_1},\ket{b_2}\rbrace$, where $\ket{b_1}=\frac{1}{\sqrt{2
 		$\bra{b_2}(c_1\ket{b_1}+c_2\ket{b_2})=\inp{b_2}{x}$ \\
 		$c_1\inp{b_2}{b_1}+c_2\inp{b_2}{b_2} = c_1*0+c_2*1=c_2$ \\
 		$c_2=\inp{b_2}{x}$ \\
-		
-		$c_2=\frac{1}{\sqrt{2}}\bmat{1 & -1}\bmat{-2 \\ 1}\longrightarrow =\bmat{\frac{1}{\sqrt{2}} & \frac{-1}				{\sqrt{2}}}\bmat{-2 \\ 1}$ \\
+		$c_2=\frac{1}{\sqrt{2}}\bmat{1 & -1}\bmat{-2 \\ 1}\longrightarrow =\bmat{\frac{1}{\sqrt{2}} & \frac{-1}{\sqrt{2}}}\bmat{-2 \\ 1}$ \\
 		$\frac{-2}{\sqrt{2}}+\frac{-1}{\sqrt{2}}=\frac{-3}{\sqrt{2}}$ \\
 		\end{center}
 	\end{enumerate}
@@ -776,17 +805,16 @@ Let $\beta=\lbrace\ket{b_1},\ket{b_2}\rbrace$, where $\ket{b_1}=\frac{1}{\sqrt{2
 \end{enumerate}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% Exercise (Gram-Schmidt) %%%
+%%% Exercise 8 %%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\subsection{Exercise (Gram-Schmidt)}
+\subsection{Exercise 8}
+
 Given $S=\rbrace\ket{v_1}=\bmat{-1 \\ 2 \\ 2}, \ket{v_2}=\bmat{2 \\ -1 \\ 2}, \ket{v_3}=\bmat{3 \\ 0 \\ 3}\lbrace$, turn $S$ into an orthonormal basis for $\spn{S}=\R^3$.
 \begin{enumerate}
 \item Find $\ket{f_1}$
-\begin{center}
 $\norm{\ket{v_1}}=3$ \\
 $\longrightarrow\ket{f_1}=\frac{1}{3}\bmat{-1 \\ 2 \\ 2}$ \\
-\end{center}
 \item Find $\ket{f_2}$
 \begin{center}
 $\ket{f_2}=\ket{v_2}-\left(\frac{\inp{v_1}{v_2}}{\inp{v_1}{v_1}}\ket{v_1}\right)$ \\
@@ -794,17 +822,43 @@ $\bmat{2 \\ -1 \\ 2}-\left[ \bmat{-1 & 2 & 2} \bmat{2 \\ -1 \\ 2} \right] =\bmat
 $\ket{f_2}=\frac{1}{3}\bmat{2 \\ -1 \\ 2}$
 \end{center}
 \item Find $\ket{f_3}$
-\begin{center}
 $\ket{f_3}=\ket{v_3}-\left[ \left( \frac{\inp{v_1}{v_3}}{\inp{v_1}{v_1}}\ket{v_1} \right) + \left( \frac{\inp{v_2}{v_3}}{\inp{v_2}{v_2}}\ket{v_2} \right)  \right]$ \\
 $=\bmat{3 \\ 0 \\ 3}-\left[ \left( \frac{\bmat{-1 & 2 & 2}\bmat{3 \\ 0 \\ 3}}{\bmat{-1 & 2 & 2}\bmat{-1 \\ 2 \\ 2}} \right) + \left( \frac{\bmat{2 & -1 & 2}\bmat{3 \\ 0 \\ 3}}{\bmat{2 & -1 & 2}\bmat{2 \\ -1 \\ 2}} \right) \right]$ \\
 $=\bmat{3 \\ 0 \\ 3}-\left( \bmat{\frac{-1}{3} \\ \frac{2}{3} \\ \frac{2}{3}} + \bmat{\frac{8}{3} \\ \frac{-4}{3} \\ \frac{8}{3}} \right) =\bmat{\frac{2}{3} \\ \frac{2}{3} \\ \frac{-1}{3}}$ \\
 $\norm{f_3}=1$ \textit{already normalized}
-\end{center}
 \end{enumerate}
 Therefore, $\ket{f_{final}}=\frac{1}{3}\bmat{-1 \\ 2 \\ 2}, \frac{1}{3}\bmat{2 \\ -1 \\ 2}, \bmat{\frac{2}{3} \\ \frac{2}{3} \\ \frac{-1}{3}}$
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Exercise 9 %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Exercise 9}
+Use the Gram-Schmidt Process to produce an orthonormal basis $\beta$ for $M=\text{Span}\left( \left\lbrace \ket{v_1},\ket{v_2} \right\rbrace \right) $ where $\ket{v_1}=\bmat{1 \\ i \\ 1}$, $\ket{v_2}=\bmat{3 \\ 1 \\ i}$. \\
+Step 1: \\
+$\ket{f_1}=\ket{b_1}=\bmat{1 \\ i \\ 1}$ \\
+Step 2: \\
+$\ket{f_2}=\ket{b_2}-\frac{\inp{f_1}{b_2}}{\inp{f_1}{f_1}}\ket{f_1}$
+$=\bmat{3 \\ 1 \\ i}-\frac{3}{3}\bmat{1 \\ i \\ 1}=\bmat{2 \\ 1-i \\ -1+i}$ \\
+Step 3: \\
+$\Vert\ket{f_1}\Vert=1$, and $\Vert\ket{f_2}\Vert=\sqrt{4+(1-i)^2+(-1+i)^2}=\sqrt{4-4i}=2\sqrt{1-i}$ \\
+Therefore, $\ket{f_1}=\bmat{1 \\ i \\ 1}$ and $\ket{f_2}=\frac{1}{2\sqrt{1-i}}\bmat{2 \\ 1-i \\ -1+i}$.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+% Matrices and Linear Transformations
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \section{Matrices and Linear Transformations}
-Lets goooo
+Understanding matrices and linear transformations will be critical when it comes time to talk about quantum mechanics. Specifically, this section will discuss matrix properties and operations, as well as special theorems that will help us to work with more complex systems.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Intro to Matrices %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Intro to Matrices}
+
 \begin{definition}
 A map $T: \C^n\longrightarrow\C^m$ is a linear transformation if:
 \begin{enumerate}
@@ -833,16 +887,20 @@ Here are some nice facts that will help us in further examples:
 \item $AB=\bmat{\bra{a_1}B \\ ... \\ \bra{a_m}B}$ where $\setofkets{a}$ are the rows of $A$.
 \item $AB=\sum^n_{i=1}\ket{a_j}\bra{b_j}$ (IE "the columns of $A$ against the rows of $B$")
 \end{enumerate}
-It's useful to know some matrix operations to proceed. In general, $\bmat{\ket{a_1} & ... & \ket{a_n}}\bmat{d_1 & & 0 \\ & ... & \\ 0 & & d_n}=\bmat{d_1\ket{a_1} & ... & d_n\ket{a_n}}$ Here's an example:
+It's useful to know some matrix operations to proceed. In general, $\bmat{\ket{a_1} & ... & \ket{a_n}}\bmat{d_1 & & 0 \\ & ... & \\ 0 & & d_n}=\bmat{d_1\ket{a_1} & ... & d_n\ket{a_n}}$. Here's an example:
 \begin{example}
-\begin{center}
 $\bmat{0 & -i \\ i & 0}\bmat{1 & 0 \\ 0 & 3}=\bmat{0 & -3i \\ i & 0}$
-\end{center}
 \end{example}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Eigenvalues and Eigenvectors %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Eigenvalues and Eigenvectors}
+
 \begin{definition}
 An \textbf{eigenvalue} for $A\in M_n$ is a complex number $\lambda\in\C^n$ such that there is a non zero vector $\ket{x}\in\C^n$ satisfying $A\ket{x}=\lambda\ket{x}$.
 \end{definition}
-Said differently, the eigenvalue for A is somehow correlated to $\lambda$.
 \begin{definition}
 A matrix $A\in M_n$ is diagonalizable if:
 \begin{enumerate}
@@ -876,7 +934,7 @@ Therefore, our eigen vector is $\ket{x}=\bmat{0 \\ 0 \\ i \\ 1}$. \\Our normaliz
 \end{center}
 \end{example}
 
-\subsection{Subsection of something}
+\subsection{Matrix Classifications}
 Some, but not all matrices are diagonalizable; this property is highly desirable. Matrices are diagonalizable if and only if the eigenvalues form a basis. \\ \textit{put some shit here} \\
 \begin{enumerate}
 \item Vectors must be self-adjoint (\textit{hermition}) IE $A\in M_n$ is \textbf{hermition} if $A^\dagger=A$, $sigma+\dagger_x=\sigma_x$, $\sigma+\dagger_y=sigma_y$, $\sigma+\dagger_z=\sigma_z$
@@ -910,10 +968,609 @@ $\forall\ket{x}\in{C^n}$, $\bra{x}A\ket{x}\geq 0$: $A=\ket{e_2}\bra{e_2}$ where 
 $\bra{x}A\ket{x}=\bmat{a^* & b^*}\bmat{0 & 0 \\ 0 & 1}\bmat{a \\ b}$ \\
 $\bmat{a^* & b^*}\bmat{0 \\ b}=0+b^*b=\mid b\mid^2\geq0$
 \end{example}
-\begin{theorem}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Spectral Theorem for Normal Matrices %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Spectral Theorem for Normal Matrices}
+
+To perform decomposition of matrices, we can use the \textit{spectral theorem for normal matrices}, and the fact that in general, $A\in M_n$ has a singular value decomposition. Note that both of these use eigenvectors of the given matrix. Note that $AB=BA$ doesn't always work for $A,B\in M_n$.
+\begin{theorem}\label{thm:stfnm}
 A matrix $N\in M_n$ is normal $\longleftrightarrow$ there is a unitary matrix $u=\bmat{\ket{u_1} & ... & \ket{u_n}}$ and a diagonalizable matrix $D=\bmat{\lambda & 0 \\ 0 & \lambda_n}$ such that $N=uDu^\dagger$
 \end{theorem}
-To perform decomposition of matrices, we can use the \textit{spectral theorem for normal matrices}, and the fact that in general, $A\in M_n$ has a singular value decomposition. Note that both of these use eigenvectors of the given matrix.
+Let's prove the forward case for this theorem. If you take $\ket{u},...,\ket{u_n}$ to be eigenvectors for $N$ with respect to eigenvalues $\lambda_1,...,\lambda_n$, then $u:=\left[ \ket{u_1} ... \ket{u_n}\right]$ is unitary and $D=\bmat{\lambda_1 & & \\ & ... & \\ & & \lambda_n}$. Therefore, $N=uDu^-1=\sum^n_{j=1}\lambda_j\ket{u_j}\bra{u_j}$. Note that this projection is $P_j$ where $P_j\ket{x}$ is the projection of $\ket{x}$ onto $\ket{u_j}$. Now, let $\ket{x}=c_1\ket{u_1}+...+c_n\ket{u_n}$ for some $c_j\in\C^n$. Therefore, 
+\begin{center}
+$N\ket{x}=\left(\sum^n_{j=1}\lambda_j\ket{u_j}\bra{u_j}\right)\left(\sum^n_{i=1}c_i\ket{u_i}\right)$ \\
+$=\sum^n_{j=1} \sum^n_{i=1} c_i \lambda_j \ket{u_j} \inp{u_j}{u_i}$ \\
+$=\sum^n_{j=1}c_j \lambda_j \ket{u_j}=D \ket{x}$ \\
+(fancy way of saying $Nu=uD$)
+\end{center}
+Let's do an example to illustrate this theorem.
+\begin{example}\label{ex:spcdcmp}
+Consider $\sigma_x=\bmat{0 & 1 \\ 1 & 0}$. Recall that a matrix $A\in M_n$ is
+\begin{enumerate}
+\item Normal if $A^\dagger A=AA^\dagger$, and
+\item Hermitian if $A^\dagger=A$
+\end{enumerate} Therefore, $\sigma_x$ is Hermition because $\sigma_x^\dagger=\sigma_x$, so, $\sigma_x\sigma_x=\sigma_x\sigma_x^\dagger$ is normal. Thus, $\sigma_x$ has a spectral decomposition. With this in mind, we're looking for $\sigma_x=uDu^\dagger$. First, let's find some eigenvalues.
+\begin{center}
+$\text{det}\left(\sigma_x-\lambda I\right)=0$ \\
+$\begin{vmatrix}
+\bmat{-\lambda & 1 \\ 1 & -\lambda}
+\end{vmatrix}=0
+$ \\
+$\lambda^2-1=0$ \\
+$\lambda\pm 1$
+\end{center}
+Now, use the eigenvalues to find eigenvectors.
+\begin{center}
+First, for $\lambda=1$, $\sigma_x\bmat{a \\ b}=1\bmat{a \\ b}$. \\
+$\bmat{a \\ b}=\bmat{b \\ a}$. \\ Therefore, $a=b$ and $\frac{1}{\sqrt{2}}\bmat{1 \\ 1}=\ket{u_1}$ \\
+Second, for $\lambda=-1$, $\sigma_x\bmat{a \\ b}=-1*\bmat{a \\ b}$ \\ $\bmat{b \\ a}=\bmat{a \\ b}$ \\ Therefore, $a=-b$ and $\frac{1}{\sqrt{2}}\bmat{-1 \\ 1}=\ket{u_2}$
+\end{center}
+We now have $u=\bmat{\frac{1}{\sqrt{2}} & -\frac{1}{\sqrt{2}} \\ \frac{1}{\sqrt{2}} & \frac{1}{\sqrt{2}}}$. Additionally, by theorem \ref{thm:stfnm}, $D=\bmat{1 & 0 \\ 0 & -1}$. Note that $u^\dagger=\bmat{\frac{1}{\sqrt{2}} & -\frac{1}{\sqrt{2}} \\ \frac{1}{\sqrt{2}} & \frac{1}{\sqrt{2}}}$. Therefore, 
+\begin{center}
+$\sigma_x=\bmat{\frac{1}{\sqrt{2}} & -\frac{1}{\sqrt{2}} \\ \frac{1}{\sqrt{2}} & \frac{1}{\sqrt{2}}}\bmat{1 & 0 \\ 0 & -1}\bmat{\frac{1}{\sqrt{2}} & -\frac{1}{\sqrt{2}} \\ \frac{1}{\sqrt{2}} & \frac{1}{\sqrt{2}}}$ \\ $=1*\ket{u_1}\bra{u_1}+(-1)*\ket{u_2}\bra{u_2}$ \\
+$=1\bmat{\frac{1}{2} & \frac{1}{2} \\ \frac{1}{2} & \frac{1}{2}}+(-1)\bmat{\frac{1}{2} & -\frac{1}{2} \\ -\frac{1}{2} & \frac{1}{2}}$
+\end{center}
+\end{example}
+Let's take a break from this example to talk about an application of functional calculus for spectral projections.
+\begin{theorem}
+Suppose $N\in M_n$. Write $N=uDu^\dagger=\sum^{n}_{i=1}\lambda_i\ket{u_i}\bra{u_i}$ ($\ket{u_i}\bra{u_i}$ are spectral projections) is an analytical function on $\C$ (IE a function $f$ has a maclarin series $f(z)=\sum^{\inf}_{k=0}{c_n}z^k$). Then, $f(N)=\sum^n_{i=1}f(\lambda_i)\ket{u_i}\bra{u_i}$.
+\end{theorem}
+This exploits a useful property of projections, where the power of any projection is the same projection. Now, let's expand on example \ref{ex:spcdcmp}.
+\begin{example}
+Consider $f(z)=e^{i\alpha z}$, which is analytic on $\C$. Let's compute $f(\sigma_x)=\text{exp}(i\alpha \sigma_x)$.
+\begin{center}
+$\text{exp}(i\alpha \sigma_x)=e^{i\alpha(1)}\bmat{\frac{1}{2} & \frac{1}{2} \\ \frac{1}{2} & \frac{1}{2}}+e^{-i\alpha}\bmat{\frac{1}{2} & -\frac{1}{2} \\ -\frac{1}{2} & \frac{1}{2}}$
+\end{center}
+Recall that Eulier's Identity says $e^{i\alpha}=\cos{\alpha}+i\sin{\alpha}$ and $e^{-i\alpha}=\cos{\alpha}-i\sin{\alpha}$
+\begin{center}
+$\text{exp}(i\alpha \sigma_x)=(\cos{\alpha}+i\sin{\alpha})P_1+(\cos{\alpha}-i\sin{\alpha})P_2$ \\
+$=\cos{\alpha}(P_1+P_2)+(i\sin{\alpha})(P_1-P_2)$. Note that $P_1+P_2=I$. \\
+$=\cos({\alpha})I+(i\sin{\alpha})(P_1-P_2)$ \\
+Now, we can see that $\text{exp}(i\alpha \sigma_x)=\bmat{\cos{\alpha} & i\sin{\alpha} \\ i\sin{\alpha} & \cos{\alpha}}$
+\end{center}
+\end{example}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Exercise 2.1 %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Exercise 2.1}
+Let $A,B,C\in M_n$, and $c\in\C$. Show the following relationships:
+\begin{enumerate}[label=(\alph*)]
+\item $\left(cA\right) ^\dagger=c^*A^\dagger$ \\
+\textit{Conjugate transpose is distributive} - $(cA)^\dagger=c^{*^T}A^\dagger$. Transpose of a scalar is the same scalar. Basically, transpose is a linear map from $m\times n$ to $n \times m$. So, $c^{*^T}=c^*$ and $\left(cA\right) ^\dagger=c^*A^\dagger$
+\item $\left(A+B\right)^\dagger=A^\dagger+B^\dagger$ \\
+Let $A=\begin{bmatrix}
+\alpha _{11} & \ldots \ldots \alpha _{1n} \\
+\vdots  & \ddots \ddots ,\vdots  \\
+\alpha _{m1} & \ldots \ldots \alpha _{mn}
+\end{bmatrix}$ and $B=\begin{bmatrix}
+\beta _{11} & \ldots \ldots \beta _{1n} \\
+\vdots  & \ddots \ldots ,\vdots  \\
+\beta _{m1} & \ldots \ldots \beta _{mn}
+\end{bmatrix}$ where $\alpha\in\C$ and $\beta\in\C$ \\
+
+% This is basically a straight copy and paste from notability reaaaally didn't feel like typing these matrices 
+$\left( A+B\right) ^{\dagger}=\left( \begin{bmatrix}
+\alpha_{11} & \ldots &\alpha _{1n} \\
+\vdots & \ddots & \vdots \\
+\alpha _{m1} & \ldots & \alpha_{mn}
+\end{bmatrix}+\begin{bmatrix}
+\beta _{11} & \ldots & \beta _{1n} \\
+\vdots & \ddots & \vdots \\
+\beta _{m1} & \ldots  & \beta _{mn}
+\end{bmatrix}\right) ^{\dagger}\\
+=\left( \begin{bmatrix}
+\alpha _{11}+\beta _{11}\cdot \ldots x_{1n}+\beta _{1n} \\
+\vdots \\
+\alpha _{m1}+\beta _{m1}\ldots \alpha _{mn}+\beta _{mn}
+\end{bmatrix}\right) ^{\dagger}\\=\begin{bmatrix}
+\alpha _{11}+ & \beta _{11}\cdot \ldots  & \alpha _{m1} & +\beta _{m1} \\
+\cdot  & \cdot . &  & . \\
+: & . &  & \vdots  \\
+\alpha _{1n} & +\beta _{1n}\cdot \cdot \cdot  & \alpha _{mn} & +\beta _{mn}
+\end{bmatrix}=\begin{bmatrix}
+\alpha _{11}+\beta _{11} & \ldots  & \alpha _{m1}+\beta _{m1} \\
+: & \cdot . & : \\
+. & . & . \\
+\alpha _{1n}+\beta _{1n} & \cdot \cdot \cdot  & \alpha _{mn}+\beta _{mn}
+\end{bmatrix}\\
+\text{Where }\alpha _{mn}=\gamma _{mn}-\sum _{mn}i\\
+\text{and }\beta _{mn}=\mu _{mn}-P_{mn}i$\\
+
+$A^{\dagger}+B^{\dagger}=\begin{bmatrix}
+\alpha _{11} & \ldots  &  & \alpha_{1n} \\
+\vdots  & \ddots  & ,\vdots  &  \\
+\alpha _{m1} & -\ldots - &  & \alpha _{mn}
+\end{bmatrix}^{\dagger}+\begin{bmatrix}
+\beta _{\vdots },1 & i_{\ddots }^{\ldots \beta } & \dfrac{\beta}{:}n \\
+\beta _{m1} & -\ldots - & \beta _{mn}
+\end{bmatrix}^{\dagger}\\
+=\begin{bmatrix}
+\alpha _{11} & \ldots  & x_{m}, \\
+\vdots  & \ddots \ddots  & \vdots  \\
+\alpha _{1n} & -\ldots  & \alpha _{mn}
+\end{bmatrix}+\begin{bmatrix}
+\beta _{11} & \ldots  & \beta _{m1} \\
+\vdots  & \ddots . & \vdots  \\
+\beta _{1n} & \ldots  & \beta _{mn}
+\end{bmatrix}\\
+\text{Where }\alpha _{mn}=\gamma -\sum i\text{ and }\beta _{mn}=\mu _{mn}-\rho _{mn}\\
+=\begin{bmatrix}
+\alpha _{11}+\beta _{1}, & \ldots  & \alpha _{m1}+\beta _{m1} \\
+\vdots  & \ddots . & \vdots  \\
+\alpha _{1n}+\beta _{1n} & \ldots \alpha _{mn} & +\beta _{mn}
+\end{bmatrix}$ \\
+
+$\longrightarrow\begin{bmatrix}
+\alpha _{11}+\beta _{11} & \cdot \ldots  & \alpha _{m1}+\beta _{m1} \\
+. &  & . \\
+: & \ddots  & \vdots  \\
+\alpha _{1n}+\beta _{1n} & ... & \alpha _{mn}+\beta _{mn}
+\end{bmatrix}=\begin{bmatrix}
+\alpha _{11}+\beta _{11} & \ldots  & \alpha _{m1}+\beta _{m1} \\
+\vdots  & \ddots . & \vdots  \\
+\alpha _{1n}+\beta _{1n} & \ldots  & \alpha _{mn}+\beta _{mn}
+\end{bmatrix}$
+
+\item $(AB)^\dagger=B^\dagger A^\dagger$ \\
+$A=\begin{bmatrix}
+\alpha _{11} & \ldots  & \alpha _{m1} \\
+\vdots & \ddots  & \vdots  \\
+\alpha _{11} & \ldots  & \alpha _{mn}
+\end{bmatrix}B=\begin{bmatrix}
+\beta _{11} & \ldots  & \beta _{m1} \\
+\vdots  & \ddots  & \vdots \\
+\beta _{11} & \ldots  & \beta _{mn}
+\end{bmatrix}$\\
+$\left( AB\right) ^{\dagger}=\left( \begin{bmatrix}
+\alpha _{11} & \ldots  & \alpha _{1n} \\
+\vdots  & \ddots  & \vdots  \\
+\alpha _{n1} & \ldots  & \alpha _{nn}
+\end{bmatrix}\begin{bmatrix}
+\beta _{11} & \ldots  & \beta _{1n} \\
+\vdots  & \ddots  & \vdots  \\
+\beta _{n_{1}} & \ldots  & \beta _{nn}
+\end{bmatrix}\right) ^{\dagger}$\\$= \begin{bmatrix}
+\left( \alpha _{11}\beta _{11}+\ldots +\alpha _{1n}\beta _{n1}\right)  & \ldots  & \left( \alpha _{11}\beta _{1}n^{t}\ldots +\alpha_{n}\beta_{nn}\right)  \\
+\vdots  & \ddots  & \vdots  \\
+\left( \alpha_{n},\beta _{11}+\ldots +\alpha _{nn}\beta _{n1}\right)  & \ldots  & \left( \alpha _{n},\beta _{n1}+\ldots +\alpha _{nn}\beta _{nn}\right) 
+\end{bmatrix}^\dagger$\\$=\begin{bmatrix}
+\left( \alpha _{11}\beta _{11}+\ldots +\alpha _{1n}\beta _{n1}\right) \ldots  &  & \left( \alpha_{n1}\beta _{11}+\ldots +\alpha _{nn}\beta _{n1}\right)  \\
+\vdots  & \ddots  & \vdots  \\
+\left( \alpha _{11}\beta _{11}+\ldots +\alpha _{1n}\beta _{nn}\right)  & \cdot \cdot \cdot  & \left( \alpha _{n},\beta _{n1}+\ldots +\alpha _{nn}\beta _{nn}\right) 
+\end{bmatrix}$\\
+where $\alpha _{nn}=\alpha _{11}=\gamma _{nn}-\sum _{nn}i$ and $
+\beta _{nn}=\beta _{11}=M_{nn}-P_{nn}i$ \\
+$B^{t}A^{t}=\begin{bmatrix}
+\alpha _{11} & \ldots  & \alpha _{in} \\
+i & \ddots  & \vdots  \\
+\alpha _{n1} & \ldots  & \alpha _{nn}
+\end{bmatrix}^{T}\begin{bmatrix}
+\beta _{11} & \ldots  & \beta _{1n} \\
+\vdots  & \ddots  & \vdots  \\
+\beta _{n_{1}} & \ldots  & \beta _{nn}
+\end{bmatrix}^{t}==\begin{bmatrix}
+\alpha _{11} & \ldots  & \alpha _{n1} \\
+\vdots  & \ddots  & \vdots  \\
+\alpha _{1n} & \ldots  & \alpha _{nn}
+\end{bmatrix}\begin{bmatrix}
+\beta _{11} & \ldots  & \beta _{n1} \\
+\vdots  & \ddots  & \vdots  \\
+\beta _{1n} & \ldots  & \beta _{nn}
+\end{bmatrix}$\\$\begin{bmatrix}
+\left( \alpha _{11}\beta _{11}+\ldots +\alpha _{1n}\beta _{n1}\right)  & \ldots  & \left( x_{n},\beta _{11}+\ldots +\alpha _{nn}\beta _{n1}\right)  \\
+\vdots  & \ddots  & \vdots  \\
+\left( \alpha _{11}\beta _{1}n^{t}\ldots +A_{1n}B_{nn}\right)  & \ldots  & \left( \alpha _{n},\beta _{n1}+\ldots +\alpha _{nn}\beta _{nn}\right) 
+\end{bmatrix}$\\\\Where $\alpha _{nn}=\alpha _{11}=\gamma _{nn}\cdot \sum _{nn}i\& \beta _{nn}=\beta _{11}=\mu _{nn}-\rho_{nn}i$\\\\$\begin{bmatrix}
+\left( \alpha _{11}\beta _{11}+\ldots +\alpha _{1n}\beta _{n1}\right)  & \ldots  & \left( x_{n},\beta _{11}+\ldots +\alpha _{nn}\beta _{n1}\right)  \\
+\vdots  & \ddots  & \vdots  \\
+\left( \alpha _{11}\beta _{1}n^{t}\ldots +\alpha _{1n}\beta _{nn}\right)  & \ldots  & \left( \alpha _{n},\beta _{n1}+\ldots +\alpha _{nn}\beta _{nn}\right) 
+\end{bmatrix}=$\\$\begin{bmatrix}
+\left( \alpha _{11}\beta _{11}+\ldots +\alpha _{1n}\beta _{n1}\right)  & \ldots  &  & \left( x_{n},\beta _{11}+\ldots +\alpha _{nn}\beta _{n1}\right)  \\
+\vdots  & \ddots  &  & \vdots  \\
+\left( \alpha _{11}\beta _{1n}t_{\ldots }+A_{n}B_{nn}\right)  &  & \ldots  & \left( \alpha _{n},\beta _{n1}+\ldots +\alpha _{nn}\beta _{nn}\right) 
+\end{bmatrix}$
+\end{enumerate}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Exercise 2.2 %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Exercise 2.2}
+Let $A=\frac{1}{\sqrt{2}}\bmat{0 & 1+i \\ i-1 & 0}$
+\begin{enumerate}[label=(\alph*)]
+\item Find the eigenvalues and normalized eigenvectors for $A$ \\
+$A-\lambda I=\begin{bmatrix}
+0 & \dfrac{1+i}{\sqrt{2}} \\
+\dfrac{1-i}{\sqrt{2}} & 0
+\end{bmatrix}-\begin{bmatrix}
+\lambda  &  & 0 \\
+ & 0 & \lambda 
+\end{bmatrix}=\begin{bmatrix}
+-\lambda  & \dfrac{1+i}{\sqrt{2}} \\
+\dfrac{1-i}{\sqrt{2}} & -\lambda 
+\end{bmatrix}$\\$\det \left| A-\lambda I\right| =\left| \begin{bmatrix}
+-\lambda  & \dfrac{1+i}{\sqrt{2}} \\
+\dfrac{1-i}{\sqrt{2}} & -\lambda 
+\end{bmatrix}\right| =0\\
+\left( \lambda ^{2}-\dfrac{1}{2}\left( 1+i\right) \left( 1-i\right) \right) =0\\
+\lambda ^{2}-\dfrac{1}{2}\left( 2\right) =0\\
+\lambda ^{2}=1\\
+\lambda =\pm 1$ \\
+$\lambda=1$ : $A-1I=\bmat{-1 & \dfrac{1+i}{\sqrt{2}} \\ \dfrac{1-i}{\sqrt{2}} & -1}\bmat{a \\ b}=0\longrightarrow\ket{v_1}=\bmat{\dfrac{-1-i}{\sqrt{2}} \\ 1}$ \\
+$\lambda=-1$ : $A+1I=\bmat{1 & \dfrac{1+i}{\sqrt{2}} \\ \dfrac{1-i}{\sqrt{2}} & 1}\bmat{a \\ b}=0\longrightarrow\ket{v_2}=\bmat{\dfrac{1+i}{\sqrt{2}} \\ 1}$
+
+\item Show that the eigenvectors are mutually orthogonal \\
+To determine if the eigenvectors are mutually orthogonal, we can verify that the inner product is zero. \\
+$\inp{v_1}{v_2}=\bmat{\dfrac{-1+i}{\sqrt{2}} & 1}\bmat{\dfrac{1+i}{\sqrt{2}} \\ 1}=\frac{-1+i}{\sqrt{2}}\cdot\frac{1+i}{\sqrt{2}}+1=0\longleftarrow$ Therefore, the eigenvectors are mutually orthogonal.
+\item Show the projection operators associated to the mutually orthogonal eigenvectors satisfy the \textit{completeness relation}; IE if $\ket{u_1}$, $\ket{u_2}$ are mutually orthogonal unit eigenvectors for $A$, then $I=\sum^2_{i=1}\ket{u_i}\bra{u_i}$. \\
+
+\item Find a unitary matrix which diagonalizes $A$, IE find a unitary matrix $U$ and a diagonal matrix $D$ such that $A=UDU^\dagger$.
+\end{enumerate}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Exercise 2.3 %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Exercise 2.3}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Exercise 2.4 %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Exercise 2.4}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Exercise 2.5 %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Exercise 2.5}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Exercise 2.6 %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Exercise 2.6}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+% Framework of Quantum Mechanics
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Framework of Quantum Mechanics}
+
+The axioms of quantum mechanics are choices made by humans to attempt to mathematically describe the behavior of particles. To dumb this down for my monkey brain, I'm going to describe these axioms with a story. To begin, let's suppose that we prepared a photon for experimentation in a laboratory. Realistically, despite 'preparing' this photon, IE understanding some of its initial conditions, we can never explicitly model it. Recall that $A\in M_n$ is:
+\begin{enumerate}
+\item normal if $A^\dagger A=AA^\dagger$
+\item Hermitian if $A^\dagger=A$
+\item unitary if $A^\dagger A=AA^\dagger=I$
+\end{enumerate}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Quantum Mechanics Axiom 1.1 %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Quantum Mechanics Axiom 1.1}
+A vector state $\ket{x}$ (IE $\ket{x}$ encodes all physical info about a photon) is a unit vector in a complex Hilbert state ($H=\C^n$). In our story, we first want to figure out the photon's polarization. To figure this out, we're going to 'shoot' it at a vertically polarized filter. In classical mechanics, our particle should be polarized either vertically or horizontally. IE there are two possible outcomes:
+\begin{enumerate}
+\item If $\ket{x}$ goes through the vertically polarized filter, it was oriented vertically
+\item If $\ket{x}$ is deflected by the vertically polarized filter, it was oriented horizontally
+\end{enumerate}
+After preparing our $\ket{x}$ 100 times and repeating this same process, we're \textit{appalled} to find that sometimes the particle was vertically oriented, but sometimes it was horizontally oriented. IE
+\begin{enumerate}
+\item 64 times it was oriented vertically ($\mid\alpha\mid^2=0.64$)
+\item 36 times it was oriented horizontally ($\mid\alpha\mid^2=0.36$)
+\end{enumerate}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Quantum Mechanics Axiom 1.2 %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Quantum Mechanics Axiom 1.2}
+Linear combinations (aka superposition) of the physical states are allowed to act as $\ket{x}$. Let's consider $\ket{v}=\bmat{0 \\ 1}$ and $\ket{h}=\bmat{1 \\ 0}$. We'll call this the polarization basis for $\C^2$. Therefore, $\ket{x}=\alpha\bmat{0 \\ 1}+\beta\bmat{1 \\ 0}$ where $\alpha$ and $\beta$ are probabilities and $\mid\alpha\mid^2+\mid\beta\mid^2=1$. Since we've assigned representations to our states, we want some easy way to 'keep track' of the choices. Let $A=\bmat{0 & 0 \\ 0 & 1}$, which behaves/represents the vertically polarized filter. This choice makes sense because $\ket{v}$ and $\ket{h}$ are eigenvectors for $A$, with eigenvalues $1$ and $0$.
+\begin{example}
+Suppose $B=\bmat{1 & 0 \\ 0 & 0}$. This might be a nice matrix to represent a horizontally polarized filter, because it has $\ket{v}$ and $\ket{h}$ as eigenvectors with eigenvalues $0$ and $1$.
+\end{example}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Quantum Mechanics Axiom 2 %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Quantum Mechanics Axiom 2}
+An observable of a state $\ket{x}$ corresponds to a Hermitian matrix $A$. IE $\ket{x}$ is in state $\ket{u}$; an eigenvector for $A$ with probability $\mid\inp{u}{x}\mid^2$. Note that we don't know the state of the particle \textit{until} it hits the filter, at which point it's one state or the other. Remember that this is basically a Walmart version of this explanation, so this is more complex. When the particle is in the 'air,' it's in the state of \textit{superposition}. Let's check this axiom: 
+\begin{center}
+$\mid\inp{v}{u}\mid^2=\mid\bra{v}(\alpha\ket{v}\times\beta\ket{h})\mid^2$ \\ 
+$=\mid\inp{v}{v}+\beta\inp{v}{v}\mid^2$ \\
+$\longrightarrow\ket{x}=\alpha\bmat{0 \\ 1}+\beta\bmat{1 \\ 0}=1$
+\end{center}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Quantum Mechanics Axiom 3 %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Quantum Mechanics Axiom 3}
+The time dependence of a state is governed by the Schrödinger equation:
+\begin{equation}
+i\hbar\frac{\partial\ket{\psi}}{\partial t}=H\ket{\psi}
+\end{equation}
+where $\hbar$ is the reduced Planck's constant and $H$ is a Hermitian matrix corresponding to the energy of the system, called "Hamiltonian." You'll note that this is just a differential equation at its core. The expectation value $\mu$ of the observable associated with $A$ after measurements with respect to many copies of $\ket{\psi}$ is the weighted average of the expected outcomes.
+\begin{equation}
+\langle A\rangle_\psi=\sum^n_{i=1}\lambda_i\vert\inp{u_i}{\psi}\vert^2
+\end{equation}
+Note that $\lambda_i$'s are the "locations" of the probabilistic outcomes.
+\begin{equation}
+\ket{\psi}=\sum^n_{i=1}c_i\ket{u_1}
+\end{equation}
+When $H$ is time-independent, the solution to the Schrödinger equation is
+\begin{equation}
+\ket{\psi(t)}=\text{exp}(-it\frac{H}{\hbar})\ket{\psi(0)}
+\end{equation}
+This is effectively saying $\frac{dy}{dt}=ky\longrightarrow y=e^{kt}$. IE when we take the derivative, we get an exponent.
+
+\begin{example}
+Consider a physical system with Hamiltonian $H=\frac{-\hbar}{2}\omega\sigma_x$ and suppose $\ket{\psi(0)}=\bmat{ 1 \\ 0}$.  Recall that $\bmat{ 1 \\ 0}$ is the first column of $\sigma_z$, and the spin points in the z-direction at $t=0$.
+\begin{enumerate}[label=(\alph*)]
+\item Find the wave function $\ket{\psi(t)}$ when $t>0$. \\
+By the Schrödinger equation, $\ket{\psi(t)}=e^{\frac{-itH}{\hbar}}*\ket{\psi(0)}$.\\
+$\ket{\psi(t)}=\text{exp}\left( i\left( \frac{-t}{\hbar}\right) \left( \frac{-\hbar}{2}\omega\sigma_x\right) \right)\bmat{1 \\ 0}$ \\
+$=\text{exp}\left( i\left( \frac{-t}{2}\omega\right) \sigma_x \right)\bmat{1 \\ 0}$ where $\alpha=\frac{-t}{2}\omega$ \\
+$=\left(\cos\left(\frac{t}{2}\omega\right) I+i\sin\left( \frac{t}{2} \omega \right) \sigma_x \right)\bmat{1 \\ 0}$ \\
+$=\bmat{\cosx{\frac{t}{2}\omega} & i\sin{\frac{t}{2}} \\ i\sinx{\frac{t}{2}} & \cosx{\frac{t}{2}\omega}}\bmat{1 \\ 0}$ \\
+$\longrightarrow\ket{\psi(t)}=\bmat{\cosx{\frac{t\omega}{2}} \\ i\sinx{\frac{t\omega}{2}}}$ This is our wave function; we can now use it to find probabilities, etc.
+\item Find the probability for the system to have outcome $+1$ upon measurement of $\omega_z$. Key idea: The coefficients of $\ket{\psi(t)}$ in the orthonormal basis of eigenvectors associated to $\sigma_z$ give the probabilities. \textit{Use the projections!} \\
+Recall that $N=uDu^\dagger=\sum^n_{j=1}\lambda_i\ket{u_j}\bra{u_j}$ \\
+$\sigma_z=\bmat{1 & 0 \\ 0 & -1}=1\bmat{1 & 0 \\ 0 & 0}+(-1)\bmat{0 & 0 \\ 0 & 1}$ \\
+So, $P_1\ket{\psi(t)}=\bmat{1 & 0 \\ 0 & 0}\bmat{\cosx{\frac{t\omega}{2}} \\ i\sinx{\frac{t\omega}{2}}}=\bmat{\cosx{\frac{t\omega}{2}} \\ 0}\cosx{\frac{t\omega}{2}}\ket{u_1}$. Now, recall that the probability of observing $\lambda_i$ state is $\vert c_i\vert^2$. IE $\ket{\psi(t)}=\sum^n_{j=1}c_i\ket{u_i}$. Also note that $\ket{u_i}$ is an orthonormal basis of eigenvectors for an observable. \\
+Therefore, the probability of seeing $+1$ upon measurement $\sigma_z$ is $P(t)=\vert\cosx{\frac{t\omega}{2}}\vert^2=\cos^2\left(\frac{\omega t}{2}\right)$
+\item Find the probability of $-1$ upon measurement of $\sigma_z$ \\
+$P_2\ket{\psi(t)}=\bmat{0 & 0 \\ 0 & 1}\bmat{\cosx{\frac{t\omega}{2}} \\ i\sinx{\frac{t\omega}{2}}}=\bmat{0 \\ i\sinx{\frac{t\omega}{2}}}=i\sinx{\frac{t\omega}{2}}$ \\
+The probability of seeing $-1$ upon measurement $\sigma_z$ is $P(t)=\vert i\sinx{\frac{t\omega}{2}}\vert^2=i\sin^2\left(\frac{\omega t}{2}\right)$ \textit{or} $\ket{\psi(t)}=\inp{u_1}{\psi(t)}\ket{u_1}+\inp{u_2}{\psi(t)}\ket{u_2}$, so, $c_2=\inp{u_2}{\psi(t)}=\bmat{0 & 1}\bmat{\cosx{\frac{t\omega}{2}} \\ i\sinx{\frac{t\omega}{2}}}$
+\item Find the expectation value under many measurements of $\sigma_z$. \\ Recall that $\left\langle A \right\rangle_\psi=\bra{\psi}A\ket{\psi}$ \\
+$\left\langle \sigma_z \right\rangle_\psi=\bra{\psi}\sigma_z\ket{\psi}=(+1)\left(\cos^2\left(\frac{\omega t}{2}\right)\right)+(-1)\sin^2\left(\frac{\omega t}{2}\right)=\left(\cos^2\left(\frac{\omega t}{2}\right)\right)-sin^2\left(\frac{\omega t}{2}\right)$
+\end{enumerate}
+\end{example}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Exercise 3.1 %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Exercise 3.1}
+Let $A=\bmat{2 & 1 \\ 1 & 2}$
+\begin{enumerate}[label=(\alph*)]
+\item Explain why $\C^2$ must have an orthonormal basis of eigenvectors for $A$ \\
+Note that since $A^\dagger A=AA^\dagger$ ($A$ is normal), AND $A^\dagger=A$ ($A$ is Hermitian), we have an orthonormal basis. So, we can use the spectral theorem.
+\item Find eigenvalues for $A$, and its corresponding normalized eigenvectors. \\
+\begin{center}
+$\text{det} \begin{vmatrix} 2 & 1 \\ 1 & 2 \end{vmatrix}=\begin{vmatrix} \bmat{2-\lambda & 1 \\ 1 & 2-\lambda} \end{vmatrix}$ \\
+$=4-2\lambda-2\lambda+\lambda^2-1=\lambda^2-4\lambda+3$ \\
+$=\lambda^2-3\lambda-\lambda$ \\
+$\lambda(\lambda-3)-\lambda-3=(\lambda-3)(\lambda-1)\longrightarrow\lambda=3,1$
+\end{center}
+Now, let's find our eigenvectors. Start with $\lambda=3$
+\begin{center}
+$A-\lambda I=\bmat{2 & 1 \\ 1 & 2}-3\bmat{1 & 0 \\ 0 & 1}$ \\
+$=\bmat{2 & 1 \\ 1 & 2}-\bmat{3 & 0 \\ 0 & 3}$ \\
+$=\bmat{-1 & 1 \\ 1 & -1}$ \\
+Therefore, $\lambda=3:\frac{1}{\sqrt{2}}\bmat{1 \\ 1}$
+\end{center}
+Next, find the eigenvector for $\lambda=1$
+\begin{center}
+$A-\lambda I=\bmat{2 & 1 \\ 1 & 2}-1\bmat{1 & 0 \\ 0 & 1}$ \\
+$=\bmat{1 & 1 \\ 1 & 1}$ \\
+\end{center}
+Therefore, $\lambda=1:\frac{1}{\sqrt{2}}\bmat{-1 \\ 1}$
+\item Find the spectral decomposition of $A$ \\
+$\ket{u_1}\bra{u_1}=\bmat{\frac{1}{2} & \frac{1}{2} \\ \frac{1}{2} & \frac{1}{2}}$ \\
+$\ket{u_2}\bra{u_2}=\bmat{\frac{1}{2} & -\frac{1}{2} \\ -\frac{1}{2} & \frac{1}{2}}$ \\
+So...
+$A=3\bmat{\frac{1}{2} & \frac{1}{2} \\ \frac{1}{2} & \frac{1}{2}}+\bmat{\frac{1}{2} & -\frac{1}{2} \\ -\frac{1}{2} & \frac{1}{2}}$
+\end{enumerate}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Exercise 3.2 %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Exercise 3.2}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Exercise 3.3 %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Exercise 3.3}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Exercise 3.4 %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Exercise 3.4}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Exercise 3.5 %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Exercise 3.5}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+% Separable States and the Single Value Decomposition
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Matrices and Linear Transformations}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Tensor Product %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Tensor Product}
+Consider a vector space with inner product $H=H_1\otimes H_2$ (where $\otimes$ is the tensor product) combining $H_1$ and $H_2$ in such a way that the elements of $H_1$ affect $H_2$, and vice versa. A general vector in $H$ is a linear combination of vectors $\lbrace\ket{v_1}\otimes\ket{v_2}\vert\ket{v_1},\ket{v_2}\in H_2\rbrace$ taking the tensor product of $A\in M_{mn}$ and $B\in M_{pq}$: \\
+$A\otimes B=\bmat{
+A_{11}B & A_{12}B & ... & A_{1n}B \\
+A_{21}B & A_{22}B & ... & A_{2n}B \\
+... & ... & ... & ... \\
+A_{m1}B & A_{m2}B & ... & A_{mn}B
+}\in M_{(mp)(nq)}$
+
+\begin{example}
+$\sigma_x\otimes i\sigma_y=\bmat{0 & 1 \\ 1 & 0}\otimes\bmat{0 & -i \\ i & 0}=
+\bmat{
+0 & 0 & 0 & 1 \\
+0 & 0 & -1 & 0 \\
+0 & 1 & 0 & 0 \\
+-1 & 0 & 0 & 0
+}$ \\
+$\sigma_y\otimes \sigma_x=\bmat{0 & 1 \\ -1 & 0}\otimes\bmat{0 & 1 \\ 1 & 0}=
+\bmat{
+0 & 0 & 0 & 1 \\
+0 & 0 & 1 & 0 \\
+0 & -1 & 0 & 0 \\
+-1 & 0 & 0 & 0
+}$ \\
+$\sigma_x\otimes \sigma_y=\bmat{0 & 1 \\ -1 & 0}\otimes\bmat{0 & 1 \\ 1 & 0}=
+\bmat{
+0 & 0 & 0 & 1 \\
+0 & 0 & -1 & 0 \\
+0 & 1 & 0 & 0 \\
+-1 & 0 & 0 & 0
+}$
+\end{example}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Nice facts of the Tensor Product %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Nice facts of the Tensor Product}
+Here are some nice facts of the tensor product:
+\begin{enumerate}
+\item $(\lambda A)\otimes B=B \otimes (\lambda B)$ IE scaling A affects B and vice versa
+\item In general, $A\otimes B\neq B\otimes A$ IE generally noncommutative
+\item $(A\otimes B)(C \otimes D)=AC\otimes BD$ IE distributive
+\item $A\otimes (B+C)=(A\otimes B)+(A\otimes C)$ IE distributive
+\item $(A\otimes B)+(C\otimes D)\neq (A + C)\otimes (B + D)$
+\item $(A\otimes B)^\dagger=A^\dagger \otimes B^\dagger$ IE dagger can be distributed
+\item If $A$ and $B$ are invertible, $(A\otimes B)^{-1}=A^{-1} \otimes B^{-1}$
+\end{enumerate}
+
+\begin{example}
+$\ket{1}\otimes\ket{1}=\ket{11}$ (some funky notation)
+IE $\bmat{1 \\ 0}\otimes\bmat{1 \\ 0}=\bmat{1 \\ 0 \\ 0 \\ 0}$ \\
+$\ket{12}=\ket{1}\otimes\ket{2}=\bmat{1 \\ 0}\otimes\bmat{0 \\ 1}=\bmat{0 \\ 1 \\ 0 \\ 0}$ \\
+$\ket{21}=\ket{2}\otimes\ket{1}=\bmat{0 \\ 1}\otimes\bmat{1 \\ 0}=\bmat{0 \\ 0 \\ 1 \\ 0}$ \\
+$\ket{22}=\ket{2}\otimes\ket{2}=\bmat{0 \\ 1}\otimes\bmat{0 \\ 1}=\bmat{0 \\ 0 \\ 0 \\ 1}$ \\
+\end{example}
+Note that $\left\lbrace\ket{11},\ket{12},\ket{21},\ket{22}\right\rbrace$ forms a basis for $\C^4$, but these vectors live in $\C^2\otimes\C^2$. IE $\C^2\otimes\C^2\cong\C^4$ \textit{(same shape)}. If $\ket{v}\in\C^m$ and $\ket{w}\in\C^n$, then $\ket{vw}=\ket{v}\otimes\ket{w}\in\C^m\oplus\C^n\cong\C^{mn}$. \\
+Note that $\text{dim}\left(\C^m\otimes\C^n\right)=\text{dim}\left(\C^m\right) + \text{dim}\left(\C^n\right)=m+n$ and $\text{dim}\left(\C^m\otimes\C^n\right)=\text{dim}\left(\C^m\right) \cdot \text{dim}\left(\C^n\right)=m\cdot n$
+
+\begin{theorem}
+If $H_1$ has orthonormal basis $\epsilon_1=\lbrace\ket{e_{1,1}},\ket{e_{1,2}},...,\ket{e_{1,m}}\rbrace$ and $\epsilon_2=\lbrace\ket{e_{2,1}},\ket{e_{2,2}},...,\ket{e_{2,n}}\rbrace$, then, $H=H_1\otimes H_2$ has orthormal basis $\lbrace\ket{e_{1,i}}\otimes\ket{e_{2,j}}\vert 1\leq i \leq m, 1 \leq j \leq n\rbrace$ written as $i\in \left[ m \right],j\in \left[ n \right] $
+\end{theorem}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Inner Product on H %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Inner Product on H}
+Let $v_1, w_1\in H_1$ and $v_2, w_2\in H_2$. Then, $\inp{\ket{v_1}\otimes\ket{v_2}}{\ket{w_1}\otimes\ket{w_2}}=\inp{v_1v_2}{w_1w_2}=\inp{v_1}{w_1}_{H_1}\cdot\inp{v_2}{w_2}_{H_2}$. We need to check that $\epsilon$ is an orthonormal set. Let $\inp{e_{1,i}e_{2,j}}{e_{1,k}e_{2,j}}=\inp{e_{1,i}}{e_{1,k}}_{H_1}\cdot\inp{e_{2,j}}{e_{2,j}}_{H_2}$.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Multipartite Physical Systems %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Multipartite Physical Systems}
+Quantum systems comprised of multiple systems are called multipartite systems. This is to say $H=H_1\otimes H_2 \otimes ... \otimes H_n$ is a multipartite system when $n=2$, and $H=H_1\otimes H_2$ is called bipartite. Note that a $\ket{\psi}$ state in $H=H_1\otimes H_2$ is bipartite.
+\begin{definition}
+A vector $\ket{\psi}\in H=H_1\otimes H_2$ is separable (IE elementary tensor) if $\ket{\psi}=\ket{\psi_1}\otimes \ket{\psi_2}$ for some $\ket{\psi_1}\in H_1,\ket{\psi_2}\in H_2$.
+\end{definition}
+Recall that $H_1\otimes H_2$ is a u.s. of linear combinations of vectors in the form $\ket{\psi_1}\otimes \ket{\psi_2}$. If $\ket{\psi}\in H_1\otimes H_2$, $\ket{\psi}$ can be written as $\sum_{ij}c_{ij}\ket{e_{1,i}}\otimes\ket{e_{2,j}}$ where $\ket{e_{1,i}}$ is the basis vector for $H_1$ and $\ket{e_{2,j}}$ is a basis vector for $H_2$.
+
+\begin{example}
+Consider $\ket{\psi}=\frac{1}{\sqrt{2}}\left(\ket{1}\otimes\ket{1}+\ket{2}\otimes\ket{2}\right)$ \\
+$\frac{1}{\sqrt{2}}\left(\ket{11}+\ket{22}\in\C^2\otimes\C^2\right) $ \\
+$=\frac{1}{\sqrt{2}}\left(\bmat{1 \\ 0 \\ 0 \\ 0}+\bmat{0 \\ 0 \\ 0 \\ 1}\right) $
+\end{example}
+How can we tell if a state $\ket{\psi}\in H_1\otimes H_2$ is separable?
+\begin{definition}
+A vector that is \textbf{not separable} is called \textbf{entangled}. IE, there is a state that can't be expressed as a tensor of two vectors, and the state can't be analyzed because the system is in superposition.
+\end{definition}
+IE, if some $\ket{\psi}$ is separable, we should be able to write it as $\ket{\psi}=\ket{\psi_1}\otimes\ket{\psi_2}$ where: \\
+$\ket{\psi_1}=c_1\ket{1}+c_2\ket{2}\in\C^2$ and
+$\ket{\psi_2}=d_1\ket{1}+d_2\ket{2}\in\C^2$. Note that the coefficient matrix for $\ket{\psi}=\ket{\psi_1}\otimes\ket{\psi_2}$ is $C=\bmat{\frac{1}{\sqrt{2}} & 0 \\ 0 & \frac{1}{\sqrt{2}}}$. Note that to put this in terms of classical encryption, the \textit{states} $H_1$ or $H_2$ are similar to single (large) primes $p,q$, and \textit{separable states} is similar to RSA where $N=pq$. Additionally, \textit{entangled} is similar to multiple of these systems together, IE $N_1+N_2+...+N_k$.
+\begin{remark}
+In $\C^2$, a state is separable if and only if the coefficient matrix is rank 1.
+\end{remark}
+This is to say that a state $\ket{\psi}=c_11\ket{11}+c_12\ket{11}+c_21\ket{21}+c_22\ket{22}$ is separable if and only if the rows of $C=\bmat{c_{11} & c_{12} \\ c_{21} & c_{22}}$ are scalar multiples of $\ket{psi}=\bmat{a \\ b}\otimes\bmat{c \\ d}=\bmat{a\bmat{c \\ d} \\ b\bmat{c \\ d}}=\bmat{c_{11} \\ c_{12} \\ c_{21} \\ c_{22}}$.
+\begin{definition}
+Let $A\in M_n$. The singular values for $A$ are the square roots of the eigenvalues for $A^\dagger A\in M_n$
+\end{definition}
+Let's do an example of the single value decomposition.
+\begin{example} Find the singular value decomposition (SVD) for $A=\bmat{1 & 1 \\ 0 & 0 \\ i & i}$. \\
+Note: $A^\dagger A=\bmat{1 & 0 & -i \\ 1 & 0 & -i}\bmat{1 & 1 \\ 0 & 0 \\ i & i}=\bmat{2 & 2 \\ 2 & 2}$.
+\begin{enumerate}
+\item First, let's compute eigenvalues and eigenvectors for $A^\dagger A$ \\
+$\lambda=0\longrightarrow\ket{x}=\frac{1}{\sqrt{2}}\bmat{-1 \\ 1}$ \\
+$\lambda=4\longrightarrow\ket{x}=\frac{1}{\sqrt{2}}\bmat{1 \\ 1}$ \\
+Note: $A^\dagger A$ is positive semidefinite, so it must be normal. Therefore, it has a spectral decomposition. \\
+$A^\dagger A=\frac{1}{\sqrt{2}}\underbrace{\textstyle \bmat{1 & -1 \\ 1 & 1}}_{\mathclap{V}}\underbrace{\textstyle \bmat{4 & 0 \\ 0 & 0}}_{\mathclap{D}}\underbrace{\textstyle \frac{1}{\sqrt{2}}\bmat{1 & -1 \\ 1 & 1}^\dagger}_{\mathclap{V^\dagger}}$
+\item Now, make sure our $V's$ are in decreasing order with respect to our eigenvalues. We'll also find our value $\Sigma$ for the SVD. \\
+$V=\frac{1}{\sqrt{2}}\bmat{1 & -1 \\ 1 & 1}$ \\
+$\Sigma=\bmat{2 & 0 \\ 0 & 0 \\ 0 & 0}$
+\item Next let's make some more eigenvectors using $A\ket{\lambda_1}+A\ket{\lambda_2}$ \\
+$A\ket{\lambda_1}=\bmat{1 & 1 \\ 0 & 0 \\ i & i}\bmat{\frac{1}{\sqrt{2}} \\ \frac{1}{\sqrt{2}}}=\sqrt{2}\bmat{1 \\ 0 \\ i}$ \\
+$A\ket{\lambda_2}=\bmat{1 & 1 \\ 0 & 0 \\ i & i}\bmat{-\frac{1}{\sqrt{2}} \\ \frac{1}{\sqrt{2}}}=\bmat{0 \\ 0 \\ 0}$ \\
+Use $\ket{u_1}=\sqrt{2}\bmat{1 \\ 0 \\ i}$ and $\ket{u_2}=\bmat{0 \\ 0 \\ 0}$ to create an orthonormal basis for $\C^3$. IE, find $\lbrace\ket{u_1},\ket{u_2},\ket{u_3}\rbrace$. Our $\ket{u_2}$ doesn't do much for us in this case, so we'll try to separate $\ket{u_1}$ into $3$ linearly independent vectors. Let's use $\lbrace\ket{u_1},\ket{2},\ket{3}\rbrace$. These are linearly independent both to each other and to $\ket{u_1}$. Now, we need to create an orthonormal basis using the Gram-Schmidt process. \\
+\begin{enumerate}
+\item Normalize $\ket{u_1}\longrightarrow\ket{u_1}=\frac{\sqrt{2}}{2}\bmat{1 \\ 0 \\ i}=\bmat{\frac{1}{\sqrt{2}} \\ 0 \\ \frac{i}{\sqrt{2}}}$
+\item $\ket{u_2}=\ket{2}-\inp{u_2}{2}\ket{u_1}=\bmat{0 \\ 1 \\ 0}-0\bmat{\frac{1}{\sqrt{2}} \\ 0 \\ \frac{1}{\sqrt{2}}}=\bmat{0 \\ 1 \\ 0}$ (already orthogonal)
+\item $\ket{u_3}=\ket{3}-\inp{u_1}{3}\ket{u_1}-\underbrace{\textstyle \inp{u_2}{3}\ket{u_1}}_{\mathclap{0}}=\ket{3}-\left(\frac{-i}{\sqrt{2}}\cdot 1\right)=\bmat{0 \\ 0 \\ 1}-\bmat{\frac{i}{2} \\ 0 \\ \frac{1}{2}}=\bmat{\frac{i}{2} \\ 0 \\ \frac{1}{2}}=\frac{1}{2}\bmat{i \\ 0 \\ 1}\longrightarrow\ket{u_3}=\frac{1}{\sqrt{2}}\bmat{i \\ 0 \\ 1}$ \\
+Ok now we have some wacky new vectors which form an orthonormal basis for $\C^3$.
+\end{enumerate}
+\item Form $u=\bmat{\ket{u_1} & \ket{u_2} & \ket{u_3}}=
+\bmat{
+\frac{1}{\sqrt{2}} & 0 & \frac{i}{\sqrt{2}} \\
+0 & 1 & 0 \\
+\frac{1}{\sqrt{2}} & 0 & \frac{1}{\sqrt{2}}}$ By the way, $u$ is unitary because its columns are orthonormal.
+\item Finally, use $A=u\Sigma V^\dagger$ to find the SVD.
+\end{enumerate}
+\end{example}
+OK so basically we found the factorization of the matrix $A$ into the product of $u$,$\Sigma$, and $V^\dagger$. Now, we're going to use another tool to accomplish a similar task, but instead use the result to express a vector as the tensor product of two inner product spaces.
+\begin{theorem}
+Let $H=H_1\cdot H_2$ where $\text{dim } H_1=m<\inf$ and $\text{dim } H_2=n<\inf$. Then, every vector $\ket{\psi}\in H$ admits a Schmidt decomposition
+\begin{center}
+$\ket{\psi}=\sum^r_{j=1}S_j \ket{u_j}\cdot\ket{v_j}$
+\end{center}
+where $S_j>0$ are the Schmidt coefficients satisfying $\sum^r_{j=1}S_j^2=1$, $\lbrace\ket{u_j}\rbrace\subseteq H_1$ and $\lbrace\ket{v_j}\rbrace\subseteq H_2$ are orthonormal and $r<\text{min}\lbrace m,n\rbrace$
+\end{theorem}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Exercise 4.1 %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Exercise 4.1}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Exercise 4.2 %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Exercise 4.2}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Exercise 4.3 %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Exercise 4.3}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Exercise 4.4 %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Exercise 4.4}
 
 %%!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 %%!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
