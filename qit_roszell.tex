@@ -1,5 +1,6 @@
 \documentclass[12pt]{article}
 \usepackage[margin=1in]{geometry} 
+\usepackage{tabularx}
 \geometry{letterpaper}   
 
 
@@ -313,6 +314,7 @@
 \newcommand{\listovecs}[2]{\ket{{#1}_1}, \ldots, \ket{{#1}_{#2}}} % set list of NAMED vectors
 \newcommand{\Tr}{\text{Tr}} % trace v1
 \newcommand{\tr}{\text{tr}} % trace v2
+\newcommand{\proj}[2]{\ket{#1}\bra{#2}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% standard mitch commands %%%
@@ -407,7 +409,7 @@
 \begin{document}
 \maketitle
 \begin{abstract}
-No idea what is happening in this class lol do this later
+Modern trends seem to conclude that the future of information processing will be increasingly completed using quantum computers. As opposed to their classical counterparts, quantum computers operate according to quantum mechanics. Quantum information theory discusses the possibilities and limitations of information representation and communication over quantum channels. This paper gives an overview of the inner workings of the math used by quantum information theory, and provides examples of the benefits over classical information theory.
 \end{abstract}
 
 \tableofcontents
@@ -416,7 +418,7 @@ No idea what is happening in this class lol do this later
 
 Let's jump right in. This section is an abbreviation of the introduction to linear algebra session.
 
-A vector space is a group of objects (vectors) which may be added together and multiplied by compatible scalars from $\R$ or $\C$. In this class, we primarily care about vector spaces $\C^n$ from $\C$ and $\R^n$ from $\R$. Recall that $\C$ is the scalar field of complex numbers $a+bi$, where multiplication is defined by the rule $i^2=-1$, and is equipped with:
+A vector space is a group of objects (vectors) which may be added together and multiplied by compatible scalars from $\R$ or $\C$. In this class, we primarily care about vector spaces $\C^n$ over $\C$ and $\R^n$ over $\R$. Recall that $\C$ is the scalar field of complex numbers $a+bi$, where multiplication is defined by the rule $i^2=-1$, and is equipped with:
 \begin{enumerate}[label=(\alph*)]
     \item a complex conjugation operation -- $\ol{a+bi}=(a+bi)^*=a-bi$ and
     \item a size function called the \textbf{modulus} -- $\abs{a+bi}=\sqrt{a^2+b^2}.$
@@ -499,16 +501,16 @@ Two vectors are \textbf{linearly independent} as long as they are not \textit{pa
 A good way of looking at this is that a system that is not linearly independent has more than one element that is some offset of the same constant. These elements are not giving new perspective, because they give the same information.
 
 \begin{definition}
-A set of vectors $\setovecs{v}$ is linearly independent if no vector is a linear combination of any other vectors. Algebraically, $[if \lambda_1\ket{v_1} + \lambda_2\ket{v_2} + ... + \lambda_n\ket{v_k}=\ket{0}, then \lambda_1=\lambda_2=\lambda_k=0]$
+A set of vectors $\setovecs{v}$ is linearly independent if no vector is a linear combination of any other vectors. Algebraically, if $\lambda_1\ket{v_1} + \lambda_2\ket{v_2} + ... + \lambda_n\ket{v_k}=\ket{0}, \text{ then } \lambda_1=\lambda_2=\lambda_k=0$
 \end{definition}
 
 The only way that the zero vector ($\ket{0}$) can be possible is if the complex constants ($\lambda$) are all the same, \textit{and} zero.
 
 \begin{theorem}
-If a set of $k$ vectors in $\C^n$ is linearly independent, then $k \leq n$. Equivalently, if you have a set of $k$ vectors in $\C^n$ such that $k>n$, then the set is linearly independent.
+If a set of $k$ vectors in $\C^n$ is linearly independent, then $k \leq n$. Equivalently, if you have a set of $k$ vectors in $\C^n$ such that $k>n$, then the set is linearly dependent.
 \end{theorem}
 
-This theorem is important because it establishes the notion that a set can't contain more vectors than the space allows for. Said differently, the dimension of $M$ is the number of vectors contained within that are linearly independent.
+This theorem is important because it establishes the notion that a set can't contain more vectors than the space allows for. Said differently, the dimension of $M$ is the number of vectors contained within that can be linearly independent.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Basis %%%
@@ -519,10 +521,10 @@ This theorem is important because it establishes the notion that a set can't con
 A \textbf{basis} of a subspace $M\subseteq\C^n$ is a set of vectors such that
 \begin{enumerate}
 	\item $S$ is linearly independent
-	\item Span($S$) $=M$ $\Longrightarrow$ "S Spans M"
+	\item $\spn{S}$ $=M$ $\Longrightarrow$ \textit{S Spans M}
 \end{enumerate}
 \end{theorem}
-It follows that the standard basis of $\C^N$ is $\bmat{1 \\ 0 \\ 0 \\ ... \\ 0},\bmat{0 \\ 1 \\ 0 \\ ... \\ 0},\bmat{0 \\ 0 \\ 1 \\ ... \\ 0},\bmat{0 \\ 0 \\ 0 \\ ... \\ 1}$
+It follows that the standard basis of $\C^n$ is $\bmat{1 \\ 0 \\ 0 \\ ... \\ 0},\bmat{0 \\ 1 \\ 0 \\ ... \\ 0},\bmat{0 \\ 0 \\ 1 \\ ... \\ 0},\bmat{0 \\ 0 \\ 0 \\ ... \\ 1}$
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Inner Products %%%
@@ -532,7 +534,7 @@ It follows that the standard basis of $\C^N$ is $\bmat{1 \\ 0 \\ 0 \\ ... \\ 0},
 
 Recall that $\ket{v}$ is a column vector and $\bra{v}$ is a row vector. Before talking about inner products, we must define operations that help the inner product process.
 \begin{remark}
-$(\C^n)^*$ is the "dual space of $\C^n$.
+$(\C^n)^*$ is the \textit{dual space} of $\C^n$.
 \end{remark}
 The dual space is the space of all row vectors. This is useful for the next definition, which is critical in completing inner products.
 \begin{definition}
@@ -569,7 +571,7 @@ $\inp{w}{v}=\bmat{-i & -1}\cdot\bmat{i \\ 1}=1+(-1*1)=0$
 \end{example}
 Recall from calculus III that the dot product of two vectors can give us insight on orthogonality. In the case of example \ref{ex:cpcmp}, the inner product of $\langle w|v \rangle$ was zero. This tells us that the two vectors are orthogonal.
 \begin{definition}
-The \textbf{norm} (similar to magnitude) of $\ket{v}\in\C^n$ is $\norm{\ket{v}}:=\sqrt{\inp{w}{v}}$ 
+The \textbf{norm} (similar to magnitude) of $\ket{v}\in\C^n$ is $\norm{\ket{v}}:=\sqrt{\inp{v}{v}}$ 
 \end{definition}
 \begin{example}
 $\ket{v}=\bmat{1 \\ 1}\in\R^2\longrightarrow||\ket{v}||=\sqrt{1^2+1^2}=\sqrt{2}$
@@ -582,20 +584,20 @@ $\ket{v}=\bmat{1 \\ 1}\in\R^2\longrightarrow||\ket{v}||=\sqrt{1^2+1^2}=\sqrt{2}$
 \end{itemize}
 \end{remark}
 \begin{definition}
-A set of non-zero vectors $S=\setofkets{v}\leq\C^n$ is called an orthogonal set if $\inp{v}{w}=0$ if $i\neq j$
+A set of non-zero vectors $S=\setofkets{v}\leq\C^n$ is called an orthogonal set if $\inp{v_i}{w_j}=0$ if $i\neq j$
 \end{definition}
 \begin{theorem}
 If $S=\setofkets{v}$ is an orthogonal set of non-zero vectors in $\C^n$, then $S$ is linearly independent.
 \end{theorem}
 \begin{proof}
-Let $c_1, ..., c_k\in\C$ such that $c_1\ket{v_1}+...+c_k\ket{v_k}$. \\
+Let $c_1, ..., c_k\in\C$ such that $c_1\ket{v_1}+...+c_k\ket{v_k}=\ket{0}$. \\
 \textit{Goal: show that $c_1=c_2=c_k=0\longrightarrow$ linearly independent using $S$ is orthogonal} \\
 Additionally, let \\ 
 \indent $j\in{1,...,k}$.\\
 Then, \\ 
 \indent $\bra{v_j}(c_1\ket{v_1}+...+c_k)=\inp{v_j}{0}$ \\
 \indent $\longrightarrow c_1\inp{v_j}{v_1}+...+c_k\inp{v_j}{v_k}$ \\
-\indent $c_j\inp{v_j}{v_j}=$ (\textit{$v_j$ is the only component 'allowed' to have magnitude}) \\
+\indent $c_j\inp{v_j}{v_j}=$ (\textit{$v_j$ is the only component allowed to have magnitude}) \\
 Thus, $c_j=0$ since $\ket{v_j}\neq\ket{0}$ \\
 Note: Since $j$ was arbitrary, $c_1 = c_2 = ... = c_k = 0$. Hence, $S$ is linearly independent.
 \end{proof}
@@ -621,11 +623,11 @@ Define $\ket{f_i}\bra{f_i}$ to be the \textbf{projection} operator onto $\spn{\k
 \begin{theorem}
 Let $\beta=\setofkets{f}$ be an orthonormal basis for $\C^n$. Then, any $\ket{x}=c_1\ket{f_1}+...+c_n\ket{f_n}=\inp{f_1}{x}\ket{f_1}+...+\inp{f_n}{x}\ket{f_n}$.
 \end{theorem}
-It follows that $\sum_{j=1}^{n} \ket{f_j}\bra{f_j}=\bmat{1 &  &  \\  & ... &  \\  &  &  1}$
+It follows that $\sum_{j=1}^{n} \ket{f_j}\bra{f_j}=\bmat{1 &  &  \\  & \ddots &  \\  &  &  1}$
 
 \begin{example}
 Let $\ket{f_1}=\frac{-2}{\sqrt{2}}\bmat{1 \\ 1},\ket{x}=\bmat{-2 \\ 1}$. \\
-$\ket{x_|}=\inp{f_1}{x}\ket{f_1}=P_1(\ket{x}$ \\
+$\ket{x_|}=\inp{f_1}{x}\ket{f_1}$ \\
 $P_1(\ket{x})=\ket{f_1}\inp{f_1}{x}$
 \end{example}
 In the above example, $\ket{x_|}$ is the projection of $x$ onto $f_1$ in the direction of $f_1$.
@@ -633,7 +635,7 @@ Note that the projection operation is similar to \textit{comp} from calculus III
 \begin{proposition}
 Let $\beta=\setofkets{f}$ be an orthonormal basis for $\C^n$. Then, $\lbrace P_1, P_2, P_n\rbrace$ is a set of $n\times n$ matrices such that
 \begin{enumerate}
-\item $P_i(\ket{v})\in\spn(\ket{f_i}$
+\item $P_i(\ket{v})\in\spn{\ket{f_i}}$
 \item $\ket{v}-P_i(\ket{v})$ is orthogonal to $\ket{f_i}$
 \item $P_i^2=P_i*P_i=P_i$
 \item $P_iP_j=0$ when $i\neq\j$, and $P_i^\dagger=P_i$
@@ -667,9 +669,9 @@ For each $\ket{f}$, $\ket{f}=\frac{1}{\norm{\ket{f}}}\ket{f}$
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \subsection{Exercise 1}
-Consider $S={\ket{v_1}, \ket{v_2}, \ket{v_3}}$ where $\ket{v_1}=\bmat{1 \\ -1}, \ket{v_2}=\bmat{i \\ 1}, \ket{v_3}=\bmat{0 \\ i}$
+\textbf{Consider $S={\ket{v_1}, \ket{v_2}, \ket{v_3}}$ where $\ket{v_1}=\bmat{1 \\ -1}, \ket{v_2}=\bmat{i \\ 1}, \ket{v_3}=\bmat{0 \\ i}$}
 \begin{enumerate}[label=(\alph*)]
-	\item Give a linear combination of the vectors in $S$. \\
+	\item \textbf{Give a linear combination of the vectors in $S$.} \\
 	\begin{center}
 	$\alpha\bmat{1 \\ -1} + \beta\bmat{i \\ 1} + \gamma\bmat{0 \\ i}=\ket{w}$ \\
 	\end{center}
@@ -681,13 +683,13 @@ Consider $S={\ket{v_1}, \ket{v_2}, \ket{v_3}}$ where $\ket{v_1}=\bmat{1 \\ -1}, 
 	\end{center}
 	Now plug in values.
 	$1*\bmat{1 \\ -1} + 1*\bmat{i \\ 1} + (-200-1i)*\bmat{0 \\ i}=\ket{w}$
-	\item Determine if $\bmat{1+i \\ 200-i}$ in Span($S$) \\
+	\item \textbf{Determine if $\bmat{1+i \\ 200-i}$ in Span($S$)} \\
 	Start with where we left off in the last part.
 	\begin{center}
 	$1*\bmat{1 \\ -1} + 1*\bmat{i \\ 1} + (-200-1i)*\bmat{0 \\ i}=\bmat{1+i \\ 200-i}$
 	\end{center}
 	$\bmat{1+i \\ 200-i}$ \textit{is} in Span($S$) because there existed values $\alpha$, $\beta$, and 	$\gamma$ such that $\ket{w}$ of $S$ is a possible outcome of $S$.
-	\item Describe Span($S$) "geometrically" \\
+	\item \textbf{Describe Span($S$) "geometrically"} \\
 	Span($S$) can be thought of as every possible vector $(\alpha\bmat{1 \\ -1} + \beta\bmat{i \\ 1} + 	\gamma\bmat{0 \\ i})$ contained within $\C^2$
 	
 \end{enumerate}
@@ -697,7 +699,7 @@ Consider $S={\ket{v_1}, \ket{v_2}, \ket{v_3}}$ where $\ket{v_1}=\bmat{1 \\ -1}, 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \subsection{Exercise 2}
-Find the condition under which the following two vectors are linearly independent:
+\textbf{Find the condition under which the following two vectors are linearly independent:}
 \begin{center}
 $\ket{v_1}=\bmat{x \\ y \\ 3},\ket{v_2}=\bmat{2 \\ x-y \\ 1}\in\R^3$
 \end{center}
@@ -714,51 +716,31 @@ Therefore, as long as $x\neq6$ and $y\neq4.5$, $\ket{v_1}$ and $\ket{v_2}$ are l
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \subsection{Exercise 3}
-Show that the set formed by the following vectors is a basis for $\C^3$
+\textbf{Show that the set formed by the following vectors is a basis for $\C^3$}
 \begin{center}
 $\ket{v_1}=\bmat{1 \\ 1 \\ 1}, \ket{v_2}=\bmat{1 \\ 0 \\ 1}, \ket{v_3}=\bmat{1 \\ -1 \\ -1}$
 \end{center}
-Recall that for the vectors to be a basis for $\C^3$, they must be linearly independent, and
-Span($\ket{v_1},\ket{v_2},\ket{v_3}$)$=\C^3$ (every vector must give additional information, IE no redundancy). To prove linear independence, we need to find where the constants ($\lambda$) are zero, by \ref{def:li}. \\
+Recall that for the vectors to be a basis for $\C^3$, they must be linearly independent and must span
+$\C^3$ (every vector must give additional information, IE no redundancy). To show that these vectors are linearly independent, we must use \ref{def:li}. Start by multiplying, each vector by some constant, and solving for them. In this case I put them in an augmented matrix. 
 \begin{center}
-\textit{Goal is to find Eigen values }
 $\bmat{1 & 1 & 1 & 0 \\ 1 & 0 & -1 & 0 \\ 1 & 1 & -1 & 0}\longrightarrow (R_2-R_3)\longrightarrow\bmat{1 & 1 & 1 & 0 \\ 0 & -1 & 0 & 0 \\ 1 & 1 & -1 & 0}\longrightarrow (R_3-R_1)\longrightarrow\bmat{1 & 1 & 1 & 0 \\ 0 & -1 & 0 & 0 \\ 0 & 0 & -2 & 0}$ \\
-Note that with linear algebra experience, this stage is enough to prove that we have linear independence. At the time of writing, I haven't taken this class so I'm going to continue. \\
-(\textit{multiply by constant})
 $\longrightarrow (-1R_2-\frac{1}{2}R_3)\longrightarrow\bmat{1 & 1 & 1 & 0 \\ 0 & 1 & 0 & 0 \\ 0 & 0 & 1 & 0}=\bmat{1 & 0 & 0 & 0 \\ 0 & 1 & 0 & 0 \\ 0 & 0 & 1 & 0}$
 \end{center}
-To prove that the vectors provided are a basis for $\C^3$, we determined that the vectors are linearly independent such that $\alpha$, $\beta$, and $\gamma$ are zero. Then, noting that we're operating in $\C^3$, the vectors must be a basis. \textit{This is a bad way of explaining this, go to office hours}
+Since the resultant matrix is row equivalent to the identity, it is invertible and therefore must form a basis for $\C^3$.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Exercise 4 %%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \subsection{Exercise 4}
-Let $\ket{x}=\bmat{1 \\ i \\ 2+i}$, $\ket{y}=\bmat{2-i \\ 1 \\ 2+i}$, $\ket{z}=\frac{\sqrt{2+\sqrt{5}}}{2+\sqrt{5}}\ket{x}$.
+\textbf{Let $\ket{x}=\bmat{1 \\ i \\ 2+i}$, $\ket{y}=\bmat{2-i \\ 1 \\ 2+i}$, $\ket{z}=\frac{\sqrt{2+\sqrt{5}}}{2+\sqrt{5}}\ket{x}$.}
 \begin{enumerate}
-	\item Find $\Vert\ket{x}\Vert$. \\
+	\item \textbf{Find $\Vert\ket{x}\Vert$.} \\
 	$\Vert\ket{x}\Vert=\sqrt{1^2+i^2+(2+i)^2}=\sqrt{1-1+(2+i)^2}=2+i$
-	\item Find $\inp{x}{y}$ \\
-	$\inp{x}{y}=\bra{x}^\dagger\cdot\ket{y}=\bmat{1 & -i & 2-i}\bmat{2-i \\ 1 \\ 2+i}=2-i-				i+5=7-2i$
-	\item find $\Vert\ket{z}\Vert$ \\ $\Vert\ket{z}\Vert=\frac{\sqrt{2+\sqrt{5}}}{2+\sqrt{5}}			\bmat{1 \\ i \\ 2+i}=(2+i)\cdot\frac{\sqrt{2+\sqrt{5}}}{2+\sqrt{5}}$
+	\item \textbf{Find $\inp{x}{y}$} \\
+	$\inp{x}{y}=\bra{x}^\dagger\cdot\ket{y}=\bmat{1 & -i & 2-i}\bmat{2-i \\ 1 \\ 2+i}=2-i-i+5=8-5i$
+	\item \textbf{Find $\Vert\ket{z}\Vert$} \\ $\Vert\ket{z}\Vert=\frac{\sqrt{2+\sqrt{5}}}{2+\sqrt{5}}			\bmat{1 \\ i \\ 2+i}=(2+i)\cdot\frac{\sqrt{2+\sqrt{5}}}{2+\sqrt{5}}$
 \end{enumerate}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% Exercise 5 %%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\subsection{Exercise 5}
-
-Prove that for all $\ket{u},\ket{v}\in\C^n$, $\inp{u}{v}=\inp{v}{u}^*$ \\
-\textit{Proof}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% Exercise 6 %%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\subsection{Exercise 6}
-Prove that the inner product on $\C^n$ is a sesquilinear form. That is, show that the inner product is linear in the "ket" component and conjugate linear in the "bra" component. \\
-\textit{Proof} Let $\ket{a},ket{b}\in\C^n$. By definition of inner product, $\inp{a}{b}=\ket{a}^\dagger\cdot\ket{b}$
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Exercise 7 %%%
@@ -842,7 +824,7 @@ $\ket{f_2}=\ket{b_2}-\frac{\inp{f_1}{b_2}}{\inp{f_1}{f_1}}\ket{f_1}$
 $=\bmat{3 \\ 1 \\ i}-\frac{3}{3}\bmat{1 \\ i \\ 1}=\bmat{2 \\ 1-i \\ -1+i}$ \\
 Step 3: \\
 $\Vert\ket{f_1}\Vert=1$, and $\Vert\ket{f_2}\Vert=\sqrt{4+(1-i)^2+(-1+i)^2}=\sqrt{4-4i}=2\sqrt{1-i}$ \\
-Therefore, $\ket{f_1}=\bmat{1 \\ i \\ 1}$ and $\ket{f_2}=\frac{1}{2\sqrt{1-i}}\bmat{2 \\ 1-i \\ -1+i}$.
+Therefore, $\ket{f_1}=\sqrt{3}\bmat{1 \\ i \\ 1}$ and $\ket{f_2}=2\sqrt{2}\bmat{2 \\ 1-i \\ -1+i}$.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%
@@ -862,8 +844,8 @@ Understanding matrices and linear transformations will be critical when it comes
 \begin{definition}
 A map $T: \C^n\longrightarrow\C^m$ is a linear transformation if:
 \begin{enumerate}
-	\item $T(\ket{v}+\ket{u}=T(\ket{v}|\ket{u})$
-	\item $T(C\mid V)=CT(\ket{v}) \forall \ket{u},\ket{v}\in\C^n$
+	\item $T(\ket{v}+\ket{u}=T(\ket{u}|\ket{v})$
+	\item $T(C\mid V)=CT(\ket{v}) \forall \ket{u},\ket{v}, C\in\C^n$
 \end{enumerate}
 \end{definition}
 Note that every linear transformation arises from a matrix.
@@ -935,35 +917,35 @@ Therefore, our eigen vector is $\ket{x}=\bmat{0 \\ 0 \\ i \\ 1}$. \\Our normaliz
 \end{example}
 
 \subsection{Matrix Classifications}
-Some, but not all matrices are diagonalizable; this property is highly desirable. Matrices are diagonalizable if and only if the eigenvalues form a basis. \\ \textit{put some shit here} \\
+Some, but not all matrices are diagonalizable; this property is highly desirable. Matrices are diagonalizable if and only if the eigenvalues form a basis. \\
 \begin{enumerate}
-\item Vectors must be self-adjoint (\textit{hermition}) IE $A\in M_n$ is \textbf{hermition} if $A^\dagger=A$, $sigma+\dagger_x=\sigma_x$, $\sigma+\dagger_y=sigma_y$, $\sigma+\dagger_z=\sigma_z$
-\item As it turns out, \textit{all} hermition matricies are diagonalizable $\longleftrightarrow$ the eigenvectors for a basis (IE linearly independent and Span). Said differently, hermition matrices are only hermition matrices if their eigenvectors form an orthonormal basis (IE unit vector, norm, and Span). It's worth noting that the eigenvalues must be real for this to be the case.
+\item Vectors must be self-adjoint (\textit{hermitian}) IE $A\in M_n$ is \textbf{hermitian} if, for example, $A^\dagger=A$, $\sigma+\dagger_x=\sigma_x$, $\sigma+\dagger_y=sigma_y$, $\sigma+\dagger_z=\sigma_z$
+\item As it turns out, \textit{all} hermitian matricies (and in fact, all normal matrices too) are diagonalizable $\longleftrightarrow$ the eigenvectors for a basis (IE linearly independent and Span). Said differently, hermitian matrices are only hermitian matrices if their eigenvectors form an orthonormal basis (IE unit vector, norm, and Span). It's worth noting that the eigenvalues must be real for this to be the case.
 \item A matrix in $M_n$ is positive-semidefinite if for all $\ket{x}\in\C^n$, we have $\bra{x}A\ket{x}\geq0$
 \item The following are equivalent:
 \begin{enumerate}
 \item $u\in M_n$ is unitary
 \item $u^\dagger=u-1$ (IE left \textit{and} right inverse) $\longrightarrow u^{-1}u=uu^{-1}$
-\item $uu^\dagger=I_n$ and $u^\dagger u=I_n$ (unitaries are normal, but not necessarily hermition)
+\item $uu^\dagger=I_n$ and $u^\dagger u=I_n$ (unitaries are normal, but not necessarily hermitian)
 \item The columns of $u$ form an orthonormal basis for $\C^n$
-\item $\forall\ket{x},\ket{y}\in\C^n$, $\inp{u_x}{u_y}=\inp{x}{y}$. Think of this as a rotation of the entire matrix, such that the angle between the vectors are preserved. Related to calculus III, this operation gives us the angle.
+\item $\forall\ket{x},\ket{y}\in\C^n$, $\inp{u}{u}=\inp{x}{y}$. Think of this as a rotation of the entire matrix, such that the angle between the vectors are preserved. Related to calculus III, this operation gives us the angle.
 \end{enumerate}
 \end{enumerate}
 Now, let's go over some examples of these properties in action.
 \begin{example}
-Example of a matrix that is \textit{not} Hermition:
+Example of a matrix that is \textit{not} hermitian:
 \begin{center}
 $N=\bmat{2 & -i \\ -i & 2}\longrightarrow N^\dagger=\bmat{2 & i \\ i & 2}$
 \end{center} Note: the columns of $N$ are not orthogonal, so $N$ is not unitary.
 \end{example}
 \begin{example}
-Example of a unitary matrix that's not Hermition: 
+Example of a unitary matrix that's not hermitian: 
 \begin{center}
 $\bmat{\frac{1}{\sqrt{2}} & -\frac{1}{\sqrt{2}} \\ \frac{1}{\sqrt{2}} & \frac{1}{\sqrt{2}}}\longrightarrow u^{-1}=u^\dagger=\bmat{\frac{1}{\sqrt{2}} & -\frac{1}{\sqrt{2}} \\ \frac{1}{\sqrt{2}} & \frac{1}{\sqrt{2}}}$
 \end{center}
 \end{example}
 \begin{example}
-$\forall\ket{x}\in{C^n}$, $\bra{x}A\ket{x}\geq 0$: $A=\ket{e_2}\bra{e_2}$ where $e_2=\bmat{0 \\ 1}=\bmat{0 & 0 \\ 0 & 1}$ This is positive semidefinite if: \\
+Recall that $\forall\ket{x}\in{C^n}$, $\bra{x}A\ket{x}\geq 0$. Consider $A=\ket{e_2}\bra{e_2}$ where $e_2=\bmat{0 \\ 1}=\bmat{0 & 0 \\ 0 & 1}$. This is positive semidefinite if: \\
 \textit{proof} Let $\ket{x}=\bmat{a \\ b}\in\C^2$. \\
 $\bra{x}A\ket{x}=\bmat{a^* & b^*}\bmat{0 & 0 \\ 0 & 1}\bmat{a \\ b}$ \\
 $\bmat{a^* & b^*}\bmat{0 \\ b}=0+b^*b=\mid b\mid^2\geq0$
@@ -977,13 +959,13 @@ $\bmat{a^* & b^*}\bmat{0 \\ b}=0+b^*b=\mid b\mid^2\geq0$
 
 To perform decomposition of matrices, we can use the \textit{spectral theorem for normal matrices}, and the fact that in general, $A\in M_n$ has a singular value decomposition. Note that both of these use eigenvectors of the given matrix. Note that $AB=BA$ doesn't always work for $A,B\in M_n$.
 \begin{theorem}\label{thm:stfnm}
-A matrix $N\in M_n$ is normal $\longleftrightarrow$ there is a unitary matrix $u=\bmat{\ket{u_1} & ... & \ket{u_n}}$ and a diagonalizable matrix $D=\bmat{\lambda & 0 \\ 0 & \lambda_n}$ such that $N=uDu^\dagger$
+A matrix $N\in M_n$ is normal $\longleftrightarrow$ there is a unitary matrix $u=\bmat{\ket{u_1} & ... & \ket{u_n}}$ and a diagonalizable matrix $D=\bmat{\lambda & & 0 \\ & \ddots & \\ 0 & & \lambda_n}$ such that $N=uDu^\dagger$
 \end{theorem}
-Let's prove the forward case for this theorem. If you take $\ket{u},...,\ket{u_n}$ to be eigenvectors for $N$ with respect to eigenvalues $\lambda_1,...,\lambda_n$, then $u:=\left[ \ket{u_1} ... \ket{u_n}\right]$ is unitary and $D=\bmat{\lambda_1 & & \\ & ... & \\ & & \lambda_n}$. Therefore, $N=uDu^-1=\sum^n_{j=1}\lambda_j\ket{u_j}\bra{u_j}$. Note that this projection is $P_j$ where $P_j\ket{x}$ is the projection of $\ket{x}$ onto $\ket{u_j}$. Now, let $\ket{x}=c_1\ket{u_1}+...+c_n\ket{u_n}$ for some $c_j\in\C^n$. Therefore, 
+Let's prove the forward case for this theorem. If you take $\ket{u},...,\ket{u_n}$ to be eigenvectors for $N$ with respect to eigenvalues $\lambda_1,...,\lambda_n$, then $u:=\left[ \ket{u_1} ... \ket{u_n}\right]$ is unitary and $D=\bmat{\lambda_1 & & \\ & \ddots & \\ & & \lambda_n}$. Therefore, $N=uDu^-1=\sum^n_{j=1}\lambda_j\ket{u_j}\bra{u_j}$. Note that $\ket{u_j}\bra{u_j}$ is the projection $P_j$ where $P_j\ket{x}$ is the projection of $\ket{x}$ onto $\ket{u_j}$. Now, let $\ket{x}=c_1\ket{u_1}+...+c_n\ket{u_n}$ for some $c_j\in\C^n$. Therefore, 
 \begin{center}
 $N\ket{x}=\left(\sum^n_{j=1}\lambda_j\ket{u_j}\bra{u_j}\right)\left(\sum^n_{i=1}c_i\ket{u_i}\right)$ \\
 $=\sum^n_{j=1} \sum^n_{i=1} c_i \lambda_j \ket{u_j} \inp{u_j}{u_i}$ \\
-$=\sum^n_{j=1}c_j \lambda_j \ket{u_j}=D \ket{x}$ \\
+$=\sum^n_{j=1}c_j \lambda_j \ket{u_j}=D \ket{x_u}$ \\
 (fancy way of saying $Nu=uD$)
 \end{center}
 Let's do an example to illustrate this theorem.
@@ -1098,7 +1080,6 @@ $A^{\dagger}+B^{\dagger}=\begin{bmatrix}
 \vdots  & \ddots . & \vdots  \\
 \beta _{1n} & \ldots  & \beta _{mn}
 \end{bmatrix}\\
-\text{Where }\alpha _{mn}=\gamma -\sum i\text{ and }\beta _{mn}=\mu _{mn}-\rho _{mn}\\
 =\begin{bmatrix}
 \alpha _{11}+\beta _{1}, & \ldots  & \alpha _{m1}+\beta _{m1} \\
 \vdots  & \ddots . & \vdots  \\
@@ -1143,9 +1124,7 @@ $\left( AB\right) ^{\dagger}=\left( \begin{bmatrix}
 \vdots  & \ddots  & \vdots  \\
 \left( \alpha _{11}\beta _{11}+\ldots +\alpha _{1n}\beta _{nn}\right)  & \cdot \cdot \cdot  & \left( \alpha _{n},\beta _{n1}+\ldots +\alpha _{nn}\beta _{nn}\right) 
 \end{bmatrix}$\\
-where $\alpha _{nn}=\alpha _{11}=\gamma _{nn}-\sum _{nn}i$ and $
-\beta _{nn}=\beta _{11}=M_{nn}-P_{nn}i$ \\
-$B^{t}A^{t}=\begin{bmatrix}
+$B^{\dagger}A^{\dagger}=\begin{bmatrix}
 \alpha _{11} & \ldots  & \alpha _{in} \\
 i & \ddots  & \vdots  \\
 \alpha _{n1} & \ldots  & \alpha _{nn}
@@ -1164,15 +1143,15 @@ i & \ddots  & \vdots  \\
 \end{bmatrix}$\\$\begin{bmatrix}
 \left( \alpha _{11}\beta _{11}+\ldots +\alpha _{1n}\beta _{n1}\right)  & \ldots  & \left( x_{n},\beta _{11}+\ldots +\alpha _{nn}\beta _{n1}\right)  \\
 \vdots  & \ddots  & \vdots  \\
-\left( \alpha _{11}\beta _{1}n^{t}\ldots +A_{1n}B_{nn}\right)  & \ldots  & \left( \alpha _{n},\beta _{n1}+\ldots +\alpha _{nn}\beta _{nn}\right) 
-\end{bmatrix}$\\\\Where $\alpha _{nn}=\alpha _{11}=\gamma _{nn}\cdot \sum _{nn}i\& \beta _{nn}=\beta _{11}=\mu _{nn}-\rho_{nn}i$\\\\$\begin{bmatrix}
-\left( \alpha _{11}\beta _{11}+\ldots +\alpha _{1n}\beta _{n1}\right)  & \ldots  & \left( x_{n},\beta _{11}+\ldots +\alpha _{nn}\beta _{n1}\right)  \\
+\left( \alpha _{11}\beta _{1}n^{\dagger}\ldots +A_{1n}B_{nn}\right)  & \ldots  & \left( \alpha _{n},\beta _{n1}+\ldots +\alpha _{nn}\beta _{nn}\right) 
+\end{bmatrix}$\\\\$\begin{bmatrix}
+\left( \alpha _{11}\beta _{11}+\ldots +\alpha _{1n}\beta _{n1}\right)  & \ldots  & \left( alpha_{n},\beta _{11}+\ldots +\alpha _{nn}\beta _{n1}\right)  \\
 \vdots  & \ddots  & \vdots  \\
-\left( \alpha _{11}\beta _{1}n^{t}\ldots +\alpha _{1n}\beta _{nn}\right)  & \ldots  & \left( \alpha _{n},\beta _{n1}+\ldots +\alpha _{nn}\beta _{nn}\right) 
+\left( \alpha _{11}\beta _{1}n^{\dagger}\ldots +\alpha _{1n}\beta _{nn}\right)  & \ldots  & \left( \alpha _{n},\beta _{n1}+\ldots +\alpha _{nn}\beta _{nn}\right) 
 \end{bmatrix}=$\\$\begin{bmatrix}
-\left( \alpha _{11}\beta _{11}+\ldots +\alpha _{1n}\beta _{n1}\right)  & \ldots  &  & \left( x_{n},\beta _{11}+\ldots +\alpha _{nn}\beta _{n1}\right)  \\
+\left( \alpha _{11}\beta _{11}+\ldots +\alpha _{1n}\beta _{n1}\right)  & \ldots  &  & \left( \alpha_{n},\beta _{11}+\ldots +\alpha _{nn}\beta _{n1}\right)  \\
 \vdots  & \ddots  &  & \vdots  \\
-\left( \alpha _{11}\beta _{1n}t_{\ldots }+A_{n}B_{nn}\right)  &  & \ldots  & \left( \alpha _{n},\beta _{n1}+\ldots +\alpha _{nn}\beta _{nn}\right) 
+\left( \alpha _{11}\beta _{1n}+_{\ldots }+A_{n}B_{nn}\right)  &  & \ldots  & \left( \alpha _{n},\beta _{n1}+\ldots +\alpha _{nn}\beta _{nn}\right) 
 \end{bmatrix}$
 \end{enumerate}
 
@@ -1183,7 +1162,7 @@ i & \ddots  & \vdots  \\
 \subsection{Exercise 2.2}
 Let $A=\frac{1}{\sqrt{2}}\bmat{0 & 1+i \\ i-1 & 0}$
 \begin{enumerate}[label=(\alph*)]
-\item Find the eigenvalues and normalized eigenvectors for $A$ \\
+\item \textbf{Find the eigenvalues and normalized eigenvectors for $A$} \\
 $A-\lambda I=\begin{bmatrix}
 0 & \dfrac{1+i}{\sqrt{2}} \\
 \dfrac{1-i}{\sqrt{2}} & 0
@@ -1201,19 +1180,19 @@ $A-\lambda I=\begin{bmatrix}
 \lambda ^{2}-\dfrac{1}{2}\left( 2\right) =0\\
 \lambda ^{2}=1\\
 \lambda =\pm 1$ \\
-$\lambda=1$ : $A-1I=\bmat{-1 & \dfrac{1+i}{\sqrt{2}} \\ \dfrac{1-i}{\sqrt{2}} & -1}\bmat{a \\ b}=0\longrightarrow\ket{v_1}=\bmat{\dfrac{-1-i}{\sqrt{2}} \\ 1}$ \\
-$\lambda=-1$ : $A+1I=\bmat{1 & \dfrac{1+i}{\sqrt{2}} \\ \dfrac{1-i}{\sqrt{2}} & 1}\bmat{a \\ b}=0\longrightarrow\ket{v_2}=\bmat{\dfrac{1+i}{\sqrt{2}} \\ 1}$
+$\lambda=1$ : $A-1I=\bmat{-1 & \dfrac{1+i}{\sqrt{2}} \\ \dfrac{1-i}{\sqrt{2}} & -1}\bmat{a \\ b}=0\longrightarrow\ket{v_1}=\sqrt{2}\bmat{\dfrac{-1-i}{\sqrt{2}} \\ 1}$ \\
+$\lambda=-1$ : $A+1I=\bmat{1 & \dfrac{1+i}{\sqrt{2}} \\ \dfrac{1-i}{\sqrt{2}} & 1}\bmat{a \\ b}=0\longrightarrow\ket{v_2}=\sqrt{2}\bmat{\dfrac{1+i}{\sqrt{2}} \\ 1}$
 
-\item Show that the eigenvectors are mutually orthogonal \\
+\item \textbf{Show that the eigenvectors are mutually orthogonal} \\
 To determine if the eigenvectors are mutually orthogonal, we can verify that the inner product is zero. \\
 $\inp{v_1}{v_2}=\bmat{\dfrac{-1+i}{\sqrt{2}} & 1}\bmat{\dfrac{1+i}{\sqrt{2}} \\ 1}=\frac{-1+i}{\sqrt{2}}\cdot\frac{1+i}{\sqrt{2}}+1=0\longleftarrow$ Therefore, the eigenvectors are mutually orthogonal.
 \item Show the projection operators associated to the mutually orthogonal eigenvectors satisfy the \textit{completeness relation}; IE if $\ket{u_1}$, $\ket{u_2}$ are mutually orthogonal unit eigenvectors for $A$, then $I=\sum^2_{i=1}\ket{u_i}\bra{u_i}$. \\
 Recall $\ket{u_i}\bra{u_i}$. \\
 $\ket{v_1}\bra{v_1}=\bmat{\frac{-1-i}{\sqrt{2}} \\ 1}\bmat{\frac{-1+i}{\sqrt{2}} & 1}=\bmat{1 & \frac{-1-i}{\sqrt{2}} \\ \frac{-1+i}{\sqrt{2}} & 1}$ \\
-$\ket{v_2}\bra{v_2}=\bmat{\frac{1+i}{\sqrt{2}} \\ 1}\bmat{\frac{1-i}{\sqrt{2}} & 1}=\bmat{1 & \frac{1-i}{\sqrt{2}} \\ \frac{1-i}{\sqrt{2}} & 1}$ \\
-$\ket{v_1}\bra{v_1}+\ket{v_2}\bra{v_2}=\bmat{2 & 0 \\ 0 & 2}=I$. Therefore, the projection operators associated to the eigenvectors satisfy the completeness relation.
-\item Find a unitary matrix which diagonalizes $A$, IE find a unitary matrix $U$ and a diagonal matrix $D$ such that $A=UDU^\dagger$. \\
-$D=\bmat{1 & 0 \\ 0 & -1}$, $u=\bmat{\frac{-(1+i)}{\sqrt{2}} & \frac{1+i}{\sqrt{2}} \\ 1 & 1}$, $u^\dagger=\bmat{\frac{-(1-i)}{\sqrt{2}} & 1 \\ 1 & \frac{1+i}{\sqrt{2}}}$ \\
+$\ket{v_2}\bra{v_2}=\bmat{\frac{1+i}{\sqrt{2}} \\ 1}\bmat{\frac{1-i}{\sqrt{2}} & 1}=\bmat{1 & \frac{1+i}{\sqrt{2}} \\ \frac{1-i}{\sqrt{2}} & 1}$ \\
+$\ket{v_1}\bra{v_1}+\ket{v_2}\bra{v_2}=\frac{1}{2}\bmat{2 & 0 \\ 0 & 2}=I$. Therefore, the projection operators associated to the eigenvectors satisfy the completeness relation.
+\item \textbf{Find a unitary matrix which diagonalizes $A$, IE find a unitary matrix $U$ and a diagonal matrix $D$ such that $A=UDU^\dagger$. }\\
+$D=\bmat{1 & 0 \\ 0 & -1}$, $u=\bmat{ \frac{1+i}{\sqrt{2}} & \frac{-(1+i)}{\sqrt{2}} \\ 1 & 1}$, $u^\dagger=\bmat{\frac{-(1-i)}{\sqrt{2}} & 1 \\ 1 & \frac{1+i}{\sqrt{2}}}$ \\
 Symbolab says $A=uDu^\dagger$... maybe a later problem
 \end{enumerate}
 
@@ -1230,14 +1209,14 @@ Let $A\in M_n$ be skew-Hermitian (IE $A^\dagger=-A$). We will prove that the eig
 \begin{center}
 $(\ket{u_i}\bra{u_i})^\dagger=(\bra{u_i})^\dagger(\bra{u_i})^\dagger=\ket{u_i}\bra{u_i}$.
 \end{center}
-We can use this property and the spectral theorem for normal matrices to show that the corresponding eigenvalues are pure imaginary. Observe
+We can use this property and the spectral theorem for normal matrices to show that the corresponding eigenvalues are pure imaginary. Note that $A$ has negative eigenvalues, IE $\bra{x}A^\dagger\ket{x}=-\lambda$, IE $\lambda^*=-\lambda$ Observe
 \begin{center}
-$A^\dagger=\sum\lambda_i^*(\ket{u_i}\bra{u_i})^\dagger=\sum\lambda_i^*\ket{u_i}\bra{u_i}=-A$.
+$A^\dagger=\sum\lambda_i^*(\ket{u_i}\bra{u_i})^\dagger=\sum\lambda_i^*\ket{u_i}\bra{u_i}=-A$.\\
 \end{center}
 Therefore, the eigenvalues of $A$ are pure imaginary.
 \end{proof}
 
-\item Let $U$ be a unitary matrix. Show that the eigenvalues of $U$ are unimodular, i.e., if $\lambda$ is an eigenvalue of $U$, then $|\lambda| = 1$.
+\item \textbf{Let $U$ be a unitary matrix. Show that the eigenvalues of $U$ are unimodular, i.e., if $\lambda$ is an eigenvalue of $U$, then $|\lambda| = 1$.}
 \begin{proof}
 Let $u\in M_n$ where $u^\dagger u=uu^\dagger=I$ (IE unitary). We will show that the eigenvalues of $u$ are unimodular. By definition of eigenvalue and eigenvector, $u\ket{x}=\lambda\ket{x}$. Observe
 \begin{center}
@@ -1246,12 +1225,12 @@ $\ket{x}^\dagger \underbrace{\textstyle u^\dagger u }_{\mathclap{1}}\ket{x}=\ket
 $\ket{x}^\dagger\ket{x}=\lambda^\dagger\lambda\ket{x}^\dagger\ket{x}$ \\
 $|x|^2=\lambda^\dagger\lambda |x|^2$ \\
 $1=\lambda^*\lambda=|\lambda|^2$ \\
-$|\lambda|=\pm 1$
+$|\lambda|=1$
 \end{center}
 Therefore, the eigenvalues of a unitary matrix $u$ are unimodular.
 \end{proof}
 
-\item Let $A$ be a normal matrix. Show that $A$ is Hermitian if and only if all the eigenvalues of $A$ are real.
+\item \textbf{Let $A$ be a normal matrix. Show that $A$ is Hermitian if and only if all the eigenvalues of $A$ are real.}
 \begin{proof}
 Let $A\in M_n$. We will prove that $A$ is Hermitian if and only if all eigenvalues of $A$ are real. First, we must show that $\ket{u_i}\bra{u_i}$ is Hermitian. Recall that $(AB)^\dagger=B^\dagger A^\dagger$ Observe
 \begin{center}
@@ -1260,12 +1239,16 @@ $(\ket{u_i}\bra{u_i})^\dagger=(\bra{u_i})^\dagger(\bra{u_i})^\dagger=\ket{u_i}\b
 Now, we prove that if $\lambda\in\R$, $A$ is Hermitian. Recall that $A$ is Hermitian if $A^\dagger=A$. Observe \\
 \begin{center}
 $A^\dagger=\sum^n_{i=1}\lambda_i^*(\ket{u_i}\bra{u_i})^\dagger=\sum^n_{i=1}\lambda_i(\ket{u_i}\bra{u_i})=A$.
+
 \end{center}
-Therefore, if $\lambda\in\R$, $A$ is Hermitian. Now, we must prove that if $A$ is Hermitian, $\lambda\in\R$. Observe
+Therefore, if $\lambda\in\R$, $A$ is Hermitian. Now, we must prove that if $A$ is Hermitian, $\lambda\in\R$. Let $\ket{x}$ be a normalized eigenvector for $A$ corresponding to $\lambda$. Observe
 \begin{center}
-\textit{honestly not sure how this is gonna differ from the forward direction}
+$A^\dagger=\sum^n_{i=1}\lambda_i^*(\ket{u_i}\bra{u_i})^\dagger=\sum^n_{i=1}\lambda_i(\ket{u_i}\bra{u_i})$
+
+$\bra{x}A^\dagger\ket{x}=\lambda^*\inp{x}{x}=\lambda^*=\lambda$
+
 \end{center}
-We proved that if $\lambda\in\R$, $A$ is Hermitian, and if $A$ is Hermitian, $\lambda\in\R$. Therefore, $A$ is Hermitian if and only if all eigenvalues of $A$ are real.
+Therefore, $\lambda\in\R$. We proved that if $\lambda\in\R$, $A$ is Hermitian, and if $A$ is Hermitian, $\lambda\in\R$. Therefore, $A$ is Hermitian if and only if all eigenvalues of $A$ are real.
 \end{proof}
 \end{enumerate}
 
@@ -1323,6 +1306,7 @@ The axioms of quantum mechanics are choices made by humans to attempt to mathema
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \subsection{Quantum Mechanics Axiom 1.1}
+\label{section:qma11}
 A vector state $\ket{x}$ (IE $\ket{x}$ encodes all physical info about a photon) is a unit vector in a complex Hilbert state ($H=\C^n$). In our story, we first want to figure out the photon's polarization. To figure this out, we're going to 'shoot' it at a vertically polarized filter. In classical mechanics, our particle should be polarized either vertically or horizontally. IE there are two possible outcomes:
 \begin{enumerate}
 \item If $\ket{x}$ goes through the vertically polarized filter, it was oriented vertically
@@ -1349,6 +1333,7 @@ Suppose $B=\bmat{1 & 0 \\ 0 & 0}$. This might be a nice matrix to represent a ho
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \subsection{Quantum Mechanics Axiom 2}
+\label{section:qma2}
 An observable of a state $\ket{x}$ corresponds to a Hermitian matrix $A$. IE $\ket{x}$ is in state $\ket{u}$; an eigenvector for $A$ with probability $\mid\inp{u}{x}\mid^2$. Note that we don't know the state of the particle \textit{until} it hits the filter, at which point it's one state or the other. Remember that this is basically a Walmart version of this explanation, so this is more complex. When the particle is in the 'air,' it's in the state of \textit{superposition}. Let's check this axiom: 
 \begin{center}
 $\mid\inp{v}{u}\mid^2=\mid\bra{v}(\alpha\ket{v}\times\beta\ket{h})\mid^2$ \\ 
@@ -1481,42 +1466,13 @@ $=\bmat{\frac{\cos(3\alpha)+i\sin(3\alpha)+\cos(\alpha)+\sin(\alpha)}{2} & \frac
 \end{center}
 \end{enumerate}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% Exercise 3.2 %%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\subsection{Exercise 3.2}
-Suppose that $A$ is a Hermitian matrix with spectral decomposition $A=\sum^n_{j=1}\lambda_j\ket{u_j}\bra{u_j}$ and let $\ket{\psi}=\sum^n_{j=1}c_j\ket{u_j}$ be a state. Prove that $\left\langle A \right\rangle_\psi=\bra{\psi}A\ket{\psi}$
-
-\begin{proof}
-Let $A\in M_n$ where $A^\dagger=A$ with spectral decomposition $A=\sum^n_{j=1}\lambda_j\ket{u_j}\bra{u_j}$, and let $\ket{\psi}=\sum^n_{j=1}c_j\ket{u_j}$ be a state. We will prove that $\left\langle A \right\rangle_\psi=\bra{\psi}A\ket{\psi}$ by showing $\bra{\psi}A\ket{\psi}=\sum^n_{j=1}\lambda_j|c_j|^2$
-\end{proof}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% Exercise 3.3 %%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\subsection{Exercise 3.3}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% Exercise 3.4 %%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\subsection{Exercise 3.4}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% Exercise 3.5 %%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\subsection{Exercise 3.5}
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%
 % Separable States and the Single Value Decomposition
 %%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{Matrices and Linear Transformations}
+\section{Separable States and the Single Value Decomposition}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Tensor Product %%%
@@ -1661,29 +1617,550 @@ $\ket{\psi}=\sum^r_{j=1}S_j \ket{u_j}\cdot\ket{v_j}$
 where $S_j>0$ are the Schmidt coefficients satisfying $\sum^r_{j=1}S_j^2=1$, $\lbrace\ket{u_j}\rbrace\subseteq H_1$ and $\lbrace\ket{v_j}\rbrace\subseteq H_2$ are orthonormal and $r<\text{min}\lbrace m,n\rbrace$
 \end{theorem}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+% Mixed States as Density Matrices
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Mixed States as Density Matrices}
+
+Let's go back to single particle systems for a little to motivate this idea of density matrices..
+\begin{example}
+Suppose $\ket{\psi}\in C^2$ is the state of some quantum system. Recall that this means that $\norm{\ket{\psi}}=1$, and if we wanted to measure 'vertical' or 'horizontal' polarization; IE \\
+\begin{center}
+Vertical: $\ket{1}=\bmat{0 \\ 1}$ \\
+Horizontal: $\ket{0}=\bmat{1 \\ 0}$
+\end{center}
+Where $\ket{1}$ and $\ket{0}$ are eigenstates of a chosen Hermitian matrix which represents our apparatus. Let's do a spectral decomposition:
+\begin{center}
+$A=0\ket{0}\bra{0}+1\ket{1}\bra{1}=\ket{1}\bra{1}=\bmat{0 \\ 1}\bmat{0 & 1}=\bmat{0 & 0 \\ 0 & 1}$
+\end{center}
+Basically, we're interested in finding probabilistic information about $\ket{\psi}$ regarding its polarization.
+\begin{center}
+$\ket{\psi}=\alpha\ket{0}+\beta{1}$ where $\norm{\ket{\psi}}=\sqrt{\inp{\psi}{\psi}}$.
+\end{center}
+So, we interpret this expression of $\ket{\psi}$ in the $\lb\ket{0},\ket{1}\rb$-basis as $\ket{\psi}$ in $\ket{0}$ with probability $\abs{\alpha}^2$ and $\ket{\psi}$ in $\ket{1}$ with probability $\abs{\beta}^2$. \\\\
+Quick side note: 
+\begin{figure}[h]
+  \includegraphics[width=.6\linewidth]{rotation1.jpeg}
+  \centering
+  \caption{Rotate}
+  \label{fig:rotate1}
+\end{figure}
+In figure \ref{fig:rotate1}, we can see that $\ket{\psi_1}=\alpha\ket{0}+\beta\ket{1}$, and $\ket{\psi_2}=e^{i\theta}\alpha\ket{0}+e^{i\theta}\beta\ket{1}$. Basically, instead of using vectors, we're going to use density matrices. Take $\ket{\psi}\in C^2 \longrightarrow \rho_\psi =\ket{\psi}\bra{\psi}$.
+\begin{center}
+$\rho_\psi=\ket{\psi_1}\bra{\psi_2}=(\alpha\ket{0}+\beta\ket{1}\cdot(\alpha^*\bra{0}+\beta^*\bra{1}$\\
+$=\abs{\alpha}^2\ket{0}\bra{0}+\alpha\beta^*\ket{0}\bra{1}+\beta\alpha^*\ket{1}\bra{0}+\abs{\beta}^2\ket{1}\bra{1}$\\
+$\bmat{\abs{\alpha}^2 & \alpha\beta^* \\ \beta\alpha^2 & \abs{\beta}^*} =\rho\ket{\psi_1}$
+\end{center}
+Note that $\text{det}=0$, $\text{rank}=1$, IE the state is not entangled and not invertable. This matrix encodes all information that we can get out of $\ket{\psi}$. That is, repeated experiments can give us more information about the system, but we can't gather much more out of $\ket{\psi}$.
+\begin{center}
+$\longrightarrow e^{i\theta}\alpha(e^{i\theta}\alpha)^*=e^{i\theta}\alpha e^{-i\theta}\alpha^*=\alpha\alpha^*=\abs{\alpha}^*$\\
+$\longrightarrow \rho_{\ket{\psi_2}}=\rho\ket{\psi_2}$ \\
+$=\bmat{\abs{\alpha}^2 & \alpha\beta^* \\ \alpha^*\beta & \abs{\beta}^2}$
+\end{center}
+\end{example}
+OK great now we're motivated about density matrices. Here's a more specific example:
+\begin{example}
+Given $\ket{\psi}=\frac{1}{\sqrt{2}}(\ket{0}-\ket{1})$, find the density matrix $\rho_\psi$ with respect to $\lb\ket{0},\ket{1}\rb$.
+\begin{center}
+$\bmat{-\frac{1}{2} & \frac{1}{2} \\ -\frac{1}{2} & \frac{1}{2}}$ \\
+$\rho_\psi=\ket{\psi}\bra{\psi}=\bmat{\frac{1}{\sqrt{2}} \\ -\frac{1}{\sqrt{2}}}\bmat{\frac{1}{2} & -\frac{1}{2}}=\bmat{-\frac{1}{2} & \frac{1}{2} \\ \frac{1}{2} \\ -\frac{1}{2}}$
+\end{center}
+\end{example}
+Here are some observations: \\
+If  $\ket{\psi}\in C^n$ is a state,
+\begin{itemize}
+\item $\rho_\psi\in M_n(\C)$
+\item $\rho_\psi$ has trace 1
+\item $\rho_\psi$ is Hermitian (IE $\rho_\psi^\dagger=\rho_\psi$). \\ In fact, $\rho_\psi$ is also positive semi-definite (IE non-negative eigenvalues).
+\end{itemize}
+To formalize these observations, here are some definitions:
+\begin{definition}
+The \textbf{trace} of an $n\times n$ matrix is the \textit{sum} of its diagonal entries.
+\end{definition}
+\begin{definition}
+A \textbf{density matrix} $\rho\in M_n$ is a Hermitian, positive-semidefinite matrix such that $\text{tr}(\rho)=1$
+\end{definition}
+Density matrices can be written with set-builder notation as follows:
+\begin{center}
+$\lb P(\ket{\psi}) \mid \ket{\psi} \text{ states }\in\C^n \rb$
+$=\lb \ket{\psi}\bra{\psi} \mid \ket{\psi} \in\C^n \text{ states} \rb$
+\end{center}
+Note that this is not actually a vector space. These sets are also called 'pure states' where there is no 'noise' in the system. We're actually particularly interested in looking at unit density matrices. We can write the linear combinations with set builder notation as:
+\begin{center}
+$\lb \sum^{m}_{i=1} \rho_i \ket{\psi_i}\bra{\psi_i} \mid \sum^{m}_{i=1} \rho_i=1, \rho_i>0 \rb$
+\end{center}
+\begin{remark}
+Sometimes, states will be unit vectors. Other times, they're just the sums of pure states, IE they're the sums of rank $1$ projection matrices.
+\end{remark}
+\begin{figure}[h]
+  \includegraphics[width=.5\linewidth]{pure_mixed.jpeg}
+  \centering
+  \caption{Illustration of pure vs. mixed states}
+  \label{fig:puremixed1}
+\end{figure}
+This set contains all complex combinations of pure states, illustrated in Figure \ref{fig:puremixed1}. This is essentially creating a weighted position average of some state $\ket{\psi}$.
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% Exercise 4.1 %%%
+%%% Revisit Axiom 1 %%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\subsection{Exercise 4.1}
+\subsection{Revisit Axiom 1}
+To complete computations using density matrices, it's useful to revisit Quantum Mechanics Axiom 1 discussed in section \ref{section:qma11}.
+\begin{remark}
+A physical state of a system, whose Hilbert space $H$ is completely determined by its associated \textit{density matrix} (IE $\text{tr}(\rho)=1\longrightarrow\text{unit condition}$) which we can think of as a map; IE $\rho:H\longrightarrow H$
+\end{remark}
+
+\begin{example}
+Show that a mixed state $\rho=\sum^n_{i=1}\rho_i\ket{\psi_i}\bra{\psi_i}$ satisfies $\text{tr}(\rho)=1$. With our framework, Axiom 1 still holes.\\
+First, pick a basis for $H$ (Hilbert space) Then, fix an orthonormal basis $\setofkets{e}$ for $H$. Recall that $(\rho)_{ij}$ has a "special inner product" $=\bra{e_i}\rho\ket{e_i}$ (the $\text{i}^{\text{th}}$ column of $e$. Basically, we want to isolate a specific entry of the matrix. So, 
+\begin{center}
+$\text{tr}(\rho)=\sum^n_{i=1}\bra{e_i}\rho\ket{e_i}=\sum^n_{i=1}\bra{e_i}\sum^n_{j=1}P_j\ket{\psi_j}\bra{\psi_j}\ket{e_j}$\\
+$=\text{"evenly distributing"}$\\
+$=\sum^n_{j=1}P_j\sum^n_{j=1}\inp{e_i}{\psi_i}\inp{\psi_j}{e_i}$
+\end{center}
+So,
+\begin{center}
+$\text{tr}(\rho)=\sum^n_{j=1}p_j\sum^n_{i=1}\inp{\psi_j}{e_i}\inp{e_i}{\psi_j}$\\
+$=\sum^n_{j=1}P_j\bra{\psi_j}\sum^n_{i=1}\ket{e_i}\inp{e_i}{\psi_j}$\\
+$=\sum^n_{j=1}P_j\inp{\psi_j}{\psi_j}=1$
+\end{center}
+\end{example}
+OK now, here's a crazy fact: $\text{tr}(AB)=\text{tr}(BA)$, even though in general, $AB\neq BA$. This is important because the trace allows us to consider a matrix as a Hilbert space. IE, 
+\begin{center}
+$\text{tr}((FA)F^\dagger)=\text{tr}(F_\dagger(FA))=text{tr}(IA)=text{tr}(A)$
+\end{center}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% Exercise 4.2 %%%
+%%% Revisit Axiom 2 %%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\subsection{Exercise 4.2}
+\subsection{Revisit Axiom 2}
+Now, let's revisit Axiom 2 from section \ref{section:qma2}. The mean value of an observable is $\left\langle A \right\rangle=\text{tr}{\rho A}$, where $\left\langle A \right\rangle$ is the probability after many measurements. Basically, we can find the probability with density matrices instead of vectors.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% Exercise 4.3 %%%
+%%% Revisit Axiom 3 %%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\subsection{Exercise 4.3}
+\subsection{Revisit Axiom 3}
+The time evolution of a density matrix is given by the Louisville-Von Neumann equation:
+\begin{equation}
+i\hbar \frac{d}{dt}\left[ \rho \right] = \left[ H,P \right]=H\rho-\rho H
+\end{equation}
+
+
+
+Recall that the probability of having an outcome of $\lambda$, an eigenvalue for an observable Hermitian $A$, given that the system is in state $\ket{\psi}$ is
+\begin{center}
+$\abs{\inp{\lambda}{\psi}}^2$
+\end{center}
+
+\begin{example}
+Recall that mixed density matrices are convex combinations of pure states.
+\begin{center}
+$\ket{\psi}=\ket{0}=\bmat{1 \\ 0}\longrightarrow\rho=\ket{\psi}\bra{\psi}=\bmat{1 & 0 \\ 0 & 0} \text{ }50\%$\\
+$\ket{\phi_1}=\ket{1}=\bmat{0 \\ 1}\longrightarrow\rho_1=\ket{1}\bra{1}=\bmat{0 & 0 \\ 0 & 1}\text{ }25\%$\\
+$\ket{\phi_2}=\frac{1}{\sqrt{2}}\bmat{1 \\ -1}\longrightarrow\rho_2=\ket{phi_2}\bra{phi_2}=\frac{1}{2}\bmat{1 & -1 \\ -1 & 1} \text{ } 25\%$
+\end{center}
+\end{example}
+In the density matrix picture, $\ket{\psi}$ is replaced by $\rho=\sum_iP_i\ket{\psi_i}\bra{\psi_i}$. The probability of outcome $\lambda$ upon measuring an observable $A$, given state $\rho$ is:
+\begin{enumerate}
+\item $\bra{\lambda}\rho\ket{\lambda}=\sum_iP_i\inp{\lambda}{\psi_i}\inp{\psi_i}{\lambda}$
+\item $\sum_iP_i\abs{{\lambda}{\psi_i}}$ (IE weighting the state by a probability
+\item $\text{tr}(\ket{\lambda}\bra{\lambda}\rho)$
+\end{enumerate}
+OK but what about bipartite states with density matrices? Bad news.. tensors of pure states (density matrices). Recall:\\
+\begin{center}
+$\ket{\psi}\in\C^n\otimes\C^n$\\
+$\ket{\psi}=\sum^n_{i=1}c_i\ket{\psi}\bra{\psi}$\\
+$=\ket{\psi_1}\otimes\ket{\psi_2}$
+\end{center}
+Basically, for vectors, separable means we can write them as a tensor. Now we're motivated to find the analog for density matrices.
+
+\begin{definition}
+Let $\rho\in M_n(\C)\otimes M_n(\C)$ be a density matrix. Recall that $\rho=\sum^n_{i=1}c_iA_{1,i}\otimes A_{2,i}$ where $A_{1,i}\in M_n(\C)$ and $A_{2,i}\in M_n(\C)$.
+\end{definition}
+What can we say about $\rho$?
+\begin{enumerate}
+\item $\rho$ is uncorrelated if $\rho_i=\rho_1\otimes\rho_2$ where $\rho_i$ is a density matrix
+\item $\rho$ is "separable" if $\rho=\sum^n_{i=1}c_i\rho_{1,i}\otimes \rho_{2,i}$. Note that each $\rho_{1,i}$ and $\rho_{2,i}$ are density matrices where $\sum P_i=1$
+\item If $\rho$ is not "separable", we can call $\rho$ inseparable.
+\end{enumerate}
+Let's see an example to tie this together.
+\begin{example}
+Given $\ket{02}\in\C^2\otimes\C^3$, or $\bmat{1 \\ 0}\otimes\bmat{0 \\ 0 \\ 1}=\bmat{0 \\ 0 \\ 1 \\ 0 \\ 0 \\ 0}$, consider the following:
+\begin{center}
+$\rho=\ket{02}\bra{02}=\bmat{0 \\ 0 \\ 1 \\ 0 \\ 0 \\ 0}\bmat{0 & 0 & 1 & 0 & 0 & 0}$
+$=\bmat{
+0 & 0 & 0 & 0 & 0 & 0 \\
+0 & 0 & 0 & 0 & 0 & 0 \\
+0 & 0 & 1 & 0 & 0 & 0 \\
+0 & 0 & 0 & 0 & 0 & 0 \\
+0 & 0 & 0 & 0 & 0 & 0 \\
+0 & 0 & 0 & 0 & 0 & 0 \\
+0 & 0 & 0 & 0 & 0 & 0
+}$
+\end{center}
+Is this separable? Our best case scenario is $\rho=\rho_1\otimes\rho_2\in M_2\otimes M_3$. In other words, we need to find the matrices that make this possible. In this case it's pretty easy:
+\begin{center}
+$\bmat{
+1 & 0 \\
+0 & 0
+}\otimes\bmat{
+0 & 0 & 0 \\
+0 & 0 & 0 \\
+0 & 0 & 1
+}=\rho=\bmat{
+0 & 0 & 0 & 0 & 0 & 0 \\
+0 & 0 & 0 & 0 & 0 & 0 \\
+0 & 0 & 1 & 0 & 0 & 0 \\
+0 & 0 & 0 & 0 & 0 & 0 \\
+0 & 0 & 0 & 0 & 0 & 0 \\
+0 & 0 & 0 & 0 & 0 & 0 \\
+0 & 0 & 0 & 0 & 0 & 0
+}=E_{33}\in M_6$
+\end{center}
+Therefore, $\rho$ is both pure AND uncorrelated.
+\end{example}
+\begin{definition}
+Suppose $A\in M_n(\C)\otimes M_m(\C)$. The \textbf{partial trace} of $A$ over $\C^m$ is
+\begin{equation}
+A=\sum^n_{i=1}c_iA_{1,i}\otimes A_{2,i}
+\end{equation}
+\begin{equation}
+A_1=\text{tr}_2(A)\sum^n_{i=1}c_iA_{1,i}\cdot\text{tr}(A_{2,i})\in M_n
+\end{equation}
+Basically, if we add a bunch of $M_n$ matrices, we get another $M_n$ matrix.
+\begin{equation}
+A_2=\text{tr}_1(A)\sum^n_{i=1}c_i\text{tr}A_{1,i}\cdot A_{2,i}\in M_n
+\end{equation}
+\end{definition}
+Note that these don't live inside the tensor anymore..
+
+\begin{example}
+What can we say about
+$\ket{\psi}=\frac{1}{\sqrt{2}}(\ket{01}\otimes\ket{10})$?\\
+\begin{center}
+$\rho=\ket{\psi}\bra{\psi}=\frac{1}{2}(\ket{01}+\ket{10})(\bra{01}+\bra{10})$\\
+$=\frac{1}{2}(  \underbrace{\textstyle \ket{01}\bra{01}}_{\mathclap{E_{22}}}+\underbrace{\textstyle \bra{10}\ket{10}}_{\mathclap{E_{23}}}+\underbrace{\textstyle \bra{01}\ket{01}}_{\mathclap{E_{32}}}+\underbrace{\textstyle \ket{10}\bra{10}}_{\mathclap{E_{33}}})\in M_2\otimes M_2$\\
+$=\frac{1}{2}\bmat{
+0 & 0 & 0 & 0 \\
+0 & 1 & 1 & 0 \\
+0 & 1 & 1 & 0 \\
+0 & 0 & 0 & 0 \\
+}\in M_4$
+\end{center}
+OK check this out: We need to find some matrices such that
+\begin{center}
+$\bmat{0 & 0 \\ 0 & 1}=A_{11}B$ and $\bmat{0 & 1 \\ 0 & 0}=A_{21}B$ and ...
+\end{center}
+However, no such "$B$" can exist, since they all contradict each other! Therefore, these states are NOT uncorrelated.
+\end{example}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+% Quantum Information Theory (probably)
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Quantum Information Theory (probably)}
+
+Quick highlights reel of my life as a computer scientist so far:
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% Exercise 4.4 %%%
+%%% Classical framework of Information Theory  %%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\subsection{Exercise 4.4}
+\subsection{Classical framework of Information Theory }
+\begin{itemize}
+\item A classical (Boolean) bit is an element $x\in \lb 0,1 \rb$
+\item Data is transmitted in strings of bits (IE a bit string)
+\end{itemize}
+
+\begin{example}
+$0100$ is a bit string of length 4
+\end{example}
+
+\begin{example}
+A bit string of length $8$ is a \textit{byte}. Also, $00100100$ in UTF-8 ASCII is the dollar sign (\$)
+\end{example}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Qubits  %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Qubits}
+\begin{definition}
+A \textbf{qubit} is a unit vector in $\C^2$, IE
+$\ket{\psi}=a\ket{0}+b\ket{1}$ such that $\abs{a}^2+\abs{b}^2=1$
+\end{definition}
+\begin{itemize}
+\item To extract information form a qubit, we somehow have to \textit{measure} it, which results in \textit{collapse} to either $\ket{0}$ or $\ket{1}$.
+\item Qutrits ($\C^3$) and qudits($\C^4$) also exist
+\end{itemize}
+\begin{definition}
+A group/system of $n$ qubits is called a \textbf{quantum register}.
+\end{definition}
+Quick classical example to motivate the idea of quantum registers:
+\begin{example}
+$xyzw$ is a bit string of length $4$, and is completely determined by the values of $x,y,z,w$ independent of each other. Basically, there are $4$ values out of $2^4$ possibilities.
+\end{example}
+OK, suppose we describe a quantum register of $n$-qubits analogous to the classical framework, meaning that we can write each qubit as
+\begin{center}
+$a_i\ket{0}+b_1\ket{1}$ for $i=1,...,n$\\
+$(a_1\ket{0}+b_1\ket{1})\otimes (a_2\ket{0}+b_2\ket{1})\otimes ...\otimes (a_n\ket{0}+b_n\ket{1})$
+\end{center}
+This is sick, but not every state in a tensor product has this form, which means it's entangled. So, the state of the system
+\begin{center}
+$\ket{\psi}=\sum_{i_k=0}a_i\cdot i_2 \cdot i_n \ket{i_1}\otimes \ket{i_2}\otimes ... \otimes \ket{i_n}\in\C^{2^n}$ (holy shit)
+\end{center}
+is a linear combination of basis vectors.
+
+\begin{example}
+Suppose we have two qubits (unit vectors in $\C^2\otimes\C^2$). 
+The set 
+\begin{center}
+$\lb\ket{\Phi^{+}}=\frac{1}{\sqrt{2}}(\ket{00}+\ket{11}),\ket{\Phi^{-}}=\frac{1}{\sqrt{2}}(\ket{00}-\ket{11}),\ket{\Psi^{+}}=\frac{1}{\sqrt{2}}(\ket{01}+\ket{10}),\ket{\Psi^{-}}=\frac{1}{\sqrt{2}}(\ket{01}-\ket{10})\rb$
+\end{center}
+is called the Bell Basis, and is an orthonormal basis for $\C^2\otimes\C^2$. Each Bell State is entangled!
+\end{example}
+Back to classical land to motivate transmission of data with qubits:
+\begin{example}\label{ex:crc}
+(Classical Repition Code) Suppose a user wants to send the message $1011$ over some communication channel. Check it out: 
+\begin{center}
+	$1011\longrightarrow 1001$ IE data loss
+\end{center}
+We can encode (super elementary) redundancy using $4$ blocks of $4$-bits.
+\begin{center}
+	$1011\longrightarrow \underbrace{\textstyle 1111000011111111}_{\text{send this}}$
+\end{center}
+What if we receive $1111010011010111$? By simple majority, we can see that we encountered some sort of data loss in this transmission.
+\end{example}
+OK siiick now how can we do this with Qubits? First, here are some operations:
+\begin{itemize}
+	\item Measurement, IE collapse $\longrightarrow$ not ideal
+	\item Unitary transformation $\longrightarrow$ spin matrices (IE quantum gates)
+\end{itemize}
+Here is our first QIT theorem of the semester that illustrates whether example \ref{ex:crc} is possible in quantum land.
+\begin{theorem}
+	(Non-Cloning Theorem)\\
+	An unknown quantum system cannot be cloned by unitary transformations.
+\end{theorem}
+Basically, if we want to encode things with QIT, we need to develop new tools. IE, there is no such unitary operator $u$ on $H\otimes H$ for all normalized states $\ket{\psi},\ket{e}\in H$ such that
+$u(\ket{\psi_e})=\ket{\psi\psi}$
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Measuring Qubits  %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Measuring Qubits}
+Measurement is basically enacting some operation on a system to output a classical bit. This operation is called collapse. To illustrate this operation, we consider a single qubit system in state $\ket{x}=a\ket{0}+b\ket{1}$. The goal is to find the probability that the state in question is $\ket{0}$ ($+1$ outcome) or $\ket{1}$ ($-1$ outcome) upon measurement. Basically, we want to use the spectral projections associated with $\sigma_z=\bmat{1 & 0 \\ 0 & -1}$.
+\begin{center}
+$=\underbrace{1}_{\lambda_1}\underbrace{\ket{0}\bra{0}}_{M_0}+\underbrace{(-1)}_{\lambda_2}\underbrace{\proj{1}{1}}_{M_1}$\\
+$P(0)=a^2=\bra{x}M_0\ket{x}$\\
+$P(1)=b^2=\bra{x}M_1\ket{x}$
+\end{center}
+With this motivation, let's complete an example in a bi-partite system.
+\begin{example}
+Let $\ket{\psi}$ be a state in a $2$-qubit system.
+\begin{center}
+$\ket{\psi}=a\ket{00}+b\ket{01}+c\ket{10}+d\ket{11}$
+\end{center} 
+Suppose we want to find the probability that the first qubit is $\ket{0}$ or $\ket{1}$ after measurement of $\ket{\psi}$. Basically, we want to consider the observable associated to the Hermitian matrix $A=\sigma_z\otimes I_2$. This means that we should consider the projection operators
+\begin{center}
+$M_0=\proj{0}{0}\otimes I_2$\\
+$M_1=\proj{1}{1}\otimes I_2$
+\end{center}
+We tensor by $I_2$ to leave the second qubit alone, and only operate on the first one in the system.
+\begin{center}
+$\ket{\psi}=\ket{0}\otimes (a\ket{0}+b\ket{1})+\ket{1}\otimes (c\ket{0}+d\ket{1})$\\
+$=u\ket{0}\otimes (\frac{a}{u}\ket{0}+\frac{b}{u}\ket{1})+\ket{v}\otimes (\frac{c}{v}\ket{0}+\frac{d}{v}\ket{1})$
+\end{center}
+where
+\begin{center}
+$u=\sqrt{\abs{a}^2+\abs{b}^2}$
+\end{center}
+and
+\begin{center}
+$v=\sqrt{\abs{c}^2+\abs{d}^2}$
+\end{center}
+OK, now, let's do our projections with these new $M_0$ and $M_1$.
+\begin{center}
+$P(0)=\bra{\psi}M_0\ket{\psi}=u^2$\\
+$P(1)=\bra{\psi}M_1\ket{\psi}=v^2$
+\end{center}
+More specifically, we're collapsing onto $\ket{0}\otimes (a\ket{0}+b\ket{1})$ and $\ket{1}\otimes (c\ket{0}+d\ket{0})$
+\end{example}
+\begin{example}
+Consider $\ket{\Phi^+}=\frac{1}{\sqrt{2}}(\ket{00}+\ket{11})$. We want to measure the system to determine vertical/horizontal polarization.
+\begin{center}
+($\sigma_z$ spectral projections)
+$M_0=\ket{0}\bra{0}=\bmat{1 & 0 \\ 0 & 0}$\\
+$M_1=\ket{1}\bra{1}=\bmat{0 & 0 \\ 0 & 1}$
+\end{center}
+Basically, on the first qubit, we have $M_0\otimes I$ and $M_1\otimes I$.
+\begin{center}
+$\ket{\Phi^+}=\frac{1}{\sqrt{2}}\ket{0}\otimes\ket{0}+0\ket{0}\otimes\ket{1}+0\ket{1}\otimes\ket{0}+\frac{1}{\sqrt{2}}\ket{1}\otimes\ket{1}$\\
+$=\frac{1}{\sqrt{2}}\ket{0}\otimes(\ket{0}+0\ket{1})+\frac{1}{\sqrt{2}}\ket{1}\otimes(0\ket{0}+\ket{1})$
+($M_0\otimes I\ket{\Phi^+}$)\\
+$=\frac{1}{\sqrt{2}}\ket{0}\inp{0}{0}\otimes (\ket{0}\otimes 0\ket{1})+0$\\
+$=\frac{1}{\sqrt{2}}\ket{0}\otimes (\ket{0}+0)=\frac{1}{\sqrt{2}}\ket{0}\otimes \ket{0}$\\
+$\bra{\Phi^+}M_0\otimes I\ket{\Phi^+}$\\
+$=\frac{1}{2}(1+0)=\frac{1}{2}$
+\end{center}
+Therefore, the actual probability that the particle will be horizontal in the first qubit is $\frac{1}{2}$.
+\end{example}
+Recall that measurement causes collapse. So what now? Well, we found that $\ket{\Phi^+}$ collapses to $\frac{1}{\sqrt{2}}\ket{0}\otimes (\ket{0}+0\ket{1})$, but note that the measurement also affected the second qubit.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% BB84 Protocol for Quantum Key Distribution (QKD)   %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{BB84 Protocol for Quantum Key Distribution (QKD)}
+A nice example of single qubit measurement is quantum key distribution. Key distribution is a cryptographic concept that pertains to the production and distribution of a key to two parties wishing to communicate securely, by means of encrypting and decryption methods. The unique benefit of quantum key distribution is that two communicating parties can detect eavesdropping of the transfer of keys due to the quantum principal that in general, measurement results in disturbance and often collapse of the system. To i
+\begin{example}
+Suppose Alice and Bob are using a \textit{one-time pad} encryption technique to communicate with each other. Alice wants to send the byte $00100100$ to Bob. They use the BB84 protocol to distribute the encryption key for communication. First, they use the bases $\beta_1$ and $\beta_2$ to prepare and measure $4N=32$ photons.
+\begin{center}
+$\beta_1=\lb\substack{0\mapsto\ket{0}\\1\mapsto\ket{1}}\rb$ and $\beta_2=\lb\substack{0\mapsto\ket{\nearrow}=\frac{1}{\sqrt{2}}(\ket{0}+\ket{1})\\1\mapsto\ket{\searrow}=\frac{1}{\sqrt{2}}(\ket{0}-\ket{1})}\rb$
+\end{center}
+Then, Alice sends Bob these $4N=32$ photons, each prepared with one of the two bases $\beta_1$ and $\beta_2$ at random.
+\begin{center}
+\begin{table}[h]
+\centering
+\begin{tabular}{|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l}
+\hline
+\textbf{Alice sends} & 0 & 1 & 0 & 0 & 1 & 1 & 0 & 1 & 0 & 0 & 1 & 0 & 0 & 0 & 1 & 0 & ... \\ \hline
+\textbf{Alice's basis} & $\beta_1$ & $\beta_2$ & $\beta_1$ & $\beta_2$ & $\beta_2$ & $\beta_1$ & $\beta_2$ & $\beta_1$ & $\beta_2$ & $\beta_2$ & $\beta_1$ & $\beta_1$ & $\beta_1$ & $\beta_1$ & $\beta_2$ & $\beta_1$ & ... \\ \hline
+\end{tabular}
+\end{table}
+\end{center}
+Now, Bob measures each received photons with respect to one of each of the two bases at random.
+\begin{center}
+\begin{table}[h]
+\centering
+\begin{tabular}{|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l}
+\hline
+\textbf{Alice sends} & 0 & 1 & 0 & 0 & 1 & 1 & 0 & 1 & 0 & 0 & 1 & 0 & 0 & 0 & 1 & 0 & ... \\ \hline
+\textbf{Alice's basis} & $\beta_1$ & $\beta_2$ & $\beta_1$ & $\beta_2$ & $\beta_2$ & $\beta_1$ & $\beta_2$ & $\beta_1$ & $\beta_2$ & $\beta_2$ & $\beta_1$ & $\beta_1$ & $\beta_1$ & $\beta_1$ & $\beta_2$ & $\beta_1$ & ... \\ \hline
+\textbf{Bob's basis} & $\beta_1$ & $\beta_2$ & $\beta_2$ & $\beta_1$ & $\beta_2$ & $\beta_2$ & $\beta_1$ & $\beta_2$ & $\beta_1$ & $\beta_2$ & $\beta_1$ & $\beta_1$ & $\beta_1$ & $\beta_1$ & $\beta_2$ & $\beta_1$ & ... \\ \hline
+\textbf{Bob reads} & 0 & 1 & ? & ? & 1 & ? & ? & ? & ? & 0 & ? & 0 & ? & ? & ? & ? & ... \\ \hline
+\end{tabular}
+\end{table}
+Where $\inp{\psi}{\nearrow}\inp{\searrow}{\psi}=\frac{1}{2}\Rightarrow 50/50$ shot $\Rightarrow$ ?
+\end{center}
+We can see that when Bob measures the bits sent by Alice with a basis different than the one she used, he cannot get any discernible information. Next, Alice and Bob talk over a classical line and identify the photons that were prepared and measured using the same basis, or roughly $2N=16$ photons. These photons are represented by the bits with a definitive collapse, IE non '?'. The remaining roughly $2N=16$ photons that Alice will send should be prepared and measured according to this same basis. Now, Alice and Bob select $N=8$ photons among the $2N=16$ photons at random to detect any tampering on the quantum line.
+\begin{center}
+\begin{table}[h]
+\centering
+\begin{tabular}{|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|}
+\hline
+\textbf{Alice sends} & 0 & 1 & 1 & 0 & 0 & 1 & 0 & 0 & 1 & 0 & 0 & 0 & 1 & 1 & 1 & 0 \\ \hline
+\textbf{Alice's basis} & $\beta_1$ & $\beta_2$ & $\beta_2$ & $\beta_2$ & $\beta_1$ & $\beta_1$ & $\beta_1$ & $\beta_2$ & $\beta_1$ & $\beta_1$ & $\beta_1$ & $\beta_2$ & $\beta_1$ & $\beta_2$ & $\beta_2$ & $\beta_2$ \\ \hline
+\textbf{Bob's basis} & $\beta_1$ & $\beta_2$ & $\beta_2$ & $\beta_2$ & $\beta_1$ & $\beta_1$ & $\beta_1$ & $\beta_2$ & $\beta_1$ & $\beta_1$ & $\beta_1$ & $\beta_2$ & $\beta_1$ & $\beta_2$ & $\beta_2$ & $\beta_2$ \\ \hline
+\textbf{Bob reads} & 0 & 1 & 1 & 0 & 0 & 1 & 0 & 0 & 1 & 0 & 0 & 0 & 1 & 1 & 1 & 0 \\ \hline
+\end{tabular}
+\end{table}
+\end{center}
+If Eve were listening, they would have intercepted and measured the quantum photons using $\beta_1$ or $\beta_2$ at random before passing the collapsed state to Bob.
+\begin{center}
+\begin{table}[h]
+\centering
+\begin{tabular}{|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|}
+\hline
+\textbf{Alice sends} & 0 & 1 & 1 & 0 & 0 & 1 & 0 & 0 & 1 & 0 & 0 & 0 & 1 & 1 & 1 & 0 \\ \hline
+\textbf{Alice's basis} & $\beta_1$ & $\beta_2$ & $\beta_2$ & $\beta_2$ & $\beta_1$ & $\beta_1$ & $\beta_1$ & $\beta_2$ & $\beta_1$ & $\beta_1$ & $\beta_1$ & $\beta_2$ & $\beta_1$ & $\beta_2$ & $\beta_2$ & $\beta_2$ \\ \hline
+\textbf{Eve's basis} & $\beta_1$ & $\beta_2$ & $\beta_1$ & $\beta_2$ & $\beta_1$ & $\beta_2$ & $\beta_1$ & $\beta_2$ & $\beta_1$ & $\beta_1$ & $\beta_2$ & $\beta_1$ & $\beta_2$ & $\beta_2$ & $\beta_1$ & $\beta_1$ \\ \hline
+\textbf{Eve reads/sends} & 0 & 1 & ? & 0 & 0 & ? & 0 & 0 & 1 & 0 & ? & ? & ? & 1 & ? & ? \\ \hline
+\textbf{Bob's basis} & $\beta_1$ & $\beta_2$ & $\beta_2$ & $\beta_2$ & $\beta_1$ & $\beta_1$ & $\beta_1$ & $\beta_2$ & $\beta_1$ & $\beta_1$ & $\beta_1$ & $\beta_2$ & $\beta_1$ & $\beta_2$ & $\beta_2$ & $\beta_2$ \\ \hline
+\textbf{Bob reads} & 0 & 1 & ? & 0 & 0 & ? & 0 & 0 & 1 & 0 & ? & ? & ? & 1 & ? & ? \\ \hline
+\end{tabular}
+\end{table}
+\end{center}
+What this comes down to is that Alice and Bob \textit{can absolutely} detect if Eve is EaVEsdropping. This can be easily be seen because despite Alice and Bob confirming the bases on which they communicated, Bob still received inconclusive states in the form of '?'. Said differently, the bits checked in the \textit{Bob reads} column were supposed to 'line up' at this point, SO, we can assume that somebody was in the middle.
+\end{example}
+
+%%%%%%%%%%%%%%%%%%%%%
+%%% Quantum Gates %%%
+%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Quantum Gates}
+Quick recap: A quantum gate is
+\begin{itemize}
+\item A unitary matrix; IE reversible and allows us to change basis
+\item How we prepare messages
+\end{itemize}
+Now, we'll go over some of the basic quantum logic gates, and compare them to their classical counterparts.
+\begin{itemize}
+\item NOT gate\\
+Classically, a not gate performs the following actions:
+\begin{center}
+$0\mapsto 1$ and $0\mapsto 1$
+\end{center}
+And as a function, the NOT gate operates as $\lb0,1\rb\mapsto\lb0,1\rb$, IE it is a bijection. A quantum not gate operates similarly. IE
+\begin{center}
+$\ket{0}\mapsto\ket{1}$ and $\ket{1}\mapsto\ket{0}$
+\end{center}
+This is done using $\sigma_x$ which is most often just called 'X'
+\item AND gate\\
+Classically, an and gate takes two bits, and outputs a $1$ only if the two bits are the same, and is represented as a function by $\lb0,1\rb^2\mapsto\lb0,1\rb$. A quantum and gate operates similarly. IE
+\begin{center}
+\[ \ket{xyz}\mapsto \begin{cases} 
+      x=y=1 & \ket{xy\overline{z}}\\
+      else \\
+       \ket{xyz}
+   \end{cases}
+\]
+$\ket{101}\stackrel{\makebox[0pt]{\mbox{\normalfont\tiny QAND}}}{\mapsto}\ket{101}$\\
+$\ket{110}\mapsto\ket{111}$
+\end{center}
+The quantum and gate is often called CCNOT.
+\item XOR gate\\
+Classically, the exclusive or gate takes two bits as input and outputs a $1$ only if the two bits are different, and is represented as a function by $\lb0,1\rb^2\mapsto\lb0,1\rb$. A quantum exclusive or gate operates slightly differently. Check it out:
+\begin{center}
+$\ket{00}\mapsto\ket{00}$\\
+$\ket{01}\mapsto\ket{01}$\\
+$\ket{10}\mapsto\ket{11}$\\
+$\ket{11}\mapsto\ket{10}$
+\end{center}
+\end{itemize}
+
+Another useful quantum gate that doesn't exist classically is called the Hadamard gate, which maps the basis states
+\begin{center}
+$\ket{0}\mapsto\frac{1}{\sqrt{2}}(\ket{0}+\ket{1})$\\
+$\ket{1}\mapsto\frac{1}{\sqrt{2}}(\ket{0}-\ket{1})$
+\end{center}
+and is used to create an equal superposition of the two states. The Hadamard gate is represented by a matrix as $H=\frac{1}{\sqrt{2}}\bmat{1 & 1 \\ 1 & -1}$. See the exercises for examples of these; we didn't do many in class.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Quantum Gates as Density Matrices %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Quantum Gates as Density Matrices}
+Quick motivation for the usefulness of density matrices representing quantum gates. The biggest question here is "what happens if quantum gates aren't dependable?" For example, noise in the quantum line or broken circuits could cause disturbances in the data transmitted.
+\begin{example}
+Imagine we want to send the bit $\ket{10}$ as $\ket{11}$ by applying CNOT. Maybe $80\%$ of the time $\ket{11}$ is sent. Fantastic! But, $15\%$ of the time, $(H\otimes I)\ket{10}$ is sent, and $5\%$ of the time $(H\otimes H)CNOT(H\otimes H)$ is sent. IE, the vector received is
+\begin{center}
+$0.80\text{CNOT}\ket{10}+0.15(H\otimes I)\ket{10}+0.05\text{CNOT}'\ket{10}$
+\end{center}
+Low key gross.. But what if we could just send a density matrix??
+\end{example}
+Well, first, we need to answer the question of how does the density matrix $\rho$ evolve under a quantum unitary gate $U$? Vector evolution allows us to apply $U$ as $\ket{\psi}\mapsto U\ket{\psi}$.
+\begin{theorem}
+If $\rho$ is a pure state density matrix $\rho=\ket{\psi}\bra{\psi}$ for some $\ket{\psi}\in\C^n$,
+\begin{center}
+$\rho=\ket{\psi}\bra{\psi}\mapsto (u\ket{\psi})(u\ket{\psi})^\dagger=U\ket{\psi}\bra{\psi}U^\dagger=U\rho U^\dagger$
+\end{center}
+\end{theorem}
+We kind of ran out of time here... But there are some cool examples of this application in the exercises.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Light speed overview of Quantum Decoherence %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Light speed overview of Quantum Decoherence}
+Let's talk about a possibly multipartite Hilbert system $H_S\otimes H_{\epsilon}$, which is our hypothetical environment's quantum system. Suppose we only want to measure information about $\ket{\psi}\in H_S$, but when we measure, our environment has state $\ket{\phi}\in H_{\epsilon}$. Basically, we're actually measuring $\ket{\psi}\otimes\ket{\phi}\in H_S\otimes H_{\epsilon}$, which is represented by the density matrix $(\ket{\psi}\otimes\ket{\phi})(\ket{\psi}\otimes\ket{\phi})^\dagger$. So, in a perfectly isolated quantum system, we would measure $\rho_S$ as it's actually represented supported by our axioms. But, if noise is introduced to the system during an action like measurement, coherence in the system is lost. Basically, quantum decoherence makes our density matrix $\bmat{\abs{\alpha}^2 & \alpha\beta^* \\ \beta\alpha^2 & \abs{\beta}^*}$ slowly approach $\bmat{\sim0 & \alpha\beta^* \\ \beta\alpha^2 & \sim0}$. Eventually, it becomes something that is no longer a density matrix and no longer useful to us...\\\\\\\\ok bye
 
 %%!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 %%!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
